@@ -1,7 +1,9 @@
-package com.i3gaz.mohamedelmahalwy.a5damat;
+package com.i3gaz.mohamedelmahalwy.a5damat.Activites;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.i3gaz.mohamedelmahalwy.a5damat.R;
 
 public class MainActivity extends AppCompatActivity {
 
