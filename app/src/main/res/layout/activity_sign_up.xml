@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/splash"
+    android:background="@mipmap/splash2"
     tools:context=".Activites.SignUpActivity">
 
     <ScrollView
@@ -15,12 +15,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageView
+                android:id="@+id/iv_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp"
+                android:src="@mipmap/logo" />
+
             <FrameLayout
+                android:id="@+id/framee"
                 android:layout_width="match_parent"
-                android:layout_height="275dp"
+                android:layout_below="@+id/iv_logo"
+                android:layout_height="445dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
                 android:layout_marginStart="19dp"
                 android:layout_marginLeft="19dp"
                 android:layout_marginEnd="19dp"
@@ -28,21 +37,21 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="220dp"
+                    android:layout_height="390dp"
                     android:layout_marginTop="40dp"
                     android:background="@drawable/et_item">
 
                     <EditText
                         android:id="@+id/et_full_name"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="30dp"
                         android:layout_marginStart="20dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="30dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginRight="20dp"
                         android:background="@null"
-                        android:gravity="right"
+                        android:gravity="right|center"
                         android:hint="الاسم كامل"
                         android:textColor="#000"
                         android:textColorHint="#A4A4A4"
@@ -63,21 +72,22 @@
                     <EditText
                         android:id="@+id/et_email"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="30dp"
                         android:layout_below="@+id/v_1"
                         android:layout_marginStart="20dp"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="30dp"
+                        android:layout_marginTop="20dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginRight="20dp"
                         android:background="@null"
-                        android:gravity="right"
+                        android:gravity="right|center"
                         android:hint="البريد الالكتروني"
                         android:textColor="#000"
                         android:textColorHint="#A4A4A4"
                         android:textSize="14sp" />
 
                     <View
+                        android:id="@+id/v_2"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_below="@+id/et_email"
@@ -88,7 +98,147 @@
                         android:layout_marginRight="20dp"
                         android:background="#F3F3F3" />
 
+                    <EditText
+                        android:id="@+id/et_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_below="@+id/v_2"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@null"
+                        android:gravity="right|center"
+                        android:hint="رقم الجوال"
+                        android:textColor="#000"
+                        android:textColorHint="#A4A4A4"
+                        android:textSize="14sp" />
 
+                    <View
+                        android:id="@+id/v_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/et_phone"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="#F3F3F3" />
+
+                    <EditText
+                        android:id="@+id/et_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_below="@+id/v_3"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@null"
+                        android:gravity="right|center"
+                        android:hint="كلمة المرور"
+                        android:textColor="#000"
+                        android:textColorHint="#A4A4A4"
+                        android:textSize="14sp" />
+
+                    <View
+                        android:id="@+id/v_4"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/et_password"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="#F3F3F3" />
+
+                    <RelativeLayout
+                        android:id="@+id/relative_credatinals"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/v_4"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp">
+
+
+                        <TextView
+                            android:id="@+id/tv_accept_credtinals"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:text="الموافقة على شروط استخدام التطبيق" />
+
+                        <ImageView
+                            android:id="@+id/iv_accept_credatinals"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_toStartOf="@+id/tv_accept_credtinals"
+                            android:layout_toLeftOf="@+id/tv_accept_credtinals"
+                            android:src="@mipmap/icon_facebook" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_sign_up"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_below="@+id/relative_credatinals"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="25dp"
+                        android:background="@drawable/btn_sign_in"
+                        android:gravity="center"
+                        android:text="تسجيل"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_sign_up"
+                        android:layout_marginTop="20dp">
+
+
+                        <TextView
+                            android:id="@+id/tv_or"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginRight="10dp"
+                            android:gravity="center"
+                            android:text="أو"
+                            android:textColor="#A4A4A4"
+                            android:textSize="16sp" />
+
+                        <View
+                            android:layout_width="20dp"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_toEndOf="@+id/tv_or"
+                            android:layout_toRightOf="@+id/tv_or"
+                            android:background="#A4A4A4" />
+
+                        <View
+                            android:layout_width="20dp"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_toStartOf="@+id/tv_or"
+                            android:layout_toLeftOf="@+id/tv_or"
+                            android:background="#A4A4A4" />
+
+                    </RelativeLayout>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -124,6 +274,19 @@
                         android:scaleType="centerCrop" />
                 </RelativeLayout>
             </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/framee"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="يوجد لدي حساب بالفعل؟ تسجيل دخول"
+                android:textColor="#000"
+                android:textSize="14sp" />
         </RelativeLayout>
     </ScrollView>
 
