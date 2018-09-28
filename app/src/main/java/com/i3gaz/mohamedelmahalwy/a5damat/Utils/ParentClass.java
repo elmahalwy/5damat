@@ -49,6 +49,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -219,10 +222,17 @@ public class ParentClass extends AppCompatActivity {
         }
     }
 
-    public static void make_toast(String toast_msg, Context context) {
 
-        Toast.makeText(context, toast_msg, Toast.LENGTH_SHORT).show();
+    public static void makeToast(Context context, int msg) {
+        Toast.makeText(context, context.getResources().getString(msg), Toast.LENGTH_SHORT).show();
     }
+
+    public static void makeToast(Context context, String msg) {
+
+
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+    }
+
 
     public static int colour_converter(String hexa_Color) {
         return Color.parseColor(hexa_Color);
@@ -266,7 +276,7 @@ public class ParentClass extends AppCompatActivity {
         }
     }
 
-    public static void  date(View v, final TextView text) {
+    public static void date(View v, final TextView text) {
         Calendar calendar = Calendar.getInstance();
         int y = calendar.get(Calendar.YEAR);
         int m = calendar.get(Calendar.MONTH);
@@ -490,7 +500,21 @@ public class ParentClass extends AppCompatActivity {
 //                            }
 //                        });
 //    }
-    public void dismiss_keyboard (){
+
+    public static void handleException(Context context, Throwable t) {
+        if (t instanceof SocketTimeoutException)
+            makeToast(context, "خطأ فى الانترنت");
+        else if (t instanceof UnknownHostException)
+            makeToast(context, "خطأ فى الاتصال");
+
+        else if (t instanceof ConnectException)
+            makeToast(context, "خطأ فى الاتصال");
+        else
+            makeToast(context, t.getLocalizedMessage());
+
+    }
+
+    public void dismiss_keyboard() {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 }

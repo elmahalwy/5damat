@@ -3,7 +3,7 @@ package com.i3gaz.mohamedelmahalwy.a5damat.Utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.i3gaz.mohamedelmahalwy.a5damat.Models.RegisterModel;
+import com.i3gaz.mohamedelmahalwy.a5damat.Models.LoginData.Data;
 
 
 /**
@@ -56,33 +56,33 @@ public class SharedPrefManager {
      *
      * @return user model
      */
-    public RegisterModel getUserDate() {
-        RegisterModel userModel = new RegisterModel();
+    public Data getUserDate() {
+        Data userModel = new Data();
         SharedPreferences sharedPreferences = mContext.getSharedPreferences(SHARED_PREF_NAME, 0);
-//        userModel.setId(sharedPreferences.getString("id", ""));
-//        userModel.setName(sharedPreferences.getString("name", ""));
-//        userModel.setEmail(sharedPreferences.getString("email", ""));
-//        userModel.setPhone(sharedPreferences.getString("phone", ""));
-//        userModel.setImage(sharedPreferences.getString("image", ""));
-//        userModel.setMobile_confirmation(sharedPreferences.getString("mobile_confirmation", ""));
-//        userModel.setToken(sharedPreferences.getString("token", ""));
+        userModel.setId(Integer.parseInt(sharedPreferences.getString("id", "")));
+        userModel.setUsername(sharedPreferences.getString("name", ""));
+        userModel.setEmail(sharedPreferences.getString("email", ""));
+        userModel.setMobile(sharedPreferences.getString("phone", ""));
+        userModel.setImage(sharedPreferences.getString("image", ""));
+        userModel.setApiToken(sharedPreferences.getString("token", ""));
         return userModel;
     }
 
     /**
      * saving user data to be used in profile
      *
-     * @param userModel is the model which hold all user data
+     * @param user is the model which hold all user data
      */
-    public void setUserDate(RegisterModel userModel) {
+    public void setUserDate(Data user) {
         SharedPreferences sharedPreferences = mContext.getSharedPreferences(SHARED_PREF_NAME, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.putString("id", userModel.getId());
-//        editor.putString("name", userModel.getName());
-//        editor.putString("email", userModel.getEmail());
-//        editor.putString("phone", userModel.getPhone());
-//        editor.putString("token",userModel.getToken());
-//        editor.putString("image",userModel.getImage());
+
+        editor.putString("id", String.valueOf(user.getId()));
+        editor.putString("name", user.getUsername());
+        editor.putString("email", user.getEmail());
+        editor.putString("phone", user.getMobile());
+        editor.putString("token",user.getApiToken());
+        editor.putString("image",user.getImage());
         editor.apply();
     }
 
