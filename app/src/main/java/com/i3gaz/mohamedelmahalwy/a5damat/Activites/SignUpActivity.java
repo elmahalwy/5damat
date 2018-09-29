@@ -1,17 +1,17 @@
 package com.i3gaz.mohamedelmahalwy.a5damat.Activites;
 
-import android.content.Intent;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.i3gaz.mohamedelmahalwy.a5damat.Models.LoginData.Data;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.i3gaz.mohamedelmahalwy.a5damat.Models.LoginData.User;
 import com.i3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
 import com.i3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
@@ -23,7 +23,6 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import spencerstudios.com.bungeelib.Bungee;
 
 public class SignUpActivity extends ParentClass {
     @BindView(R.id.et_full_name)
@@ -47,6 +46,8 @@ public class SignUpActivity extends ParentClass {
     String mobile_token;
 
     boolean checked_accept_terms = false;
+    GoogleSignInClient mGoogleSignInClient;
+    private String TAG;
 
 
     @Override
@@ -82,6 +83,10 @@ public class SignUpActivity extends ParentClass {
                 signUp();
             }
         });
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
     void signUp() {
@@ -141,5 +146,39 @@ public class SignUpActivity extends ParentClass {
                 }
             });
         }
+    }
+
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+//        if (requestCode == RC_SIGN_IN) {
+//            // The Task returned from this call is always completed, no need to attach
+//            // a listener.
+//            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+//            handleSignInResult(task);
+//        }
+//    }
+//
+//    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+//        try {
+//            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+//
+//            // Signed in successfully, show authenticated UI.
+//            updateUI(account);
+//        } catch (ApiException e) {
+//            // The ApiException status code indicates the detailed failure reason.
+//            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+//            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+//            updateUI(null);
+//        }
+//    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+//        updateUI(account);
     }
 }

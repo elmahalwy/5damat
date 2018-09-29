@@ -2,12 +2,10 @@ package com.i3gaz.mohamedelmahalwy.a5damat.Activites;
 
 import android.content.Intent;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.i3gaz.mohamedelmahalwy.a5damat.R;
 import com.i3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass;
-import com.i3gaz.mohamedelmahalwy.a5damat.Utils.SharedPrefManager;
 
 import butterknife.ButterKnife;
 

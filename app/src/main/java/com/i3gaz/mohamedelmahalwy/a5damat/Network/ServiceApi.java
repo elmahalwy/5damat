@@ -14,4 +14,10 @@ public interface ServiceApi {
                                      @Field("device_token") String device_token,
                                      @Field("serial_num") String serial_num,
                                      @Field("password") String password);
+
+    @POST(Urls.SignIn)
+    Call<User> Sign_in_response_call(@Field("email") String email,
+                                     @Field("password") String password,
+                                     @Field("device_token") String device_token,
+                                     @Field("serial_num") String serial_num);
 }
