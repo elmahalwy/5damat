@@ -1,5 +1,6 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Activites;
 
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -49,12 +50,13 @@ public class SignUpActivity extends ParentClass {
     GoogleSignInClient mGoogleSignInClient;
     private String TAG;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         ButterKnife.bind(this);
+        SharedPreferences prefs = getSharedPreferences("mobile_token", MODE_PRIVATE);
+        mobile_token = prefs.getString("m_token", "");
         initUi();
         initEventDriven();
     }

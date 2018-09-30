@@ -1,6 +1,7 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Activites;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -50,6 +51,8 @@ public class SignInActivity extends ParentClass {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in_layout);
         ButterKnife.bind(this);
+        SharedPreferences prefs = getSharedPreferences("mobile_token", MODE_PRIVATE);
+        mobile_token = prefs.getString("m_token", "");
         initUi();
         initEventDriven();
     }
