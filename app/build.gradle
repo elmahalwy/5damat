@@ -1,9 +1,10 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.i3gaz.mohamedelmahalwy.a5damat"
+        applicationId "com.I3gaz.mohamedelmahalwy.a5damat"
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
@@ -46,5 +47,5 @@ dependencies {
     implementation 'com.daimajia.slider:library:1.1.5@aar'
     implementation 'com.nineoldandroids:library:2.4.0'
     implementation 'com.google.android.gms:play-services-auth:16.0.0'
-
 }
+apply plugin: 'com.google.gms.google-services'

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "131489961449",
+    "firebase_url": "https://damat-31834.firebaseio.com",
+    "project_id": "damat-31834",
+    "storage_bucket": "damat-31834.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:131489961449:android:53b075654fa62703",
+        "android_client_info": {
+          "package_name": "com.I3gaz.mohamedelmahalwy.a5damat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "131489961449-9992sgnf7eej4sso2id6b2ajhuoabu6o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.I3gaz.mohamedelmahalwy.a5damat",
+            "certificate_hash": "d1c3e6765cfcd011f9354597a8901ac2f65174a7"
+          }
+        },
+        {
+          "client_id": "131489961449-fjk7vsmpj9p84i3tib4pnh8d745qpjjg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJqRL6cvi69oQYedbK2vozxHI4m3Jh9gI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "131489961449-fjk7vsmpj9p84i3tib4pnh8d745qpjjg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
