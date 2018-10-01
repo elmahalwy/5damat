@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Bundle;
 
-import com.i3gaz.mohamedelmahalwy.a5damat.R;
+import com.I3gaz.mohamedelmahalwy.a5damat.R;
 import com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass;
 
 import butterknife.ButterKnife;
@@ -24,6 +24,7 @@ public class SplashActivity extends ParentClass {
 
         ToMainActivity();
     }
+
     private void ToMainActivity() {
         new Handler().postDelayed(new Runnable() {
             @Override

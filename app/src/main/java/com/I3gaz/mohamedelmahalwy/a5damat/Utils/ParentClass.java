@@ -35,8 +35,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.androidnetworking.error.ANError;
-import com.i3gaz.mohamedelmahalwy.a5damat.R;
+import com.I3gaz.mohamedelmahalwy.a5damat.R;
+
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -281,59 +281,6 @@ public class ParentClass extends AppCompatActivity {
 
     }
 
-    public void handle_error_fast_networking(ANError error, Context context) {
-
-        customLoadingDialog.dismiss();
-
-        if (error.getErrorCode() != 0) {
-            // received error from server
-            // error.getErrorCode() - the error code from server
-            // error.getErrorBody() - the error body from server
-            // error.getErrorDetail() - just an error detail
-            Log.e("onError errorCode : ", String.valueOf(error.getErrorCode()));
-            Log.e("onError errorBody : ", error.getErrorBody());
-            if (error.getErrorCode() == 400) {
-                Toast.makeText(context, "حدث خطأ ما...", Toast.LENGTH_SHORT).show();
-            }
-            if (error.getErrorCode() == 500) {
-                Toast.makeText(context, "خطأ فى الاتصال بالسيرفر...", Toast.LENGTH_SHORT).show();
-            }
-            // get parsed error object (If ApiError is your class) .
-
-        } else {
-            // error.getErrorDetail() : connectionError, parseError, requestCancelledError
-            Log.e("onError errorDetail : ", error.getErrorDetail());
-            if (error.getErrorDetail().equals("connectionError")) {
-                Toast.makeText(context, "حطأ فى الاتصال بالانترنت...", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    public static void handle_error_fast_networking_without_loading_dialog(ANError error, Context context) {
-
-        if (error.getErrorCode() != 0) {
-            // received error from server
-            // error.getErrorCode() - the error code from server
-            // error.getErrorBody() - the error body from server
-            // error.getErrorDetail() - just an error detail
-            Log.e("onError errorCode : ", String.valueOf(error.getErrorCode()));
-            Log.e("onError errorBody : ", error.getErrorBody());
-            if (error.getErrorCode() == 400) {
-                Toast.makeText(context, "حدث خطأ ما...", Toast.LENGTH_SHORT).show();
-            }
-            if (error.getErrorCode() == 500) {
-                Toast.makeText(context, "خطأ فى الاتصال بالسيرفر...", Toast.LENGTH_SHORT).show();
-            }
-            // get parsed error object (If ApiError is your class)
-
-        } else {
-            // error.getErrorDetail() : connectionError, parseError, requestCancelledError
-            Log.e("onError errorDetail : ", error.getErrorDetail());
-            if (error.getErrorDetail().equals("connectionError")) {
-                Toast.makeText(context, "حطأ فى الاتصال بالانترنت...", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
 
     public void dismiss_custom_loading_dialog() {
         customLoadingDialog.dismiss();

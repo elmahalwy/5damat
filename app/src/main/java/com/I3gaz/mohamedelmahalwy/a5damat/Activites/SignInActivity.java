@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.LoginData.User;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
-import com.i3gaz.mohamedelmahalwy.a5damat.R;
+import com.I3gaz.mohamedelmahalwy.a5damat.R;
 import com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass;
 
 import butterknife.BindView;
@@ -70,7 +70,7 @@ public class SignInActivity extends ParentClass {
         tv_did_you_forger_your_password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),ForgetPasswordActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ForgetPasswordActivity.class);
                 startActivity(intent);
                 Bungee.fade(SignInActivity.this);
             }
@@ -78,7 +78,7 @@ public class SignInActivity extends ParentClass {
         tv_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),SignUpActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
                 startActivity(intent);
                 Bungee.fade(SignInActivity.this);
             }

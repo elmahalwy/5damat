@@ -8,7 +8,7 @@ import android.view.Gravity;
 import android.view.ViewGroup;
 import android.view.Window;
 
-import com.i3gaz.mohamedelmahalwy.a5damat.R;
+import com.I3gaz.mohamedelmahalwy.a5damat.R;
 
 
 /**

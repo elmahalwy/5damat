@@ -10,7 +10,7 @@ import android.widget.Toast;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ResetPassword.ResetPassword;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
-import com.i3gaz.mohamedelmahalwy.a5damat.R;
+import com.I3gaz.mohamedelmahalwy.a5damat.R;
 import com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass;
 
 import butterknife.BindView;
