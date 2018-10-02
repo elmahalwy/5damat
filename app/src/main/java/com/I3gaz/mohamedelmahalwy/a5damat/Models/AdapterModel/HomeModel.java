@@ -1,7 +1,7 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel;
 
 public class HomeModel {
-    String iv_img,tv_title,tv_time,tv_number_of_buyers,home_id;
+    String iv_img, tv_title, tv_time, tv_number_of_buyers, home_id;
 
     public String getIv_img() {
         return iv_img;
