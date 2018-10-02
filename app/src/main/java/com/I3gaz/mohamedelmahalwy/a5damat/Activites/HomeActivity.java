@@ -1,9 +1,10 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Activites;
 
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,16 +15,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.CategoriesAdapter;
-import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.CategoriesModel;
+import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.HomeFragmnet;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.MainCategories.MainCategories;
+import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
+import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
+import com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends ParentClass {
     @BindView(R.id.frame_container)
     FrameLayout frame_container;
     @BindView(R.id.relative_requests)
@@ -55,10 +63,12 @@ public class HomeActivity extends AppCompatActivity {
 
 
     RecyclerView rv_categories;
-    List<CategoriesModel> categoriesModelList;
+
     CategoriesAdapter categoriesAdapter;
     LinearLayoutManager linearLayoutManager;
 
+    FragmentManager fm;
+    HomeFragmnet homeFragmnet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,15 +78,18 @@ public class HomeActivity extends AppCompatActivity {
         initUi();
         initEventDriven();
         handle_clicks_bottom_tab();
+        init_fragments();
+        replaceFragment(homeFragmnet);
+        get_main_categories();
     }
 
     void initUi() {
 
         rv_categories = (RecyclerView) findViewById(R.id.rv_categories);
-        categoriesModelList = new ArrayList<>();
-        categoriesAdapter = new CategoriesAdapter(categoriesModelList, HomeActivity.this);
+        categoriesAdapter = new CategoriesAdapter( HomeActivity.this);
         linearLayoutManager = new LinearLayoutManager(HomeActivity.this, LinearLayout.HORIZONTAL, false);
         rv_categories.setLayoutManager(linearLayoutManager);
+        rv_categories.setAdapter(categoriesAdapter);
     }
 
     void initEventDriven() {
@@ -84,10 +97,15 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    void init_fragments() {
+        homeFragmnet = new HomeFragmnet();
+    }
+
     void handle_clicks_bottom_tab() {
         relative_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                replaceFragment(homeFragmnet);
                 tv_home.setTextColor(Color.parseColor("#174BB0"));
                 iv_home.setImageResource(R.mipmap.home);
                 tv_messages.setTextColor(Color.parseColor("#B2BBC9"));
@@ -139,5 +157,31 @@ public class HomeActivity extends AppCompatActivity {
                 iv_search.setImageResource(R.mipmap.search);
             }
         });
+    }
+
+    public void replaceFragment(Fragment fragment) {
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.frame_container, fragment);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+    void get_main_categories() {
+        RetroWeb.getClient().create(ServiceApi.class).Get_main_categories().enqueue(new Callback<MainCategories>() {
+            @Override
+            public void onResponse(Call<MainCategories> call, Response<MainCategories> response) {
+                if (response.body().isValue()) {
+                    categoriesAdapter.addAll(response.body().getData());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MainCategories> call, Throwable t) {
+                handleException(HomeActivity.this, t);
+                t.printStackTrace();
+            }
+        });
+
     }
 }

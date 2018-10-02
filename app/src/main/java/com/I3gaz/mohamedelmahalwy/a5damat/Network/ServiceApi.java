@@ -1,11 +1,18 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Network;
 
+import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.CategoriesAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.LoginData.User;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.MainCategories.MainCategories;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ResetPassword.ResetPassword;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.SubCategories.SubCategories;
+
+import java.net.URI;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface ServiceApi {
     @POST(Urls.SignUp)
@@ -24,4 +31,10 @@ public interface ServiceApi {
 
     @POST(Urls.ResetPassword)
     Call<ResetPassword> RESET_PASSWORD_CALL(@Field("input") String input);
+
+    @GET(Urls.MainCategroies)
+    Call<MainCategories> Get_main_categories();
+
+    @GET(Urls.SubCategroies)
+    Call<SubCategories> get_sub_categories(@Path("category_id") String category_id);
 }

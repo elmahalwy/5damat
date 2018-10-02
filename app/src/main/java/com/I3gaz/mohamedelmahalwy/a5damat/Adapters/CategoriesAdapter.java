@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.CategoriesModel;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.MainCategories.Datum;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
 
 import java.util.ArrayList;
@@ -18,13 +18,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ViewHolder> {
-    List<CategoriesModel> categories_list = new ArrayList<>();
+    List<Datum> categories_list;
     Context context;
     LayoutInflater layoutInflater;
-    int lastPosition = -1;
+    public  static int id;
 
-    public CategoriesAdapter(List<CategoriesModel> categories_list, Context context) {
-        this.categories_list = categories_list;
+    public CategoriesAdapter(Context context) {
+        categories_list = new ArrayList<>();
         this.context = context;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -37,13 +37,26 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CategoriesAdapter.ViewHolder holder, int position) {
-        holder.tv_category.setText(categories_list.get(position).getText());
+    public void onBindViewHolder(@NonNull CategoriesAdapter.ViewHolder holder, final int position) {
+        holder.tv_category.setText(categories_list.get(position).getName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                id = categories_list.get(position).getId();
+            }
+        });
     }
+
 
     @Override
     public int getItemCount() {
         return categories_list.size();
+    }
+
+    public void addAll(List<Datum> data) {
+        categories_list.clear();
+        categories_list.addAll(data);
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

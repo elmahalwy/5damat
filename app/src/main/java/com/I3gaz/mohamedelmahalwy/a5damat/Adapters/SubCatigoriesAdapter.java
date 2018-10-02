@@ -10,24 +10,22 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.SubCatigoriesModel;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.SubCategories.SubCategoriesDatum;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.SubCategories.SubCategory;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
-import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SubCatigoriesAdapter extends RecyclerView.Adapter<SubCatigoriesAdapter.ViewHolder> {
-    List<SubCatigoriesModel> sub_catigories_list = new ArrayList<>();
+    List<SubCategory> sub_catigories_list;
     Context context;
     LayoutInflater layoutInflater;
     int lastPosition = -1;
 
-    public SubCatigoriesAdapter(List<SubCatigoriesModel> sub_catigories_list, Context context) {
-        this.sub_catigories_list = sub_catigories_list;
+    public SubCatigoriesAdapter(Context context) {
         this.context = context;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -41,7 +39,7 @@ public class SubCatigoriesAdapter extends RecyclerView.Adapter<SubCatigoriesAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tv_title.setText(sub_catigories_list.get(position).getTv_title());
+        holder.tv_title.setText(sub_catigories_list.get(position).getName());
         if (position > lastPosition) {
 
             Animation animation = AnimationUtils.loadAnimation(context,
@@ -54,6 +52,12 @@ public class SubCatigoriesAdapter extends RecyclerView.Adapter<SubCatigoriesAdap
     @Override
     public int getItemCount() {
         return sub_catigories_list.size();
+    }
+
+    public void addAll(List<SubCategory> data) {
+        sub_catigories_list.clear();
+        sub_catigories_list.addAll(data);
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

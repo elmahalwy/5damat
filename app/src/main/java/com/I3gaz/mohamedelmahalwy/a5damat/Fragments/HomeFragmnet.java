@@ -45,4 +45,6 @@ public class HomeFragmnet extends Fragment {
 
     private void initEventDrivn() {
     }
+
+
 }

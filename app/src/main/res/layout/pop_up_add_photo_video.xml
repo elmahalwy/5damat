@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="390dp"
+    android:layout_gravity="center"
+    android:layout_marginStart="15dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginEnd="15dp"
+    android:layout_marginRight="15dp"
+    android:background="@drawable/drawable_linear_main">
+
+    <ImageView
+        android:id="@+id/iv_vector_add"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/vector_add_photo" />
+
+    <TextView
+        android:id="@+id/tv_add_photo_video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_vector_add"
+        android:layout_centerHorizontal="true"
+        android:text="اضف صورة او فيديو"
+        android:textColor="#1C1C1C"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/iv_from_my_device"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_add_photo_video"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/circle_grey" />
+
+    <TextView
+        android:id="@+id/tv_from_device"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_add_photo_video"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toStartOf="@+id/iv_from_my_device"
+        android:layout_toLeftOf="@+id/iv_from_my_device"
+        android:text="صورة من جهازى"
+        android:textColor="#1C1C1C"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:id="@+id/iv_from_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_from_my_device"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/circle_grey" />
+
+    <TextView
+        android:id="@+id/tv_from_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_from_my_device"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toStartOf="@+id/iv_from_link"
+        android:layout_toLeftOf="@+id/iv_from_link"
+        android:text="صورة من رابط"
+        android:textColor="#1C1C1C"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:id="@+id/iv_video_youtube"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_from_link"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/circle_grey" />
+
+    <TextView
+        android:id="@+id/tv_video_youtube"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_from_link"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toStartOf="@+id/iv_from_link"
+        android:layout_toLeftOf="@+id/iv_from_link"
+        android:text="فيديو من اليوتيوب"
+        android:textColor="#1C1C1C"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/btn_choose"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/iv_video_youtube"
+        android:layout_marginStart="55dp"
+        android:layout_marginLeft="55dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginRight="55dp"
+        android:background="@drawable/btn_sign_in"
+        android:gravity="center"
+        android:text="اختيار الصورة"
+        android:textColor="#FFF"
+        android:textSize="16sp" />
+</RelativeLayout>
