@@ -52,6 +52,7 @@
                     android:src="@mipmap/requests_grey" />
 
                 <TextView
+                    android:id="@+id/tv_requests"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/iv_requests"
@@ -81,6 +82,7 @@
                     android:src="@mipmap/message_grey" />
 
                 <TextView
+                    android:id="@+id/tv_messages"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/iv_messages"
@@ -110,6 +112,7 @@
                     android:src="@mipmap/search_grey" />
 
                 <TextView
+                    android:id="@+id/tv_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/iv_search"
@@ -139,6 +142,7 @@
                     android:src="@mipmap/home_grey" />
 
                 <TextView
+                    android:id="@+id/tv_home"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/iv_home"
@@ -150,6 +154,7 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/iv_add"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentBottom="true"
