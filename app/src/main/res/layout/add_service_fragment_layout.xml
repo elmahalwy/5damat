@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_layout" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_service_is_for_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:text="ماذا ستفعل مقابل الخدمة التي تقدمها:"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/et_what_would_you_do_for_exchange_of_this_service"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/tv_service_is_for_title"
+                android:layout_marginEnd="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/drawable_add_service"
+                android:gravity="center_vertical|right"
+                android:paddingEnd="10dp"
+                android:paddingRight="10dp"
+                android:textColor="#000"
+                android:textColorHint="#8E8E8E"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_service_price_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/et_what_would_you_do_for_exchange_of_this_service"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:text="سعر الخدمة:"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+            <Spinner
+                android:id="@+id/sp_service_price"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/tv_service_price_title"
+                android:layout_marginEnd="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/drawable_add_service"
+                android:gravity="center_vertical|right"
+                android:paddingEnd="10dp"
+                android:paddingRight="10dp"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_service_category_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/sp_service_price"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:text="التصنيف:"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+            <Spinner
+                android:id="@+id/sp_category"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/tv_service_category_title"
+                android:layout_marginEnd="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/drawable_add_service"
+                android:gravity="center_vertical|right"
+                android:paddingEnd="10dp"
+                android:paddingRight="10dp"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+            <Spinner
+                android:id="@+id/sp_sub_category"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/sp_category"
+                android:layout_marginEnd="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/drawable_add_service"
+                android:gravity="center_vertical|right"
+                android:paddingEnd="10dp"
+                android:paddingRight="10dp"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_service_details_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/sp_sub_category"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:text="وصف الخدمة:"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/et_service_details"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@+id/tv_service_details_title"
+                android:layout_marginEnd="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/drawable_add_service"
+                android:gravity="top|right"
+                android:hint="ادخل وصف الخدمة"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:textColorHint="#8E8E8E"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_service_gallery_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/et_service_details"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:text="ادخل معرض الخدمة:"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+            <FrameLayout
+                android:id="@+id/frame_fo"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_below="@+id/tv_service_gallery_title"
+                android:layout_marginEnd="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/drawable_add_service">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_videos_and_images"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_add_photo_or_video"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableTop="@mipmap/icon_addphoto"
+                    android:text="أضف صورة او فيديو"
+                    android:textColor="#8E8E8E"
+                    android:textSize="16sp" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/add_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/frame_fo"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="أضف صوره او فيديو"
+                android:textColor="#3558B9"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_key_words_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/add_more"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:text="كلمات مفتاحية:"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/et_key_words"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/tv_key_words_title"
+                android:layout_marginEnd="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/drawable_add_service"
+                android:gravity="top|right"
+                android:hint="ادخل الكلمات المفتاحية"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:textColorHint="#8E8E8E"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_service_delivery_time_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/et_key_words"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:text="مده التسليم:"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+            <Spinner
+                android:id="@+id/sp_service_delivery_time"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/tv_service_delivery_time_title"
+                android:layout_marginEnd="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/drawable_add_service"
+                android:gravity="center_vertical|right"
+                android:paddingEnd="10dp"
+                android:paddingRight="10dp"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_service_instructions_to_buyer_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/sp_service_delivery_time"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:text="ادخل تعليمات للمشتري:"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/et_service_instructions_to_buyer_title"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@+id/tv_service_instructions_to_buyer_title"
+                android:layout_marginEnd="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/drawable_add_service"
+                android:gravity="top|right"
+                android:hint="ادخل تعليمات للمشتري"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:textColorHint="#8E8E8E"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_add_developments_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/et_service_instructions_to_buyer_title"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:text="ادخل إضافات لهذة الخدمة:"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_developments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_add_developments_title"
+                android:layout_marginEnd="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/drawable_add_service" />
+
+            <Button
+                android:id="@+id/btn_add_more_developments"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/rv_developments"
+                android:layout_marginEnd="40dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/et_add_more_developments"
+                android:gravity="center"
+                android:text="أضف تطويراً لهذة الخدمة"
+                android:textColor="#3558B9"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_sign_up"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/btn_add_more_developments"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_sign_in"
+                android:gravity="center"
+                android:text="أضف الخدمة"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+    </ScrollView>
+</LinearLayout>
