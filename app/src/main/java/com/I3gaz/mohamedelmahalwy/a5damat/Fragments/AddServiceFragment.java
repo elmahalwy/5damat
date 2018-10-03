@@ -41,6 +41,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -110,6 +112,7 @@ public class AddServiceFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         /////////////////////////////////videos_and_images//////////////////////////////
+        videoAndImageList = new ArrayList<>();
         rv_videos_and_images = (RecyclerView) view.findViewById(R.id.rv_videos_and_images);
         videoAndImageAdapater = new VideoAndImageAdapater(videoAndImageList, getContext());
         linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayout.HORIZONTAL, false);
@@ -120,7 +123,7 @@ public class AddServiceFragment extends Fragment {
         developmentList = new ArrayList<>();
         developmentsAdapter = new DevelopmentsAdapter(developmentList, getContext());
         linearLayoutManager1 = new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false);
-        rv_developments.setLayoutManager(linearLayoutManager);
+        rv_developments.setLayoutManager(linearLayoutManager1);
         rv_developments.setAdapter(developmentsAdapter);
         pop_up_add_photo_video = new Dialog(getActivity());
         pop_up_add_photo_video.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -146,10 +149,10 @@ public class AddServiceFragment extends Fragment {
 
     private void initUI() {
         ((HomeActivity) getActivity()).dismiss_keyboard();
-        getsp_service_price();
-        getsp_category();
-        getsp_service_delivery_time();
-        getsp_service_price();
+//        getsp_service_price();
+//        getsp_category();
+//        getsp_service_delivery_time();
+//        getsp_service_price();
         initialize_list();
     }
 
@@ -214,19 +217,27 @@ public class AddServiceFragment extends Fragment {
                     Toast.makeText(getContext(), "برجاء إختيار صورة او ڤيديو", Toast.LENGTH_SHORT).show();
                 }
                 if (type.equals("iv_from_my_device")) {
-                    ((HomeActivity) getActivity()).imageBrowse(PICK_IMAGE_REQUEST);
+                    Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    // Start the Intent
+                    startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST);
                 }
                 if (type.equals("iv_from_link")) {
                     if (TextUtils.isEmpty(et_image_from_link.getText().toString())) {
                         Toast.makeText(getContext(), "برجاء إضافة رابط الصورة", Toast.LENGTH_SHORT).show();
                     } else {
-                        VideoAndImageModel videoAndImageModel=new VideoAndImageModel();
+                        tv_add_photo_or_video.setVisibility(View.GONE);
+                        view_for_add_image_at_first_Time.setVisibility(View.GONE);
+                        rv_videos_and_images.setVisibility(View.VISIBLE);
+                        add_more.setVisibility(View.VISIBLE);
+                        VideoAndImageModel videoAndImageModel = new VideoAndImageModel();
                         videoAndImageModel.setIv_service(et_image_from_link.getText().toString());
                         videoAndImageModel.setYoutube_player_view("empty");
                         videoAndImageModel.setType("image_link");
                         videoAndImageList.add(videoAndImageModel);
                         image_links_list.add(et_image_from_link.getText().toString());
                         rv_videos_and_images.getAdapter().notifyDataSetChanged();
+                        rv_videos_and_images.scrollToPosition(videoAndImageList.size()-1);
+                        pop_up_add_photo_video.dismiss();
 
                     }
                 }
@@ -234,15 +245,23 @@ public class AddServiceFragment extends Fragment {
                     if (TextUtils.isEmpty(et_video_from_link.getText().toString())) {
                         Toast.makeText(getContext(), "برجاء إضافة رابط الڤيديو", Toast.LENGTH_SHORT).show();
                     } else {
+                        tv_add_photo_or_video.setVisibility(View.GONE);
+                        view_for_add_image_at_first_Time.setVisibility(View.GONE);
+                        rv_videos_and_images.setVisibility(View.VISIBLE);
+                        add_more.setVisibility(View.VISIBLE);
                         video_links_list.add(et_video_from_link.getText().toString());
-                        VideoAndImageModel videoAndImageModel=new VideoAndImageModel();
+
+                        VideoAndImageModel videoAndImageModel = new VideoAndImageModel();
                         videoAndImageModel.setIv_service("empty");
-                        videoAndImageModel.setYoutube_player_view(et_video_from_link.getText().toString());
+                        videoAndImageModel.setYoutube_player_view(get_youtube_id(et_video_from_link.getText().toString()));
+                        Log.e("video_id",get_youtube_id(et_video_from_link.getText().toString()));
                         videoAndImageModel.setType("video_link");
                         videoAndImageList.add(videoAndImageModel);
-                        video_links_list.add(et_video_from_link.getText().toString());
+                        video_links_list.add(get_youtube_id(et_video_from_link.getText().toString()));
                         rv_videos_and_images.getAdapter().notifyDataSetChanged();
+                        rv_videos_and_images.scrollToPosition(videoAndImageList.size()-1);
 
+                        pop_up_add_photo_video.dismiss();
 
                     }
                 }
@@ -261,17 +280,20 @@ public class AddServiceFragment extends Fragment {
             file = new File(filePath);
             Log.e("file", "" + file);
             try {
+                pop_up_add_photo_video.dismiss();
                 tv_add_photo_or_video.setVisibility(View.GONE);
                 view_for_add_image_at_first_Time.setVisibility(View.GONE);
                 rv_videos_and_images.setVisibility(View.VISIBLE);
                 add_more.setVisibility(View.VISIBLE);
-                VideoAndImageModel videoAndImageModel=new VideoAndImageModel();
-                videoAndImageModel.setIv_service(imageUri.toString());
+                VideoAndImageModel videoAndImageModel = new VideoAndImageModel();
+                videoAndImageModel.setIv_service("empty");
                 videoAndImageModel.setYoutube_player_view("empty");
+                videoAndImageModel.setImage_uri(imageUri);
                 videoAndImageModel.setType("file");
                 videoAndImageList.add(videoAndImageModel);
                 image_files_list.add(file);
                 rv_videos_and_images.getAdapter().notifyDataSetChanged();
+                rv_videos_and_images.scrollToPosition(videoAndImageList.size()-1);
             } catch (Exception e) {
                 e.printStackTrace();
                 Toast.makeText(getActivity(), "حدث خطأ ما", Toast.LENGTH_LONG).show();
@@ -282,6 +304,18 @@ public class AddServiceFragment extends Fragment {
         }
     }
 
+    private String get_youtube_id(String url) {
+        String pattern = "(?<=watch\\?v=|/videos/|embed\\/|youtu.be\\/|\\/v\\/|watch\\?v%3D|%2Fvideos%2F|embed%2F|youtu.be%2F|%2Fv%2F)[^#\\&\\?\\n]*";
+
+        Pattern compiledPattern = Pattern.compile(pattern);
+        Matcher matcher = compiledPattern.matcher(url);
+
+        if (matcher.find()) {
+            return matcher.group();
+        } else {
+            return "0";
+        }
+    }
 
     public static String getRealPathFromUri(Context context, Uri contentUri) {
         Cursor cursor = null;

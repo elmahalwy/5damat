@@ -1,7 +1,10 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel;
 
+import android.net.Uri;
+
 public class VideoAndImageModel {
     String youtube_player_view,iv_service,type;
+    Uri image_uri;
 
     public String getYoutube_player_view() {
         return youtube_player_view;
@@ -25,5 +28,13 @@ public class VideoAndImageModel {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Uri getImage_uri() {
+        return image_uri;
+    }
+
+    public void setImage_uri(Uri image_uri) {
+        this.image_uri = image_uri;
     }
 }

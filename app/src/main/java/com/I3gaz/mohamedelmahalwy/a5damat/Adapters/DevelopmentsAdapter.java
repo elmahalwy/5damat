@@ -49,6 +49,10 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
         return developments_list.size();
     }
 
+    public int getItemViewType(int position) {
+        return position;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.et_developments)

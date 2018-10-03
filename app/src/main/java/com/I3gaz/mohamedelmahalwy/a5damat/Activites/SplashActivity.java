@@ -30,22 +30,22 @@ public class SplashActivity extends ParentClass {
             @Override
             public void run() {
                 if (sharedPrefManager.getLoginStatus()) {
-//                    Intent mainIntent;
-//                    mainIntent = new Intent(SplashActivity.this, HomeActivity.class);
-//                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-//                    startActivity(mainIntent);
+                    Intent mainIntent;
+                    mainIntent = new Intent(SplashActivity.this, HomeActivity.class);
+                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(mainIntent);
 
                     SplashActivity.this.finish();
                 }
                 if (!sharedPrefManager.getLoginStatus()) {
                     Intent mainIntent;
-//                    mainIntent = new Intent(SplashActivity.this, HomeActivity.class);
-//                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-//                    startActivity(mainIntent);
+                    mainIntent = new Intent(SplashActivity.this, HomeActivity.class);
+                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(mainIntent);
 
                     SplashActivity.this.finish();
                 }

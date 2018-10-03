@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.CategoriesAdapter;
+import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.AddServiceFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.HomeFragmnet;
 import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.MySettingsFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MainCategories.MainCategories;
@@ -62,7 +63,7 @@ public class HomeActivity extends ParentClass {
     @BindView(R.id.iv_add)
     ImageView iv_add;
 
-
+    AddServiceFragment addServiceFragment;
     RecyclerView rv_categories;
 
     CategoriesAdapter categoriesAdapter;
@@ -77,18 +78,18 @@ public class HomeActivity extends ParentClass {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
+        init_fragments();
+        replaceFragment(homeFragmnet);
         initUi();
         initEventDriven();
         handle_clicks_bottom_tab();
-        init_fragments();
-        replaceFragment(homeFragmnet);
         get_main_categories();
     }
 
     void initUi() {
 
         rv_categories = (RecyclerView) findViewById(R.id.rv_categories);
-        categoriesAdapter = new CategoriesAdapter( HomeActivity.this);
+        categoriesAdapter = new CategoriesAdapter(HomeActivity.this);
         linearLayoutManager = new LinearLayoutManager(HomeActivity.this, LinearLayout.HORIZONTAL, false);
         rv_categories.setLayoutManager(linearLayoutManager);
         rv_categories.setAdapter(categoriesAdapter);
@@ -102,6 +103,7 @@ public class HomeActivity extends ParentClass {
     void init_fragments() {
         homeFragmnet = new HomeFragmnet();
         mySettingsFragment = new MySettingsFragment();
+        addServiceFragment = new AddServiceFragment();
     }
 
     void handle_clicks_bottom_tab() {
@@ -160,15 +162,23 @@ public class HomeActivity extends ParentClass {
                 iv_search.setImageResource(R.mipmap.search);
             }
         });
+        iv_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment(addServiceFragment);
+            }
+        });
     }
 
     public void replaceFragment(Fragment fragment) {
+        FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.frame_container, fragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.addToBackStack(null);
         ft.commit();
     }
+
 
     void get_main_categories() {
         RetroWeb.getClient().create(ServiceApi.class).Get_main_categories().enqueue(new Callback<MainCategories>() {

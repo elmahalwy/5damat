@@ -4,9 +4,6 @@
     android:layout_height="match_parent"
     android:background="#FFF"
     android:orientation="vertical">
-
-    <include layout="@layout/toolbar_layout" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -174,7 +171,7 @@
             <FrameLayout
                 android:id="@+id/frame_fo"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="200dp"
                 android:layout_below="@+id/tv_service_gallery_title"
                 android:layout_marginEnd="20dp"
                 android:layout_marginLeft="20dp"
