@@ -14,9 +14,9 @@
     <ImageView
         android:id="@+id/iv_vector"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="135dp"
         android:scaleType="fitXY"
-        android:src="@drawable/vector_add_photo" />
+        android:src="@drawable/success" />
 
     <TextView
         android:id="@+id/tv_1"

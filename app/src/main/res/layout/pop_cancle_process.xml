@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="130dp"
         android:scaleType="fitXY"
-        android:src="@drawable/vector_add_photo" />
+        android:src="@drawable/cancel" />
 
     <TextView
         android:id="@+id/tv_add_photo_video"
