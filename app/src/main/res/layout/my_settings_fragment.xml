@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_layout" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_profile_pic"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:src="@mipmap/logo"
+                app:civ_border_color="#FFFFFF"
+                app:civ_border_width="1dp" />
+
+            <TextView
+                android:id="@+id/tv_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_profile_pic"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:drawableEnd="@mipmap/user"
+                android:drawableRight="@mipmap/user"
+                android:drawablePadding="3dp"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="sasdadas" />
+
+
+            <TextView
+                android:id="@+id/tv_my_favourites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_user_name"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="15dp"
+                android:drawableEnd="@mipmap/favourite"
+                android:drawableRight="@mipmap/favourite"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="مفضلتي" />
+
+            <TextView
+                android:id="@+id/tv_my_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_my_favourites"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="15dp"
+                android:drawableEnd="@mipmap/coin"
+                android:drawableRight="@mipmap/coin"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="الرصيد" />
+
+            <TextView
+                android:id="@+id/tv_my_services"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_my_balance"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="15dp"
+                android:drawableEnd="@mipmap/my_service"
+                android:drawableRight="@mipmap/my_service"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="خدماتي" />
+
+            <TextView
+                android:id="@+id/tv_edit_my_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_my_services"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="15dp"
+                android:drawableEnd="@mipmap/edite_account"
+                android:drawableRight="@mipmap/edite_account"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="تعديل الحساب" />
+
+            <TextView
+                android:id="@+id/tv_support"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_edit_my_account"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="15dp"
+                android:drawableEnd="@mipmap/helping"
+                android:drawableRight="@mipmap/helping"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="مساعدة" />
+
+            <TextView
+                android:id="@+id/tv_log_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_support"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:drawableEnd="@mipmap/exit"
+                android:drawableRight="@mipmap/exit"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="خروج" />
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+</LinearLayout>
