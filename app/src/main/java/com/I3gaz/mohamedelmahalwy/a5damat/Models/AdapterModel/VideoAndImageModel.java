@@ -1,7 +1,7 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel;
 
 public class VideoAndImageModel {
-    String youtube_player_view,iv_service;
+    String youtube_player_view,iv_service,type;
 
     public String getYoutube_player_view() {
         return youtube_player_view;
@@ -17,5 +17,13 @@ public class VideoAndImageModel {
 
     public void setIv_service(String iv_service) {
         this.iv_service = iv_service;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

@@ -4,6 +4,7 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.CategoriesAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.LoginData.User;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MainCategories.MainCategories;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ResetPassword.ResetPassword;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SubCategories.SubCategories;
 
 import java.net.URI;
@@ -37,4 +38,7 @@ public interface ServiceApi {
 
     @GET(Urls.SubCategroies)
     Call<SubCategories> get_sub_categories(@Path("category_id") String category_id);
+
+    @GET(Urls.SpinnerUrl)
+    Call<SpinnerModel> fill_spinner(@Path("spinner_url") String spinner_url);
 }

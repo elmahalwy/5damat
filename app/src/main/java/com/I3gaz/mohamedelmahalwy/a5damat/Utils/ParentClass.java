@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -27,23 +28,38 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerData;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerModel;
+import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
+import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
 
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ParentClass extends AppCompatActivity {
     public static int paginate = 0;
@@ -56,6 +72,7 @@ public class ParentClass extends AppCompatActivity {
     public SharedPrefManager sharedPrefManager;
     public List<String> list_names;
     public List<Integer> list_idss;
+    public List<SpinnerData> spinner_list;
 
 
     @Override
@@ -325,116 +342,86 @@ public class ParentClass extends AppCompatActivity {
         return checked;
     }
 
-//    public void fill_spinner(final Spinner spinner,
-//                             final String spinner_init, final String color_inputs_0, final String color_selected, final String url) {
-//                AndroidNetworking.get(url)
-//                        .addHeaders("Accept", "application/json")
-//                        .setPriority(Priority.MEDIUM)
-//                        .build()
-//                        .getAsJSONObject(new JSONObjectRequestListener() {
-//                            @Override
-//                            public void onResponse(JSONObject response) {
-//                                try {
-//                                    Log.e("url", url);
-//                                    Log.e("spinner_init", spinner_init);
-//                                    list_names=new ArrayList<>();
-//                                    list_idss=new ArrayList<>();
-//                                    list_names.add(spinner_init);
-//                                    list_idss.add(0);
-//                                    JSONArray data = response.getJSONArray("data");
-//                                    for (int i = 0; i < data.length(); i++) {
-//                                        SpinnerModel country_model = new SpinnerModel();
-//                                        JSONObject current_object = data.getJSONObject(i);
-//                                        country_model.setId(current_object.getString("id"));
-//                                        country_model.setName(current_object.getString("name"));
-//                                        list_names.add(country_model.getName());
-//                                        list_idss.add(Integer.valueOf(country_model.getId()));
-//                                    }
-//
-//                                    Log.e("list_names", list_names + "");
-//                                    Log.e("ssssize", list_names.size() + "");
-//                                    ArrayAdapter<String> levels_list_adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.text_spinner, list_names) {
-//
-//                                        @NonNull
-//                                        @Override
-//                                        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-//                                            View v = super.getView(position, convertView, parent);
-//
-//
-//                                            if (((TextView) v).getText().toString().equals(spinner_init)) {
-//                                                ((TextView) v).setTextColor(Color.parseColor(color_inputs_0));
-//                                            } else {
-//                                                ((TextView) v).setTextColor(Color.parseColor(color_selected));
-//                                            }
-//                                            return v;
-//
-//                                        }
-//
-//                                        @Override
-//                                        public boolean isEnabled(int position) {
-//                                            if (position == 0) {
-//                                                // Disable the first item from Spinner
-//                                                // First item will be use for hint
-//                                                return false;
-//                                            } else {
-//                                                return true;
-//                                            }
-//                                        }
-//
-//                                        @Override
-//                                        public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-//                                            View view = super.getDropDownView(position, convertView, parent);
-//                                            TextView tv = (TextView) view;
-//                                            if (position == 0) {
-//                                                // Set the hint text color gray
-//                                                tv.setTextColor(Color.parseColor(color_inputs_0));
-//                                            } else {
-//                                                tv.setTextColor(Color.parseColor(color_selected));
-//                                            }
-//
-//                                            return view;
-//                                        }
-//
-//                                    };
-//
-//
-//                                    // Drop down layout style
-//                                    levels_list_adapter.setDropDownViewResource(R.layout.text_spinner);
-//                                    // attaching data adapter to spinner
-//                                    spinner.setAdapter(levels_list_adapter);
-//
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void onError(ANError error) {
-//                                if (error.getErrorCode() != 0) {
-//                                    // received error from server
-//                                    // error.getErrorCode() - the error code from server
-//                                    // error.getErrorBody() - the error body from server
-//                                    // error.getErrorDetail() - just an error detail
-//                                    Log.e("onError errorCode : ", String.valueOf(error.getErrorCode()));
-//                                    Log.e("onError errorBody : ", error.getErrorBody());
-//                                    if (error.getErrorCode() == 400) {
-//                                        Toast.makeText(ParentClass.this, "تم التسجيل مسبقا بنفس البيانات", Toast.LENGTH_SHORT).show();
-//                                    }
-//                                    if (error.getErrorCode() == 500) {
-//                                        Toast.makeText(ParentClass.this, "خطأ فى الاتصال بالسيرفر...", Toast.LENGTH_SHORT).show();
-//                                    }
-//                                    // get parsed error object (If ApiError is your class)
-//
-//                                } else {
-//                                    // error.getErrorDetail() : connectionError, parseError, requestCancelledError
-//                                    Log.e("onError errorDetail : ", error.getErrorDetail());
-//                                    if (error.getErrorDetail().equals("connectionError")) {
-//                                        Toast.makeText(ParentClass.this, "خطأ فى الاتصال بالانترنت...", Toast.LENGTH_SHORT).show();
-//                                    }
-//                                }
-//                            }
-//                        });
-//    }
+    public void fill_spinner(final Spinner spinner,
+                             final String spinner_init, final String color_inputs_0, final String color_selected, final String url) {
+        RetroWeb.getClient().create(ServiceApi.class).fill_spinner(url).enqueue(new Callback<SpinnerModel>() {
+            @Override
+            public void onResponse(Call<SpinnerModel> call, Response<SpinnerModel> response) {
+                Log.e("url", url);
+                Log.e("spinner_init", spinner_init);
+                list_names = new ArrayList<>();
+                list_idss = new ArrayList<>();
+                spinner_list = new ArrayList<>();
+                list_names.add(spinner_init);
+                list_idss.add(0);
+                spinner_list.addAll(response.body().getData());
+                for (int i = 0; i < spinner_list.size(); i++) {
+                    list_names.add(spinner_list.get(i).getName());
+                    list_idss.add(spinner_list.get(i).getId());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SpinnerModel> call, Throwable t) {
+                handleException(getApplicationContext(), t);
+                t.printStackTrace();
+
+            }
+        });
+        Log.e("list_names", list_names + "");
+        Log.e("ssssize", list_names.size() + "");
+        ArrayAdapter<String> levels_list_adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.text_spinner, list_names) {
+
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                View v = super.getView(position, convertView, parent);
+
+
+                if (((TextView) v).getText().toString().equals(spinner_init)) {
+                    ((TextView) v).setTextColor(Color.parseColor(color_inputs_0));
+                } else {
+                    ((TextView) v).setTextColor(Color.parseColor(color_selected));
+                }
+                return v;
+
+            }
+
+            @Override
+            public boolean isEnabled(int position) {
+                if (position == 0) {
+                    // Disable the first item from Spinner
+                    // First item will be use for hint
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            @Override
+            public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if (position == 0) {
+                    // Set the hint text color gray
+                    tv.setTextColor(Color.parseColor(color_inputs_0));
+                } else {
+                    tv.setTextColor(Color.parseColor(color_selected));
+                }
+
+                return view;
+            }
+
+        };
+
+
+        // Drop down layout style
+        levels_list_adapter.setDropDownViewResource(R.layout.text_spinner);
+        // attaching data adapter to spinner
+        spinner.setAdapter(levels_list_adapter);
+
+
+    }
 
     public static void handleException(Context context, Throwable t) {
         if (t instanceof SocketTimeoutException)

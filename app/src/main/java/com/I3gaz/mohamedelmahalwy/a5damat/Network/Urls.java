@@ -10,5 +10,7 @@ public class Urls {
     public final static String ResetPassword = "reset_password";
     public final static String MainCategroies = "category";
     public final static String SubCategroies = "category/{category_id}";
+    public final static String SpinnerUrl = "{spinner_url}";
+
 
 }
