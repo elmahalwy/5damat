@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.DevelopmentModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.SubCatigoriesModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
 
@@ -19,12 +20,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapter.ViewHolder> {
-    List<SubCatigoriesModel> developments_list = new ArrayList<>();
+    List<DevelopmentModel> developments_list = new ArrayList<>();
     Context context;
     LayoutInflater layoutInflater;
     int lastPosition = -1;
 
-    public DevelopmentsAdapter(List<SubCatigoriesModel> developments_list, Context context) {
+    public DevelopmentsAdapter(List<DevelopmentModel> developments_list, Context context) {
         this.developments_list = developments_list;
         this.context = context;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.SubCatigoriesModel;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.VideoAndImageModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
 import com.pierfrancescosoffritti.androidyoutubeplayer.player.YouTubePlayer;
 
@@ -20,12 +21,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class VideoAndImageAdapater extends RecyclerView.Adapter<VideoAndImageAdapater.ViewHolder> {
-    List<SubCatigoriesModel> imges_and_videos_list = new ArrayList<>();
+    List<VideoAndImageModel> imges_and_videos_list = new ArrayList<>();
     Context context;
     LayoutInflater layoutInflater;
     int lastPosition = -1;
 
-    public VideoAndImageAdapater(List<SubCatigoriesModel> imges_and_videos_list, Context context) {
+    public VideoAndImageAdapater(List<VideoAndImageModel> imges_and_videos_list, Context context) {
         this.imges_and_videos_list = imges_and_videos_list;
         this.context = context;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
