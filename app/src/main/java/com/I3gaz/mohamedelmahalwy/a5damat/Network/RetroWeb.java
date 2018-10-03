@@ -16,6 +16,7 @@ public class RetroWeb {
     public static Retrofit getClient() {
         if (retrofit == null)
 
+
         {
             retrofit = new Retrofit.Builder()
                     .baseUrl(Urls.BaseUrl)
