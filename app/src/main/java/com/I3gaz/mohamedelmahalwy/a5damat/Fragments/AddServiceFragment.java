@@ -83,7 +83,7 @@ public class AddServiceFragment extends Fragment {
     String sp_service_delivery_time_name;
     @BindView(R.id.et_service_instructions_to_buyer_title)
     EditText et_service_instructions_to_buyer_title;
-    RecyclerView rv_developments;
+   public static RecyclerView rv_developments;
     List<DevelopmentModel> developmentList;
     LinearLayoutManager linearLayoutManager1;
     DevelopmentsAdapter developmentsAdapter;

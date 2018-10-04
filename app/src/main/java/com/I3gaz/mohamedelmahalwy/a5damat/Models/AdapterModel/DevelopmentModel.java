@@ -2,6 +2,7 @@ package com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel;
 
 public class DevelopmentModel {
     String et_developments,sp_price_for_development,sp_time_for_development,sp_time;
+    boolean added=false;
 
     public String getEt_developments() {
         return et_developments;
@@ -33,5 +34,13 @@ public class DevelopmentModel {
 
     public void setSp_time(String sp_time) {
         this.sp_time = sp_time;
+    }
+
+    public Boolean getAdded() {
+        return added;
+    }
+
+    public void setAdded(Boolean added) {
+        this.added = added;
     }
 }
