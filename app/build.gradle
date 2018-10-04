@@ -49,7 +49,7 @@ dependencies {
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:8.0.1'
     implementation 'com.github.tarek360.RichPath:animator:0.1.0'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
-
+    implementation 'com.github.joielechong:countrycodepicker:2.1.5'
 
 }
 apply plugin: 'com.google.gms.google-services'

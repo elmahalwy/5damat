@@ -48,6 +48,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/accept_request"
         android:gravity="center"
         android:text="كن اول مشتري"
