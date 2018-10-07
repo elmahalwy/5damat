@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_msg"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/logo" />
+
+    <TextView
+        android:id="@+id/tv_msg_owner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/iv_msg"
+        android:layout_toStartOf="@+id/iv_msg"
+        android:text="عمر نجاح"
+        android:textColor="#000"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_msg_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12:12pm"
+        android:textColor="#454545"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_msg_owner"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/iv_msg"
+        android:layout_toStartOf="@+id/iv_msg"
+        android:drawableEnd="@mipmap/calender"
+        android:drawablePadding="5dp"
+        android:drawableRight="@mipmap/calender"
+        android:gravity="center"
+        android:text="10/10/2010"
+        android:textColor="#454545"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_date"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toLeftOf="@+id/iv_msg"
+        android:layout_toStartOf="@+id/iv_msg"
+        android:text="يتم اعاده تفاصيل هذه الرساله"
+        android:textColor="#454545"
+        android:textSize="12sp" />
+</RelativeLayout>
