@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="350dp"
+    android:layout_gravity="center"
+    android:layout_marginEnd="15dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginStart="15dp"
+    android:background="@drawable/drawable_linear_main">
+
+    <ImageView
+        android:id="@+id/iv_vector"
+        android:layout_width="match_parent"
+        android:layout_height="135dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/service_evaluation" />
+
+    <TextView
+        android:id="@+id/tv_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_vector"
+        android:layout_centerHorizontal="true"
+        android:text="تقييم الخدمة"
+        android:textColor="#1C1C1C"
+        android:textSize="16sp" />
+
+    <RelativeLayout
+        android:id="@+id/relative_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_1"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/accept_request"
+
+
+        >
+
+        <com.hedgehog.ratingbar.RatingBar
+            android:id="@+id/ratingbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            android:clickable="false"
+            android:paddingEnd="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingStart="20dp"
+            app:clickable="false"
+            app:starCount="5"
+            app:starEmpty="@drawable/star"
+            app:starFill="@drawable/star_1"
+            app:starImageHeight="30dp"
+            app:starImagePadding="5dp"
+            app:starImageWidth="30dp" />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/et_rating_note"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/relative_rate"
+        android:layout_marginEnd="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/accept"
+        android:gravity="right|top"
+        android:hint="ادخل التفاصيل"
+        android:paddingEnd="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:textColor="#3558B9"
+        android:textColorHint="#000"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_sign_up"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/et_rating_note"
+        android:layout_marginEnd="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_sign_in"
+        android:gravity="center"
+        android:text="إرسال التقييم"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp" />
+</RelativeLayout>
