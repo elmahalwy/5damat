@@ -154,4 +154,6 @@
         android:text="اختيار الصورة"
         android:textColor="#FFF"
         android:textSize="16sp" />
+
+
 </RelativeLayout>
