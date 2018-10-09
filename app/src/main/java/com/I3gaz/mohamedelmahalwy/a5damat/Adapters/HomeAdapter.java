@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.HomeModel;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.AllServices.Datum;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
 import com.squareup.picasso.Picasso;
 
@@ -22,13 +23,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
-    List<HomeModel> home_list = new ArrayList<>();
+    List<Datum> home_list;
     Context context;
     LayoutInflater layoutInflater;
     int lastPosition = -1;
 
-    public HomeAdapter(List<HomeModel> home_list, Context context) {
-        this.home_list = home_list;
+    public HomeAdapter(Context context) {
+        home_list = new ArrayList<>();
         this.context = context;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -42,10 +43,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tv_title.setText(home_list.get(position).getTv_title());
-        holder.tv_time.setText(home_list.get(position).getTv_time());
-        holder.tv_number_of_buyers.setText(home_list.get(position).getTv_number_of_buyers());
-        Picasso.with(context).load(home_list.get(position).getIv_img())
+        holder.tv_title.setText(home_list.get(position).getTitle());
+        holder.tv_time.setText(home_list.get(position).getCreatedDate());
+        holder.tv_number_of_buyers.setText(home_list.get(position).getOrderCount());
+        Picasso.with(context).load(home_list.get(position).getImages().get(0))
                 .into(holder.iv_img);
         if (position > lastPosition) {
 
@@ -59,6 +60,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return home_list.size();
+    }
+
+    public void addAll(List<Datum> data) {
+        home_list.clear();
+        home_list.addAll(data);
+        notifyDataSetChanged();
     }
 
     public int getItemViewType(int position) {

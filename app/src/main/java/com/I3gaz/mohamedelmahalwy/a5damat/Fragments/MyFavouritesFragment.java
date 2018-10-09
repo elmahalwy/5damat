@@ -25,15 +25,14 @@ import butterknife.ButterKnife;
 public class MyFavouritesFragment extends Fragment {
     @BindView(R.id.rv_my_favourites)
     RecyclerView rv_my_favourites;
-    List<MyFavouritesModel> myFavouritesModelList;
+
     MyFavouritesAdapter myFavouritesAdapter;
     LinearLayoutManager linearLayoutManager;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.my_favourites_fragment, container, false);
         ButterKnife.bind(this, view);
-        myFavouritesModelList = new ArrayList<>();
-        myFavouritesAdapter = new MyFavouritesAdapter(myFavouritesModelList, getContext());
+        myFavouritesAdapter = new MyFavouritesAdapter(getContext());
         linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false);
         rv_my_favourites.setLayoutManager(linearLayoutManager);
         rv_my_favourites.setAdapter(myFavouritesAdapter);
@@ -47,6 +46,10 @@ public class MyFavouritesFragment extends Fragment {
     }
 
     void initEventDriven() {
+
+    }
+
+    void get_my_favourites() {
 
     }
 }

@@ -1,8 +1,10 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Network;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.CategoriesAdapter;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.AllServices.AllServices;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.LoginData.User;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MainCategories.MainCategories;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyFavourites.Favourites;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ResetPassword.ResetPassword;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SubCategories.SubCategories;
@@ -41,4 +43,13 @@ public interface ServiceApi {
 
     @GET(Urls.SpinnerUrl)
     Call<SpinnerModel> fill_spinner(@Path("spinner_url") String spinner_url);
+
+    @GET(Urls.AllServices)
+    Call<AllServices> get_all_service();
+
+    @GET(Urls.ServiceCategory)
+    Call<AllServices> get_service_category(@Path("category_id") String category_id);
+
+    @GET(Urls.MyFavourites)
+    Call<Favourites> get_my_favourites(@Field("user_id") String user_id);
 }

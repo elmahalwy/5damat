@@ -24,6 +24,7 @@ public class SubCatigoriesAdapter extends RecyclerView.Adapter<SubCatigoriesAdap
     Context context;
     LayoutInflater layoutInflater;
     int lastPosition = -1;
+    public static int id;
 
     public SubCatigoriesAdapter(Context context) {
         this.context = context;
@@ -38,8 +39,16 @@ public class SubCatigoriesAdapter extends RecyclerView.Adapter<SubCatigoriesAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.tv_title.setText(sub_catigories_list.get(position).getName());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                id = sub_catigories_list.get(position).getId();
+
+            }
+        });
         if (position > lastPosition) {
 
             Animation animation = AnimationUtils.loadAnimation(context,

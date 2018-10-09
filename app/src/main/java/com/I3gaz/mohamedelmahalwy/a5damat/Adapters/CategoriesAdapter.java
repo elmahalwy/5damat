@@ -43,6 +43,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
             @Override
             public void onClick(View v) {
                 id = categories_list.get(position).getId();
+
             }
         });
     }

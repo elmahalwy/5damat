@@ -8,8 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.MyFavouritesModel;
-import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.MyServiceModel;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.AllServices.Datum;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
 
 import java.util.ArrayList;
@@ -19,13 +18,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MyFavouritesAdapter extends RecyclerView.Adapter<MyFavouritesAdapter.ViewHolder> {
-    List<MyFavouritesModel> my_favourites_list = new ArrayList<>();
+    List<com.I3gaz.mohamedelmahalwy.a5damat.Models.MyFavourites.Datum> my_favourites_list;
     Context context;
     LayoutInflater layoutInflater;
     int lastPosition = -1;
 
-    public MyFavouritesAdapter(List<MyFavouritesModel> my_favourites_list, Context context) {
-        this.my_favourites_list = my_favourites_list;
+    public MyFavouritesAdapter(Context context) {
+        this.my_favourites_list = new ArrayList<>();
         this.context = context;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -47,6 +46,12 @@ public class MyFavouritesAdapter extends RecyclerView.Adapter<MyFavouritesAdapte
         return my_favourites_list.size();
     }
 
+    public void addAll(List<com.I3gaz.mohamedelmahalwy.a5damat.Models.MyFavourites.Datum> data) {
+        my_favourites_list.clear();
+        my_favourites_list.addAll(data);
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_service_title)
         TextView tv_service_title;
@@ -56,8 +61,8 @@ public class MyFavouritesAdapter extends RecyclerView.Adapter<MyFavouritesAdapte
         TextView tv_user_name;
         @BindView(R.id.tv_delete)
         TextView tv_delete;
-@BindView(R.id.tv_date)
-TextView tv_date;
+        @BindView(R.id.tv_date)
+        TextView tv_date;
 
         public ViewHolder(View itemView) {
             super(itemView);

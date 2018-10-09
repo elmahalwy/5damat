@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +18,17 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
 import com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +36,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import spencerstudios.com.bungeelib.Bungee;
+
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
+import java.util.Arrays;
 
 public class SignInActivity extends ParentClass {
     @BindView(R.id.et_email)
@@ -43,11 +60,15 @@ public class SignInActivity extends ParentClass {
     String emailPattern = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     String mobile_token;
+    GoogleSignInClient mGoogleSignInClient;
+    int RC_SIGN_IN = 9001;
+
+    CallbackManager callbackManager;
+    private static final String EMAIL = "email";
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in_layout);
         ButterKnife.bind(this);
@@ -61,6 +82,23 @@ public class SignInActivity extends ParentClass {
     }
 
     void initEventDriven() {
+        //// login google////
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        updateUI(account);
+        /// end login google ////
+        //// login facebook /////
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
+        callbackManager = CallbackManager.Factory.create();
+
+
+        /// end login facebook/////
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +119,18 @@ public class SignInActivity extends ParentClass {
                 Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
                 startActivity(intent);
                 Bungee.fade(SignInActivity.this);
+            }
+        });
+        iv_google.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                google_sign_in();
+            }
+        });
+        iv_face.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                login_facebook();
             }
         });
     }
@@ -131,4 +181,73 @@ public class SignInActivity extends ParentClass {
         }
     }
 
+    void updateUI(GoogleSignInAccount account) {
+        Log.e("accccount", account + "aaa");
+
+    }
+
+    private void google_sign_in() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        } else {
+            Log.e("jjjjj","kkk");
+
+        }
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            Log.e("email", account.getEmail());
+            Log.e("display_name", account.getDisplayName());
+            Log.e("id", account.getId());
+//            Log.e("id_token",account.getIdToken());
+            // Signed in successfully, show authenticated UI.
+            updateUI(account);
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.e("signInResult:failed", e.getStatusCode() + "ppp");
+            updateUI(null);
+        }
+    }
+
+    void login_facebook() {
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        // App code
+                        Log.e("facebook_token", loginResult.getAccessToken() + "face");
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        // App code
+                        Log.e("facebook_token",  "face");
+
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        // App code
+                        Log.e("facebook_exception",  exception+"execption");
+
+                    }
+                });
+
+    }
 }

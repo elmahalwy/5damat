@@ -51,6 +51,7 @@ dependencies {
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
     implementation 'com.github.joielechong:countrycodepicker:2.1.5'
     implementation 'com.hedgehog.ratingbar:app:1.1.2'
+    implementation 'com.facebook.android:facebook-login:[4,5)'
 
 }
 apply plugin: 'com.google.gms.google-services'
