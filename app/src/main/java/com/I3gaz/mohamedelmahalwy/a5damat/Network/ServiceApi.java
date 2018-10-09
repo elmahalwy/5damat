@@ -7,6 +7,7 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.MainCategories.MainCategories;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyFavourites.Favourites;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ResetPassword.ResetPassword;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerModel;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerssModelss;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SubCategories.SubCategories;
 
 import java.net.URI;
@@ -42,7 +43,10 @@ public interface ServiceApi {
     Call<SubCategories> get_sub_categories(@Path("category_id") String category_id);
 
     @GET(Urls.SpinnerUrl)
-    Call<SpinnerModel> fill_spinner(@Path("spinner_url") String spinner_url);
+    Call<SpinnerModel> fill_spinner(@Path("category_id") String spinner_url);
+
+    @GET(Urls.Spinner_sub_categoryUrl)
+    Call<SpinnerModel> fill_spinner_sub_category(@Path("category_id") String category_id);
 
     @GET(Urls.AllServices)
     Call<AllServices> get_all_service();
@@ -52,4 +56,7 @@ public interface ServiceApi {
 
     @GET(Urls.MyFavourites)
     Call<Favourites> get_my_favourites(@Field("user_id") String user_id);
+
+    @GET(Urls.Spinner_add_service__Url)
+    Call<SpinnerssModelss> fill_add_service_spinner(@Path("category_id") String category_id);
 }

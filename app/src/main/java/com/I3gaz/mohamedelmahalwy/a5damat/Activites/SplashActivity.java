@@ -31,7 +31,7 @@ public class SplashActivity extends ParentClass {
             public void run() {
                 if (sharedPrefManager.getLoginStatus()) {
                     Intent mainIntent;
-                    mainIntent = new Intent(SplashActivity.this, SignInActivity.class);
+                    mainIntent = new Intent(SplashActivity.this, HomeActivity.class);
                     mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     mainIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -41,7 +41,7 @@ public class SplashActivity extends ParentClass {
                 }
                 if (!sharedPrefManager.getLoginStatus()) {
                     Intent mainIntent;
-                    mainIntent = new Intent(SplashActivity.this, SignInActivity.class);
+                    mainIntent = new Intent(SplashActivity.this, HomeActivity.class);
                     mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     mainIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

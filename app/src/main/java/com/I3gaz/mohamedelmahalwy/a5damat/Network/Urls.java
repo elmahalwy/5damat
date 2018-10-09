@@ -10,10 +10,13 @@ public class Urls {
     public final static String ResetPassword = "reset_password";
     public final static String MainCategroies = "category";
     public final static String SubCategroies = "category/{category_id}";
-    public final static String SpinnerUrl = "{spinner_url}";
+    public final static String SpinnerUrl = "{category_id}";
     public final static String AllServices = "all-services";
     public final static String ServiceCategory = "category/{category_id}";
     public final static String MyFavourites = "user_favs";
+    public final static String Spinner_add_service__Url = "settings/{category_id}";
+    public final static String Spinner_sub_categoryUrl = "category/{category_id}";
+
 
 
 }

@@ -4,9 +4,11 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,6 +37,10 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.HomeAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.VideoAndImageAdapater;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.DevelopmentModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.VideoAndImageModel;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerModel;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerssModelss;
+import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
+import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.Urls;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
 
@@ -46,6 +53,9 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -55,14 +65,18 @@ public class AddServiceFragment extends Fragment {
     EditText et_what_would_you_do_for_exchange_of_this_service;
     @BindView(R.id.sp_service_price)
     Spinner sp_service_price;
-    int service_price_id = 0;
+    List<String> sp_service_price_list;
     String service_price_name;
     @BindView(R.id.sp_category)
     Spinner sp_category;
+    List<String> sp_category_list;
+    List<Integer> sp_category_list_ids;
     int sp_category_id = 0;
     String sp_category_name;
     @BindView(R.id.sp_sub_category)
     Spinner sp_sub_category;
+    List<String> sp_sub_category_list;
+    List<Integer> sp_sub_category_list_ids;
     int sp_sub_category_id = 0;
     String sp_sub_category_name;
     @BindView(R.id.et_service_details)
@@ -79,11 +93,11 @@ public class AddServiceFragment extends Fragment {
     EditText et_key_words;
     @BindView(R.id.sp_service_delivery_time)
     Spinner sp_service_delivery_time;
-    int sp_service_delivery_time_id = 0;
+    List<String> sp_service_delivery_time_list;
     String sp_service_delivery_time_name;
     @BindView(R.id.et_service_instructions_to_buyer_title)
     EditText et_service_instructions_to_buyer_title;
-   public static RecyclerView rv_developments;
+    public static RecyclerView rv_developments;
     List<DevelopmentModel> developmentList;
     LinearLayoutManager linearLayoutManager1;
     DevelopmentsAdapter developmentsAdapter;
@@ -149,10 +163,10 @@ public class AddServiceFragment extends Fragment {
 
     private void initUI() {
         ((HomeActivity) getActivity()).dismiss_keyboard();
-//        getsp_service_price();
-//        getsp_category();
-//        getsp_service_delivery_time();
-//        getsp_service_price();
+        getsp_service_price();
+        getsp_category();
+        getsp_sub_category();
+        getsp_service_delivery_time();
         initialize_list();
     }
 
@@ -236,7 +250,7 @@ public class AddServiceFragment extends Fragment {
                         videoAndImageList.add(videoAndImageModel);
                         image_links_list.add(et_image_from_link.getText().toString());
                         rv_videos_and_images.getAdapter().notifyDataSetChanged();
-                        rv_videos_and_images.scrollToPosition(videoAndImageList.size()-1);
+                        rv_videos_and_images.scrollToPosition(videoAndImageList.size() - 1);
                         pop_up_add_photo_video.dismiss();
 
                     }
@@ -254,12 +268,12 @@ public class AddServiceFragment extends Fragment {
                         VideoAndImageModel videoAndImageModel = new VideoAndImageModel();
                         videoAndImageModel.setIv_service("empty");
                         videoAndImageModel.setYoutube_player_view(get_youtube_id(et_video_from_link.getText().toString()));
-                        Log.e("video_id",get_youtube_id(et_video_from_link.getText().toString()));
+                        Log.e("video_id", get_youtube_id(et_video_from_link.getText().toString()));
                         videoAndImageModel.setType("video_link");
                         videoAndImageList.add(videoAndImageModel);
                         video_links_list.add(get_youtube_id(et_video_from_link.getText().toString()));
                         rv_videos_and_images.getAdapter().notifyDataSetChanged();
-                        rv_videos_and_images.scrollToPosition(videoAndImageList.size()-1);
+                        rv_videos_and_images.scrollToPosition(videoAndImageList.size() - 1);
 
                         pop_up_add_photo_video.dismiss();
 
@@ -293,7 +307,7 @@ public class AddServiceFragment extends Fragment {
                 videoAndImageList.add(videoAndImageModel);
                 image_files_list.add(file);
                 rv_videos_and_images.getAdapter().notifyDataSetChanged();
-                rv_videos_and_images.scrollToPosition(videoAndImageList.size()-1);
+                rv_videos_and_images.scrollToPosition(videoAndImageList.size() - 1);
             } catch (Exception e) {
                 e.printStackTrace();
                 Toast.makeText(getActivity(), "حدث خطأ ما", Toast.LENGTH_LONG).show();
@@ -333,70 +347,343 @@ public class AddServiceFragment extends Fragment {
     }
 
     private void getsp_service_price() {
-        ((HomeActivity) getActivity()).fill_spinner(sp_service_price, "سعر الخدمة",
-                "#3558B9", "#3558B9", Urls.BaseUrl + "countries");
-        sp_service_price.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        sp_service_price_list = new ArrayList<>();
+        sp_service_price_list.add("السعر");
+        RetroWeb.getClient().create(ServiceApi.class).fill_add_service_spinner("main_prices").enqueue(new Callback<SpinnerssModelss>() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                service_price_name = ((HomeActivity) getActivity()).list_names.get(i);
-                service_price_id = ((HomeActivity) getActivity()).list_idss.get(i);
-                Log.e("service_price_name", service_price_name + "w");
+            public void onResponse(Call<SpinnerssModelss> call, Response<SpinnerssModelss> response) {
+                try {
+                    sp_service_price_list.addAll(response.body().getData());
+                    ArrayAdapter<String> levels_list_adapter = new ArrayAdapter<String>(getContext(), R.layout.text_spinner, sp_service_price_list) {
+
+                        @NonNull
+                        @Override
+                        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                            View v = super.getView(position, convertView, parent);
+
+
+                            if (((TextView) v).getText().toString().equals("السعر")) {
+                                ((TextView) v).setTextColor(Color.parseColor("#3558B9"));
+                            } else {
+                                ((TextView) v).setTextColor(Color.parseColor("#3558B9"));
+                            }
+                            return v;
+
+                        }
+
+                        @Override
+                        public boolean isEnabled(int position) {
+                            if (position == 0) {
+                                // Disable the first item from Spinner
+                                // First item will be use for hint
+                                return false;
+                            } else {
+                                return true;
+                            }
+                        }
+
+                        @Override
+                        public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                            View view = super.getDropDownView(position, convertView, parent);
+                            TextView tv = (TextView) view;
+                            if (position == 0) {
+                                // Set the hint text color gray
+                                tv.setTextColor(Color.parseColor("#3558B9"));
+                            } else {
+                                tv.setTextColor(Color.parseColor("#3558B9"));
+                            }
+
+                            return view;
+                        }
+
+                    };
+
+
+                    // Drop down layout style
+                    levels_list_adapter.setDropDownViewResource(R.layout.text_spinner);
+                    // attaching data adapter to spinner
+                    sp_service_price.setAdapter(levels_list_adapter);
+                    sp_service_price.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            service_price_name = sp_service_price_list.get(i);
+                            Log.e("service_price_name", service_price_name + "w");
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+                        }
+                    });
+                } catch (Exception e) {
+
+                }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onFailure(Call<SpinnerssModelss> call, Throwable t) {
+                ((HomeActivity) getActivity()).handleException(getContext(), t);
+                t.printStackTrace();
+
             }
         });
     }
 
     private void getsp_category() {
-        ((HomeActivity) getActivity()).fill_spinner(sp_category, "القسم",
-                "#3558B9", "#3558B9", Urls.BaseUrl + "countries");
-        sp_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        sp_category_list = new ArrayList<>();
+        sp_category_list_ids = new ArrayList<>();
+        sp_category_list.add("القسم");
+        sp_category_list_ids.add(0);
+        RetroWeb.getClient().create(ServiceApi.class).fill_spinner("category").enqueue(new Callback<SpinnerModel>() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                sp_category_name = ((HomeActivity) getActivity()).list_names.get(i);
-                sp_category_id = ((HomeActivity) getActivity()).list_idss.get(i);
-                Log.e("sp_category_name", sp_category_name + "w");
-                getsp_sub_category();
+            public void onResponse(Call<SpinnerModel> call, Response<SpinnerModel> response) {
+                try {
+                    for (int i = 0; i < response.body().getData().size(); i++) {
+                        sp_category_list.add(response.body().getData().get(i).getName());
+                        sp_category_list_ids.add(response.body().getData().get(i).getId());
+                    }
+                    ArrayAdapter<String> levels_list_adapter = new ArrayAdapter<String>(getContext(), R.layout.text_spinner, sp_category_list) {
+
+                        @NonNull
+                        @Override
+                        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                            View v = super.getView(position, convertView, parent);
+
+
+                            if (((TextView) v).getText().toString().equals("القسم")) {
+                                ((TextView) v).setTextColor(Color.parseColor("#3558B9"));
+                            } else {
+                                ((TextView) v).setTextColor(Color.parseColor("#3558B9"));
+                            }
+                            return v;
+
+                        }
+
+                        @Override
+                        public boolean isEnabled(int position) {
+                            if (position == 0) {
+                                // Disable the first item from Spinner
+                                // First item will be use for hint
+                                return false;
+                            } else {
+                                return true;
+                            }
+                        }
+
+                        @Override
+                        public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                            View view = super.getDropDownView(position, convertView, parent);
+                            TextView tv = (TextView) view;
+                            if (position == 0) {
+                                // Set the hint text color gray
+                                tv.setTextColor(Color.parseColor("#3558B9"));
+                            } else {
+                                tv.setTextColor(Color.parseColor("#3558B9"));
+                            }
+
+                            return view;
+                        }
+
+                    };
+
+
+                    // Drop down layout style
+                    levels_list_adapter.setDropDownViewResource(R.layout.text_spinner);
+                    // attaching data adapter to spinner
+                    sp_category.setAdapter(levels_list_adapter);
+                    sp_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            sp_category_name = sp_category_list.get(i);
+                            sp_category_id = sp_category_list_ids.get(i);
+                            Log.e("sp_category_name", sp_category_name + "w");
+                            getsp_sub_category();
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+                        }
+                    });
+                } catch (Exception e) {
+
+                }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onFailure(Call<SpinnerModel> call, Throwable t) {
+                ((HomeActivity) getActivity()).handleException(getContext(), t);
+                t.printStackTrace();
+
             }
         });
     }
 
     private void getsp_sub_category() {
-        ((HomeActivity) getActivity()).fill_spinner(sp_sub_category, "القسم الفرعي",
-                "#3558B9", "#3558B9", Urls.BaseUrl + "countries");
-        sp_sub_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        sp_sub_category_list = new ArrayList<>();
+        sp_sub_category_list_ids = new ArrayList<>();
+        sp_sub_category_list.add("القسم الفرعي");
+        sp_sub_category_list_ids.add(0);
+        Log.e("sp_category_id",sp_category_id+"");
+        RetroWeb.getClient().create(ServiceApi.class).fill_spinner_sub_category(String.valueOf(sp_category_id)).enqueue(new Callback<SpinnerModel>() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                sp_sub_category_name = ((HomeActivity) getActivity()).list_names.get(i);
-                sp_sub_category_id = ((HomeActivity) getActivity()).list_idss.get(i);
-                Log.e("sp_sub_category_name", sp_sub_category_name + "w");
+            public void onResponse(Call<SpinnerModel> call, Response<SpinnerModel> response) {
+                try {
+                    for (int i = 0; i < response.body().getData().size(); i++) {
+                        sp_sub_category_list.add(response.body().getData().get(i).getName());
+                        sp_sub_category_list_ids.add(response.body().getData().get(i).getId());
+                    }
+                    ArrayAdapter<String> levels_list_adapter = new ArrayAdapter<String>(getContext(), R.layout.text_spinner, sp_sub_category_list) {
+
+                        @NonNull
+                        @Override
+                        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                            View v = super.getView(position, convertView, parent);
+
+
+                            if (((TextView) v).getText().toString().equals("القسم الفرعي")) {
+                                ((TextView) v).setTextColor(Color.parseColor("#3558B9"));
+                            } else {
+                                ((TextView) v).setTextColor(Color.parseColor("#3558B9"));
+                            }
+                            return v;
+
+                        }
+
+                        @Override
+                        public boolean isEnabled(int position) {
+                            if (position == 0) {
+                                // Disable the first item from Spinner
+                                // First item will be use for hint
+                                return false;
+                            } else {
+                                return true;
+                            }
+                        }
+
+                        @Override
+                        public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                            View view = super.getDropDownView(position, convertView, parent);
+                            TextView tv = (TextView) view;
+                            if (position == 0) {
+                                // Set the hint text color gray
+                                tv.setTextColor(Color.parseColor("#3558B9"));
+                            } else {
+                                tv.setTextColor(Color.parseColor("#3558B9"));
+                            }
+
+                            return view;
+                        }
+
+                    };
+
+
+                    // Drop down layout style
+                    levels_list_adapter.setDropDownViewResource(R.layout.text_spinner);
+                    // attaching data adapter to spinner
+                    sp_sub_category.setAdapter(levels_list_adapter);
+                    sp_sub_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            sp_category_name = sp_sub_category_list.get(i);
+                            sp_category_id = sp_sub_category_list_ids.get(i);
+                            Log.e("sp_sub_category_name", sp_sub_category_name + "w");
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+                        }
+                    });
+                } catch (Exception e) {
+
+                }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onFailure(Call<SpinnerModel> call, Throwable t) {
+                ((HomeActivity) getActivity()).handleException(getContext(), t);
+                t.printStackTrace();
+
             }
         });
     }
 
     private void getsp_service_delivery_time() {
-        ((HomeActivity) getActivity()).fill_spinner(sp_service_delivery_time, "مده التسليم",
-                "#3558B9", "#3558B9", Urls.BaseUrl + "countries");
-        sp_service_delivery_time.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        sp_service_delivery_time_list = new ArrayList<>();
+        sp_service_delivery_time_list.add("مدة التسليم");
+        RetroWeb.getClient().create(ServiceApi.class).fill_add_service_spinner("deadlines").enqueue(new Callback<SpinnerssModelss>() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                sp_service_delivery_time_name = ((HomeActivity) getActivity()).list_names.get(i);
-                sp_service_delivery_time_id = ((HomeActivity) getActivity()).list_idss.get(i);
-                Log.e("service_delivery_time", sp_service_delivery_time_name + "w");
+            public void onResponse(Call<SpinnerssModelss> call, Response<SpinnerssModelss> response) {
+                try {
+                    sp_service_delivery_time_list.addAll(response.body().getData());
+                    ArrayAdapter<String> levels_list_adapter = new ArrayAdapter<String>(getContext(), R.layout.text_spinner, sp_service_delivery_time_list) {
+
+                        @NonNull
+                        @Override
+                        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                            View v = super.getView(position, convertView, parent);
+
+
+                            if (((TextView) v).getText().toString().equals("مدة التسليم")) {
+                                ((TextView) v).setTextColor(Color.parseColor("#3558B9"));
+                            } else {
+                                ((TextView) v).setTextColor(Color.parseColor("#3558B9"));
+                            }
+                            return v;
+
+                        }
+
+                        @Override
+                        public boolean isEnabled(int position) {
+                            if (position == 0) {
+                                // Disable the first item from Spinner
+                                // First item will be use for hint
+                                return false;
+                            } else {
+                                return true;
+                            }
+                        }
+
+                        @Override
+                        public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                            View view = super.getDropDownView(position, convertView, parent);
+                            TextView tv = (TextView) view;
+                            if (position == 0) {
+                                // Set the hint text color gray
+                                tv.setTextColor(Color.parseColor("#3558B9"));
+                            } else {
+                                tv.setTextColor(Color.parseColor("#3558B9"));
+                            }
+
+                            return view;
+                        }
+
+                    };
+
+
+                    // Drop down layout style
+                    levels_list_adapter.setDropDownViewResource(R.layout.text_spinner);
+                    // attaching data adapter to spinner
+                    sp_service_delivery_time.setAdapter(levels_list_adapter);
+                    sp_service_delivery_time.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            sp_service_delivery_time_name = sp_service_delivery_time_list.get(i);
+                            Log.e("sp_delivery_time_name", sp_service_delivery_time_name + "w");
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+                        }
+                    });
+                } catch (Exception e) {
+
+                }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onFailure(Call<SpinnerssModelss> call, Throwable t) {
+                ((HomeActivity) getActivity()).handleException(getContext(), t);
+                t.printStackTrace();
+
             }
         });
     }

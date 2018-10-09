@@ -354,67 +354,69 @@ public class ParentClass extends AppCompatActivity {
         RetroWeb.getClient().create(ServiceApi.class).fill_spinner(url).enqueue(new Callback<SpinnerModel>() {
             @Override
             public void onResponse(Call<SpinnerModel> call, Response<SpinnerModel> response) {
-                Log.e("url", url);
-                Log.e("spinner_init", spinner_init);
-                list_names = new ArrayList<>();
-                list_idss = new ArrayList<>();
-                spinner_list = new ArrayList<>();
-                list_names.add(spinner_init);
-                list_idss.add(0);
-                spinner_list.addAll(response.body().getData());
-                for (int i = 0; i < spinner_list.size(); i++) {
-                    list_names.add(spinner_list.get(i).getName());
-                    list_idss.add(spinner_list.get(i).getId());
+                try {
+                    list_names = new ArrayList<>();
+                    list_idss = new ArrayList<>();
+                    spinner_list = new ArrayList<>();
+                    list_names.add(spinner_init);
+                    list_idss.add(0);
+//                spinner_list.addAll(response.body().getData());
+                    for (int i = 0; i < response.body().getData().size(); i++) {
+                        list_names.add(response.body().getData().get(i).getName());
+                        list_idss.add(response.body().getData().get(i).getId());
+                    }
+                    ArrayAdapter<String> levels_list_adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.text_spinner, list_names) {
+
+                        @NonNull
+                        @Override
+                        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                            View v = super.getView(position, convertView, parent);
+
+
+                            if (((TextView) v).getText().toString().equals(spinner_init)) {
+                                ((TextView) v).setTextColor(Color.parseColor(color_inputs_0));
+                            } else {
+                                ((TextView) v).setTextColor(Color.parseColor(color_selected));
+                            }
+                            return v;
+
+                        }
+
+                        @Override
+                        public boolean isEnabled(int position) {
+                            if (position == 0) {
+                                // Disable the first item from Spinner
+                                // First item will be use for hint
+                                return false;
+                            } else {
+                                return true;
+                            }
+                        }
+
+                        @Override
+                        public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                            View view = super.getDropDownView(position, convertView, parent);
+                            TextView tv = (TextView) view;
+                            if (position == 0) {
+                                // Set the hint text color gray
+                                tv.setTextColor(Color.parseColor(color_inputs_0));
+                            } else {
+                                tv.setTextColor(Color.parseColor(color_selected));
+                            }
+
+                            return view;
+                        }
+
+                    };
+
+
+                    // Drop down layout style
+                    levels_list_adapter.setDropDownViewResource(R.layout.text_spinner);
+                    // attaching data adapter to spinner
+                    spinner.setAdapter(levels_list_adapter);
+                } catch (Exception e) {
+
                 }
-                ArrayAdapter<String> levels_list_adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.text_spinner, list_names) {
-
-                    @NonNull
-                    @Override
-                    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                        View v = super.getView(position, convertView, parent);
-
-
-                        if (((TextView) v).getText().toString().equals(spinner_init)) {
-                            ((TextView) v).setTextColor(Color.parseColor(color_inputs_0));
-                        } else {
-                            ((TextView) v).setTextColor(Color.parseColor(color_selected));
-                        }
-                        return v;
-
-                    }
-
-                    @Override
-                    public boolean isEnabled(int position) {
-                        if (position == 0) {
-                            // Disable the first item from Spinner
-                            // First item will be use for hint
-                            return false;
-                        } else {
-                            return true;
-                        }
-                    }
-
-                    @Override
-                    public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                        View view = super.getDropDownView(position, convertView, parent);
-                        TextView tv = (TextView) view;
-                        if (position == 0) {
-                            // Set the hint text color gray
-                            tv.setTextColor(Color.parseColor(color_inputs_0));
-                        } else {
-                            tv.setTextColor(Color.parseColor(color_selected));
-                        }
-
-                        return view;
-                    }
-
-                };
-
-
-                // Drop down layout style
-                levels_list_adapter.setDropDownViewResource(R.layout.text_spinner);
-                // attaching data adapter to spinner
-                spinner.setAdapter(levels_list_adapter);
             }
 
             @Override
