@@ -7,15 +7,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddOrDeleteItemsToFavourites.AddOrDeleteItemToFavourit;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AllServices.Datum;
+import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
+import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
+import com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.handleException;
 
 public class MyFavouritesAdapter extends RecyclerView.Adapter<MyFavouritesAdapter.ViewHolder> {
     List<com.I3gaz.mohamedelmahalwy.a5damat.Models.MyFavourites.Datum> my_favourites_list;
@@ -37,8 +47,36 @@ public class MyFavouritesAdapter extends RecyclerView.Adapter<MyFavouritesAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        holder.tv_category.setText(my_favourites_list.get(position).getCategory());
+        holder.tv_service_title.setText(my_favourites_list.get(position).getTitle());
+        holder.tv_user_name.setText(my_favourites_list.get(position).getOwner());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
+        holder.tv_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RetroWeb.getClient().create(ServiceApi.class).add_or_item_to_favourites(
+                        String.valueOf(ParentClass.sharedPrefManager.getUserDate().getId()), String.valueOf(my_favourites_list.get(position).getServiceId()))
+                        .enqueue(new Callback<AddOrDeleteItemToFavourit>() {
+                            @Override
+                            public void onResponse(Call<AddOrDeleteItemToFavourit> call, Response<AddOrDeleteItemToFavourit> response) {
+                                ParentClass.makeToast(context, response.body().getMsg());
+                                my_favourites_list.remove(position);
+                            }
+
+                            @Override
+                            public void onFailure(Call<AddOrDeleteItemToFavourit> call, Throwable t) {
+                                handleException(context, t);
+                                t.printStackTrace();
+                            }
+                        });
+            }
+        });
     }
 
     @Override
@@ -61,8 +99,6 @@ public class MyFavouritesAdapter extends RecyclerView.Adapter<MyFavouritesAdapte
         TextView tv_user_name;
         @BindView(R.id.tv_delete)
         TextView tv_delete;
-        @BindView(R.id.tv_date)
-        TextView tv_date;
 
         public ViewHolder(View itemView) {
             super(itemView);

@@ -15,6 +15,9 @@ public class Datum {
     @SerializedName("category")
     @Expose
     private String category;
+    @SerializedName("owner")
+    @Expose
+    private String owner;
 
     public int getServiceId() {
         return serviceId;
@@ -38,6 +41,14 @@ public class Datum {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
 }

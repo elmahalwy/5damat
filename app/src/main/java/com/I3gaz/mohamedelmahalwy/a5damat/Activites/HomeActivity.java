@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.CategoriesAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.AddServiceFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.HomeFragmnet;
+import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.MyFavouritesFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.MySettingsFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MainCategories.MainCategories;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
@@ -72,6 +73,7 @@ public class HomeActivity extends ParentClass {
     FragmentManager fm;
     HomeFragmnet homeFragmnet;
     MySettingsFragment mySettingsFragment;
+    MyFavouritesFragment myFavouritesFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +106,7 @@ public class HomeActivity extends ParentClass {
         homeFragmnet = new HomeFragmnet();
         mySettingsFragment = new MySettingsFragment();
         addServiceFragment = new AddServiceFragment();
+        myFavouritesFragment = new MyFavouritesFragment();
     }
 
     void handle_clicks_bottom_tab() {

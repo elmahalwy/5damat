@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 
-import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.CategoriesAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.HomeAdapter;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.SubCatigoriesAdapter;

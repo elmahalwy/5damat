@@ -76,7 +76,7 @@ public class ParentClass extends AppCompatActivity {
     static boolean checked = true;
     protected LocationManager locationManager;
     CustomLoadingDialog customLoadingDialog;
-    public SharedPrefManager sharedPrefManager;
+    public static SharedPrefManager sharedPrefManager;
     public List<String> list_names;
     public List<Integer> list_idss;
     public List<SpinnerData> spinner_list;

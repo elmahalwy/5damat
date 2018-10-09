@@ -10,17 +10,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.MyFavouritesAdapter;
-import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.MyServiceAdapter;
-import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.MyFavouritesModel;
-import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.MyServiceModel;
-import com.I3gaz.mohamedelmahalwy.a5damat.R;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
+import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.MyFavouritesAdapter;
+
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyFavourites.Favourites;
+import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
+import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
+import com.I3gaz.mohamedelmahalwy.a5damat.R;
+import com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.handleException;
 
 public class MyFavouritesFragment extends Fragment {
     @BindView(R.id.rv_my_favourites)
@@ -36,20 +43,26 @@ public class MyFavouritesFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false);
         rv_my_favourites.setLayoutManager(linearLayoutManager);
         rv_my_favourites.setAdapter(myFavouritesAdapter);
-        initUI();
-        initEventDriven();
+        get_my_favourites();
         return view;
     }
 
-    void initUI() {
-
-    }
-
-    void initEventDriven() {
-
-    }
 
     void get_my_favourites() {
+        RetroWeb.getClient().create(ServiceApi.class).get_my_favourites(String.valueOf(ParentClass.sharedPrefManager.getUserDate().getId())).enqueue(new Callback<Favourites>() {
+            @Override
+            public void onResponse(Call<Favourites> call, Response<Favourites> response) {
+                if (response.body().isValue()) {
+                    myFavouritesAdapter.addAll(response.body().getData());
+                    rv_my_favourites.setAdapter(myFavouritesAdapter);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<Favourites> call, Throwable t) {
+                handleException(getActivity(), t);
+                t.printStackTrace();
+            }
+        });
     }
 }

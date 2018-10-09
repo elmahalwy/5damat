@@ -1,6 +1,7 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Network;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.CategoriesAdapter;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddOrDeleteItemsToFavourites.AddOrDeleteItemToFavourit;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AllServices.AllServices;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.LoginData.User;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MainCategories.MainCategories;
@@ -59,4 +60,8 @@ public interface ServiceApi {
 
     @GET(Urls.Spinner_add_service__Url)
     Call<SpinnerssModelss> fill_add_service_spinner(@Path("category_id") String category_id);
+
+    @POST(Urls.AddOrDeleteItemToFavourites)
+    Call<AddOrDeleteItemToFavourit> add_or_item_to_favourites(@Field("user_id") String user_id,
+                                                              @Field("service_id") String service_id);
 }
