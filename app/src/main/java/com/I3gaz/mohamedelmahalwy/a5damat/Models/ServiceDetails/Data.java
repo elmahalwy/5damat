@@ -45,7 +45,7 @@ public class Data {
     private String roles;
     @SerializedName("like")
     @Expose
-    private int like;
+    private boolean like;
     @SerializedName("rate")
     @Expose
     private String rate;
@@ -187,12 +187,12 @@ public class Data {
         this.category = category;
     }
 
-    public int getLike() {
 
+    public boolean isLike() {
         return like;
     }
 
-    public void setLike(int like) {
+    public void setLike(boolean like) {
         this.like = like;
     }
 }

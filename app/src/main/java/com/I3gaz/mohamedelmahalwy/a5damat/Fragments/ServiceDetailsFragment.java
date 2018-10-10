@@ -31,6 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.Context.LOCATION_SERVICE;
 import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.handleException;
 import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.sharedPrefManager;
 
@@ -58,6 +59,8 @@ public class ServiceDetailsFragment extends Fragment {
     RecyclerView rv_developments;
     ServiceDevelopmentsDetailsAdapter serviceDevelopmentsDetailsAdapter;
     LinearLayoutManager linearLayoutManagerDevlopmentsDetails;
+    @BindView(R.id.tv_not_found_development)
+    TextView tv_not_found_development;
     @BindView(R.id.tv_total_price_title)
     TextView tv_total_price_title;
     @BindView(R.id.tv_total_price)
@@ -75,12 +78,13 @@ public class ServiceDetailsFragment extends Fragment {
     @BindView(R.id.iv_open_chat)
     ImageView iv_open_chat;
 
-    String user_id;
+    String user_id = "";
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.service_details_fragment_layout, container, false);
         ButterKnife.bind(this, view);
+        Log.e("service_id", getArguments().getString("service_id"));
         initUI();
         get_service_details();
         initEventDriven();
@@ -91,15 +95,15 @@ public class ServiceDetailsFragment extends Fragment {
         //// first recycler for images and videos ////
         imagesVIdeosModelList = new ArrayList<>();
         serviceDetailsVideosAndImagesAdapter = new ServiceDetailsVideosAndImagesAdapter(imagesVIdeosModelList, getContext());
-        linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false);
+        linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayout.HORIZONTAL, false);
         rv_videos_and_images.setLayoutManager(linearLayoutManager);
-        rv_videos_and_images.setAdapter(serviceDetailsVideosAndImagesAdapter);
+
         ///// end first recycler //////
 
 
         /// recycler for extra developments ////
         serviceDevelopmentsDetailsAdapter = new ServiceDevelopmentsDetailsAdapter(getActivity());
-        linearLayoutManagerDevlopmentsDetails = new LinearLayoutManager(getContext(),LinearLayout.VERTICAL,false);
+        linearLayoutManagerDevlopmentsDetails = new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false);
         rv_developments.setLayoutManager(linearLayoutManagerDevlopmentsDetails);
 
         ///// end //////
@@ -108,8 +112,9 @@ public class ServiceDetailsFragment extends Fragment {
     private void initEventDriven() {
         tv_total_price_title.setVisibility(View.GONE);
         tv_total_price.setVisibility(View.GONE);
-
-        if (user_id.equals(sharedPrefManager.getUserDate().getId())) {
+        Log.e("user_id", user_id);
+        Log.e("iiiid", String.valueOf(sharedPrefManager.getUserDate().getId()));
+        if (user_id.equals(String.valueOf(sharedPrefManager.getUserDate().getId()))) {
             iv_open_chat.setVisibility(View.GONE);
             iv_like.setVisibility(View.GONE);
             btn_edit.setText("تعديل الخدمة");
@@ -127,31 +132,39 @@ public class ServiceDetailsFragment extends Fragment {
                     @Override
                     public void onResponse(Call<ServiceDetails> call, Response<ServiceDetails> response) {
                         if (response.body().isValue()) {
-                            for (int i = 0; i < response.body().getData().getImages().size(); i++) {
-                                ImagesVIdeosModel imagesVIdeosModel = new ImagesVIdeosModel();
-                                imagesVIdeosModel.setType("image");
-                                imagesVIdeosModel.setVideo_image(response.body().getData().getImages().get(i));
-                                imagesVIdeosModelList.add(imagesVIdeosModel);
+                            if (!response.body().getData().getImages().isEmpty()) {
+                                for (int i = 0; i < response.body().getData().getImages().size(); i++) {
+                                    ImagesVIdeosModel imagesVIdeosModel = new ImagesVIdeosModel();
+                                    imagesVIdeosModel.setType("image");
+                                    imagesVIdeosModel.setVideo_image(response.body().getData().getImages().get(i));
+                                    imagesVIdeosModelList.add(imagesVIdeosModel);
+                                }
                             }
-                            for (int i = 0; i < response.body().getData().getVideos().size(); i++) {
-                                ImagesVIdeosModel imagesVIdeosModel = new ImagesVIdeosModel();
-                                imagesVIdeosModel.setType("video");
-                                imagesVIdeosModel.setVideo_image(response.body().getData().getVideos().get(i));
-                                imagesVIdeosModelList.add(imagesVIdeosModel);
+                            if (!response.body().getData().getVideos().isEmpty()) {
+                                for (int i = 0; i < response.body().getData().getVideos().size(); i++) {
+                                    ImagesVIdeosModel imagesVIdeosModel = new ImagesVIdeosModel();
+                                    imagesVIdeosModel.setType("video");
+                                    imagesVIdeosModel.setVideo_image(response.body().getData().getVideos().get(i));
+                                    imagesVIdeosModelList.add(imagesVIdeosModel);
+                                }
                             }
+                            rv_videos_and_images.setAdapter(serviceDetailsVideosAndImagesAdapter);
                             tv_rate.setText(response.body().getData().getRate());
                             tv__service_title.setText(response.body().getData().getTitle());
                             tv_service_category.setText(response.body().getData().getCategory());
                             tv_details.setText(response.body().getData().getNote());
-                            tv_main_price.setText("السعر الاساسي" + response.body().getData().getPrice());
-                            tv_delivery_time.setText("مدة التسليم " + response.body().getData().getDeadline() + "يوم");
+                            tv_main_price.setText("السعر الاساسي " + response.body().getData().getPrice());
+                            tv_delivery_time.setText("مدة التسليم " + response.body().getData().getDeadline() + " يوم");
                             tv_service_owner.setText(response.body().getData().getOwner());
-                            user_id = String.valueOf(response.body().getData().getOwnerId());
+
+                            user_id = "" + response.body().getData().getOwnerId();
+                            Log.e("userid", "" + response.body().getData().getOwnerId());
 
                             if (response.body().getData().getSubServices().isEmpty()) {
                                 rv_developments.setVisibility(View.GONE);
+                                tv_not_found_development.setVisibility(View.VISIBLE);
                             } else {
-
+                                tv_not_found_development.setVisibility(View.GONE);
                                 serviceDevelopmentsDetailsAdapter.addAll(response.body().getData().getSubServices());
                                 rv_developments.setAdapter(serviceDevelopmentsDetailsAdapter);
                             }
