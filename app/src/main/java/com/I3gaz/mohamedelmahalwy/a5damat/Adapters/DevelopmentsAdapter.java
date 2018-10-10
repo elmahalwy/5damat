@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -24,7 +26,9 @@ import android.widget.Toast;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
 import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.AddServiceFragment;
+import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.HomeFragmnet;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.DevelopmentModel;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddService;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerssModelss;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
@@ -46,6 +50,8 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.handleException;
 
 public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapter.ViewHolder> {
     List<DevelopmentModel> developments_list = new ArrayList<>();
@@ -447,11 +453,25 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                             cancel = true;
                             Log.e("development_list_empty", development_list_is_empty);
 
-                        } else if (developments_list.get(0).getSp_price_for_development().equals("سعر التطوير") || developments_list.get(0).getSp_time().equals("مده التسليم") ||
-                                developments_list.get(0).getSp_time_for_development().equals("هل سيزيد من مدة التنفيذ") || TextUtils.isEmpty(developments_list.get(0).getEt_developments())) {
-                            Toast.makeText(context, "برجاء اكمال كل بيانات التطوير", Toast.LENGTH_SHORT).show();
-                            cancel = true;
-                            Log.e("development_list_emptyy", development_list_is_empty);
+                        }
+                        else if (developments_list.get(0).getSp_time_for_development().equals("لا")){
+                            if (developments_list.get(0).getSp_price_for_development().equals("سعر التطوير") ||
+                                    developments_list.get(0).getSp_time_for_development().equals("هل سيزيد من مدة التنفيذ") ||
+                                    TextUtils.isEmpty(developments_list.get(0).getEt_developments())) {
+                                Toast.makeText(context, "برجاء اكمال كل بيانات التطوير", Toast.LENGTH_SHORT).show();
+                                cancel = true;
+                                Log.e("development_list_emptyy", development_list_is_empty);
+                            }
+
+                        }
+                        else if (developments_list.get(0).getSp_time_for_development().equals("نعم")){
+                            if (developments_list.get(0).getSp_price_for_development().equals("سعر التطوير") || developments_list.get(0).getSp_time().equals("مده التسليم") ||
+                                    developments_list.get(0).getSp_time_for_development().equals("هل سيزيد من مدة التنفيذ") || TextUtils.isEmpty(developments_list.get(0).getEt_developments())) {
+                                Toast.makeText(context, "برجاء اكمال كل بيانات التطوير", Toast.LENGTH_SHORT).show();
+                                cancel = true;
+                                Log.e("development_list_emptyy", development_list_is_empty);
+                            }
+
                         }
 
                     }
@@ -541,22 +561,50 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                     try {
                         main.put("title",
                                 AddServiceFragment.et_what_would_you_do_for_exchange_of_this_service.getText().toString());
-                        main.put("main_price", AddServiceFragment.service_price_name);
+                        main.put("price", AddServiceFragment.service_price_name);
                         main.put("category_id", AddServiceFragment.sp_category_id);
                         main.put("sub_category_id", AddServiceFragment.sp_sub_category_id);
-                        main.put("service_details", AddServiceFragment.et_service_details.getText().toString());
+                        main.put("note", AddServiceFragment.et_service_details.getText().toString());
                         main.put("key_words", AddServiceFragment.et_key_words.getText().toString());
-                        main.put("time_to_deliver", AddServiceFragment.sp_service_delivery_time_name);
-                        main.put("buyer_instructions", AddServiceFragment.et_service_instructions_to_buyer_title.getText().toString());
-                        main.put("video_links", video_links);
-                        main.put("image_links", image_links);
-                        main.put("image_files", image_files);
+                        main.put("deadline", AddServiceFragment.sp_service_delivery_time_name);
+                        main.put("roles", AddServiceFragment.et_service_instructions_to_buyer_title.getText().toString());
+                        main.put("user_id", sharedPrefManager.getUserDate().getId());
+                        main.put("videos", video_links);
+                        main.put("images_links", image_links);
+                        main.put("images", image_files);
                         main.put("image_files_sizes", image_files_sizes);
                         main.put("developments", developments);
                         Log.e("main", String.valueOf(main));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    /////////////////////////////sending_request/////////////////////////////////////////////////////////
+                    RetroWeb.getClient().create(ServiceApi.class).add_service(main).enqueue(new Callback<AddService>() {
+                        @Override
+                        public void onResponse(Call<AddService> call, Response<AddService> response) {
+                            Log.e("response_add_service", response.body().toString());
+                            if (response.body().isValue()) {
+                                Log.e("gggg", "in");
+                                FragmentManager fm = ((HomeActivity) context).getSupportFragmentManager();
+                                FragmentTransaction ft = fm.beginTransaction();
+                                ft.replace(R.id.frame_container, new HomeFragmnet());
+                                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+                                ft.remove(new AddServiceFragment());
+                                fm.popBackStack();
+                                ft.commit();
+                            } else {
+                                Toast.makeText(context, "حدث خطأ ما", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<AddService> call, Throwable t) {
+                            handleException(context, t);
+                            t.printStackTrace();
+                        }
+                    });
+
                 }
             }
         });

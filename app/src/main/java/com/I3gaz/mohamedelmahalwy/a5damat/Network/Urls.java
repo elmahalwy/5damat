@@ -20,4 +20,6 @@ public class Urls {
     public final static String MyServices = "my_services/{user_id}";
     public final static String MyMessges ="user_messages";
     public final static String ServiceDetails = "single-service";
+    public final static String add_service = "service";
+
 }
