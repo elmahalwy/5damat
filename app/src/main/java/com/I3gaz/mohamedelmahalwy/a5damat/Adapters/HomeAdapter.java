@@ -45,7 +45,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.tv_title.setText(home_list.get(position).getTitle());
         holder.tv_time.setText(home_list.get(position).getCreatedDate());
-        holder.tv_number_of_buyers.setText(home_list.get(position).getOrderCount());
+        holder.tv_number_of_buyers.setText(String.valueOf(home_list.get(position).getOrderCount()));
         Picasso.with(context).load(home_list.get(position).getImages().get(0))
                 .into(holder.iv_img);
         if (position > lastPosition) {

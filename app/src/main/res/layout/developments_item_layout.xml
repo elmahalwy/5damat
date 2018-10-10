@@ -3,10 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <ImageView
+        android:id="@+id/iv_remove"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="10dp"
+        android:src="@drawable/remove"
+        android:visibility="gone"
+        />
+
     <EditText
         android:id="@+id/et_developments"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_below="@+id/iv_remove"
         android:background="@drawable/drawable_add_service"
         android:gravity="top|right"
         android:hint="ادخل التطويرات"
@@ -59,6 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@+id/sp_time"
+        android:layout_marginBottom="20dp"
         android:layout_marginEnd="40dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"

@@ -6,7 +6,9 @@
     android:orientation="vertical">
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/scrol_view"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -333,7 +335,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/drawable_add_service" />
+                 />
 
 
             <TextView

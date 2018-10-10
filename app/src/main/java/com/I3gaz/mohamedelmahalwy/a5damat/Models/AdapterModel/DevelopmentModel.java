@@ -1,8 +1,10 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel;
 
 public class DevelopmentModel {
-    String et_developments,sp_price_for_development,sp_time_for_development,sp_time;
+    String et_developments,sp_price_for_development,sp_time_for_development,sp_time="";
     boolean added=false;
+    boolean added_to_list=false;
+
 
     public String getEt_developments() {
         return et_developments;
@@ -42,5 +44,13 @@ public class DevelopmentModel {
 
     public void setAdded(Boolean added) {
         this.added = added;
+    }
+
+    public boolean isAdded_to_list() {
+        return added_to_list;
+    }
+
+    public void setAdded_to_list(boolean added_to_list) {
+        this.added_to_list = added_to_list;
     }
 }

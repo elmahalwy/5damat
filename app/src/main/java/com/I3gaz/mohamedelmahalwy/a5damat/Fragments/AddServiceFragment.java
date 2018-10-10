@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,26 +62,24 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class AddServiceFragment extends Fragment {
-    @BindView(R.id.et_what_would_you_do_for_exchange_of_this_service)
-    EditText et_what_would_you_do_for_exchange_of_this_service;
+    public static EditText et_what_would_you_do_for_exchange_of_this_service;
     @BindView(R.id.sp_service_price)
     Spinner sp_service_price;
     List<String> sp_service_price_list;
-    String service_price_name;
+    public static String service_price_name = "";
     @BindView(R.id.sp_category)
     Spinner sp_category;
     List<String> sp_category_list;
     List<Integer> sp_category_list_ids;
-    int sp_category_id = 0;
-    String sp_category_name;
+    public static int sp_category_id = 0;
+    String sp_category_name = "";
     @BindView(R.id.sp_sub_category)
     Spinner sp_sub_category;
     List<String> sp_sub_category_list;
     List<Integer> sp_sub_category_list_ids;
-    int sp_sub_category_id = 0;
+    public static int sp_sub_category_id = 0;
     String sp_sub_category_name;
-    @BindView(R.id.et_service_details)
-    EditText et_service_details;
+    public static EditText et_service_details;
     RecyclerView rv_videos_and_images;
     VideoAndImageAdapater videoAndImageAdapater;
     List<VideoAndImageModel> videoAndImageList;
@@ -89,20 +88,18 @@ public class AddServiceFragment extends Fragment {
     TextView tv_add_photo_or_video;
     @BindView(R.id.add_more)
     TextView add_more;
-    @BindView(R.id.et_key_words)
-    EditText et_key_words;
+    public static EditText et_key_words;
     @BindView(R.id.sp_service_delivery_time)
     Spinner sp_service_delivery_time;
     List<String> sp_service_delivery_time_list;
-    String sp_service_delivery_time_name;
-    @BindView(R.id.et_service_instructions_to_buyer_title)
-    EditText et_service_instructions_to_buyer_title;
+    public static String sp_service_delivery_time_name = "";
+    public static EditText et_service_instructions_to_buyer_title;
     public static RecyclerView rv_developments;
     List<DevelopmentModel> developmentList;
     LinearLayoutManager linearLayoutManager1;
     DevelopmentsAdapter developmentsAdapter;
-    @BindView(R.id.tv_sign_up)
-    TextView tv_sign_up;
+    //    public static  @BindView(R.id.tv_sign_up)
+    public static TextView tv_add_service;
     @BindView(R.id.view_for_add_image_at_first_Time)
     View view_for_add_image_at_first_Time;
     Dialog pop_up_add_photo_video;
@@ -114,17 +111,48 @@ public class AddServiceFragment extends Fragment {
     Button btn_choose;
     String type = "null";
     static final int PICK_IMAGE_REQUEST = 1;
-    List<File> image_files_list = new ArrayList<>();
-    List<String> image_links_list = new ArrayList<>();
-    List<String> video_links_list = new ArrayList<>();
+    public static List<File> image_files_list = new ArrayList<>();
+    public static List<Integer> image_file_size_list = new ArrayList<>();
+    public static List<String> image_links_list = new ArrayList<>();
+    public static List<String> video_links_list = new ArrayList<>();
     String filePath;
     File file;
+    public static ScrollView scrol_view;
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.add_service_fragment_layout, container, false);
         ButterKnife.bind(this, view);
-
+        scrol_view = (ScrollView) view.findViewById(R.id.scrol_view);
+        et_what_would_you_do_for_exchange_of_this_service = (EditText) view.findViewById(R.id.et_what_would_you_do_for_exchange_of_this_service);
+        tv_add_service = (TextView) view.findViewById(R.id.tv_sign_up);
+        et_service_details = (EditText) view.findViewById(R.id.et_service_details);
+        et_key_words = (EditText) view.findViewById(R.id.et_key_words);
+        et_service_instructions_to_buyer_title = (EditText) view.findViewById(R.id.et_service_instructions_to_buyer_title);
+        et_what_would_you_do_for_exchange_of_this_service.post(new Runnable() {
+            @Override
+            public void run() {
+                et_what_would_you_do_for_exchange_of_this_service.setError(null);
+            }
+        });
+        et_service_details.post(new Runnable() {
+            @Override
+            public void run() {
+                et_service_details.setError(null);
+            }
+        });
+        et_key_words.post(new Runnable() {
+            @Override
+            public void run() {
+                et_key_words.setError(null);
+            }
+        });
+        et_service_instructions_to_buyer_title.post(new Runnable() {
+            @Override
+            public void run() {
+                et_service_instructions_to_buyer_title.setError(null);
+            }
+        });
         /////////////////////////////////videos_and_images//////////////////////////////
         videoAndImageList = new ArrayList<>();
         rv_videos_and_images = (RecyclerView) view.findViewById(R.id.rv_videos_and_images);
@@ -263,8 +291,6 @@ public class AddServiceFragment extends Fragment {
                         view_for_add_image_at_first_Time.setVisibility(View.GONE);
                         rv_videos_and_images.setVisibility(View.VISIBLE);
                         add_more.setVisibility(View.VISIBLE);
-                        video_links_list.add(et_video_from_link.getText().toString());
-
                         VideoAndImageModel videoAndImageModel = new VideoAndImageModel();
                         videoAndImageModel.setIv_service("empty");
                         videoAndImageModel.setYoutube_player_view(get_youtube_id(et_video_from_link.getText().toString()));
@@ -299,13 +325,18 @@ public class AddServiceFragment extends Fragment {
                 view_for_add_image_at_first_Time.setVisibility(View.GONE);
                 rv_videos_and_images.setVisibility(View.VISIBLE);
                 add_more.setVisibility(View.VISIBLE);
+                int file_size = Integer.parseInt(String.valueOf(file.length() / 1024));
+                image_file_size_list.add(file_size);
+                Log.e("file_size", file_size + "MB");
                 VideoAndImageModel videoAndImageModel = new VideoAndImageModel();
                 videoAndImageModel.setIv_service("empty");
                 videoAndImageModel.setYoutube_player_view("empty");
                 videoAndImageModel.setImage_uri(imageUri);
                 videoAndImageModel.setType("file");
+                videoAndImageModel.setFile_size(file_size);
                 videoAndImageList.add(videoAndImageModel);
                 image_files_list.add(file);
+
                 rv_videos_and_images.getAdapter().notifyDataSetChanged();
                 rv_videos_and_images.scrollToPosition(videoAndImageList.size() - 1);
             } catch (Exception e) {
@@ -522,7 +553,7 @@ public class AddServiceFragment extends Fragment {
         sp_sub_category_list_ids = new ArrayList<>();
         sp_sub_category_list.add("القسم الفرعي");
         sp_sub_category_list_ids.add(0);
-        Log.e("sp_category_id",sp_category_id+"");
+        Log.e("sp_category_id", sp_category_id + "");
         RetroWeb.getClient().create(ServiceApi.class).fill_spinner_sub_category(String.valueOf(sp_category_id)).enqueue(new Callback<SpinnerModel>() {
             @Override
             public void onResponse(Call<SpinnerModel> call, Response<SpinnerModel> response) {
@@ -583,8 +614,8 @@ public class AddServiceFragment extends Fragment {
                     sp_sub_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                            sp_category_name = sp_sub_category_list.get(i);
-                            sp_category_id = sp_sub_category_list_ids.get(i);
+                            sp_sub_category_name = sp_sub_category_list.get(i);
+                            sp_sub_category_id = sp_sub_category_list_ids.get(i);
                             Log.e("sp_sub_category_name", sp_sub_category_name + "w");
                         }
 
@@ -690,10 +721,12 @@ public class AddServiceFragment extends Fragment {
 
     private void initialize_list() {
         DevelopmentModel developmentModel = new DevelopmentModel();
-        developmentModel.setEt_developments("0");
+        developmentModel.setEt_developments("");
         developmentModel.setSp_price_for_development("0");
         developmentModel.setSp_time("0");
         developmentModel.setSp_time_for_development("0");
+        developmentModel.setAdded(false);
+
         developmentList.add(developmentModel);
     }
 

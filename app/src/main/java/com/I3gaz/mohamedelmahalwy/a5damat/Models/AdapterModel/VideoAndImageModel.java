@@ -5,6 +5,7 @@ import android.net.Uri;
 public class VideoAndImageModel {
     String youtube_player_view,iv_service,type;
     Uri image_uri;
+    int file_size;
 
     public String getYoutube_player_view() {
         return youtube_player_view;
@@ -36,5 +37,13 @@ public class VideoAndImageModel {
 
     public void setImage_uri(Uri image_uri) {
         this.image_uri = image_uri;
+    }
+
+    public int getFile_size() {
+        return file_size;
+    }
+
+    public void setFile_size(int file_size) {
+        this.file_size = file_size;
     }
 }
