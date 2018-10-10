@@ -15,6 +15,7 @@ public class SplashActivity extends ParentClass {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
         ButterKnife.bind(this);
 
 //        YoYo.with(Techniques.FadeInUp)
