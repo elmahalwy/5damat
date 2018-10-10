@@ -18,11 +18,13 @@ import java.net.URI;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface ServiceApi {
+    @FormUrlEncoded
     @POST(Urls.SignUp)
     Call<User> Sign_up_response_call(@Field("username") String username,
                                      @Field("mobile") String mobile,
@@ -31,12 +33,14 @@ public interface ServiceApi {
                                      @Field("serial_num") String serial_num,
                                      @Field("password") String password);
 
+    @FormUrlEncoded
     @POST(Urls.SignIn)
     Call<User> Sign_in_response_call(@Field("email") String email,
                                      @Field("password") String password,
                                      @Field("device_token") String device_token,
                                      @Field("serial_num") String serial_num);
 
+    @FormUrlEncoded
     @POST(Urls.ResetPassword)
     Call<ResetPassword> RESET_PASSWORD_CALL(@Field("input") String input);
 
@@ -64,6 +68,7 @@ public interface ServiceApi {
     @GET(Urls.Spinner_add_service__Url)
     Call<SpinnerssModelss> fill_add_service_spinner(@Path("category_id") String category_id);
 
+    @FormUrlEncoded
     @POST(Urls.AddOrDeleteItemToFavourites)
     Call<AddOrDeleteItemToFavourit> add_or_item_to_favourites(@Field("user_id") String user_id,
                                                               @Field("service_id") String service_id);
@@ -71,9 +76,11 @@ public interface ServiceApi {
     @GET(Urls.MyServices)
     Call<MyServices> get_my_services(@Path("user_id") String user_id);
 
+    @FormUrlEncoded
     @POST(Urls.MyMessges)
     Call<MyMessages> get_my_messages(@Field("user_id") String user_id);
 
+    @FormUrlEncoded
     @POST(Urls.ServiceDetails)
     Call<ServiceDetails> get_service_details(@Field("service_id") String service_id);
 }

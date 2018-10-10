@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -86,6 +87,13 @@ public class HomeActivity extends ParentClass {
         initEventDriven();
         handle_clicks_bottom_tab();
         get_main_categories();
+        Log.e("iiid", "" + sharedPrefManager.getUserDate().getId());
+        Log.e("user_name", "" + sharedPrefManager.getUserDate().getUsername());
+        Log.e("email", "" + sharedPrefManager.getUserDate().getEmail());
+        Log.e("token", "" + sharedPrefManager.getUserDate().getApiToken());
+        Log.e("mobile", "" + sharedPrefManager.getUserDate().getMobile());
+        Log.e("image", "" + sharedPrefManager.getUserDate().getImage());
+
     }
 
     void initUi() {
