@@ -40,6 +40,9 @@ public class VideoAndImageAdapater extends RecyclerView.Adapter<VideoAndImageAda
 
     public VideoAndImageAdapater(List<VideoAndImageModel> imges_and_videos_list, Context context) {
         this.imges_and_videos_list = imges_and_videos_list;
+
+
+
         this.context = context;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }

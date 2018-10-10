@@ -52,6 +52,7 @@ dependencies {
     implementation 'com.github.joielechong:countrycodepicker:2.1.5'
     implementation 'com.hedgehog.ratingbar:app:1.1.2'
     implementation 'com.facebook.android:facebook-login:[4,5)'
+    implementation 'com.github.ShogoMizumoto:ZDepthShadowLayout:1.0.4'
 
 }
 apply plugin: 'com.google.gms.google-services'

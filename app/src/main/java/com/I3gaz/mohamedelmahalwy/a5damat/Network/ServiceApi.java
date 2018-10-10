@@ -6,7 +6,10 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.AllServices.AllServices;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.LoginData.User;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MainCategories.MainCategories;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyFavourites.Favourites;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyMessages.MyMessages;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyServices.MyServices;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ResetPassword.ResetPassword;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails.ServiceDetails;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerssModelss;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SubCategories.SubCategories;
@@ -64,4 +67,13 @@ public interface ServiceApi {
     @POST(Urls.AddOrDeleteItemToFavourites)
     Call<AddOrDeleteItemToFavourit> add_or_item_to_favourites(@Field("user_id") String user_id,
                                                               @Field("service_id") String service_id);
+
+    @GET(Urls.MyServices)
+    Call<MyServices> get_my_services(@Path("user_id") String user_id);
+
+    @POST(Urls.MyMessges)
+    Call<MyMessages> get_my_messages(@Field("user_id") String user_id);
+
+    @POST(Urls.ServiceDetails)
+    Call<ServiceDetails> get_service_details(@Field("service_id") String service_id);
 }

@@ -11,6 +11,7 @@
         android:layout_alignParentRight="true"
         android:text="awsddsasdsadaddsdasdssaasdsdsdaddadsadsdadsadsadsdsdsadsdas"
         android:layout_marginEnd="10dp"
+        android:gravity="right"
         android:layout_marginRight="10dp" />
 
     <LinearLayout

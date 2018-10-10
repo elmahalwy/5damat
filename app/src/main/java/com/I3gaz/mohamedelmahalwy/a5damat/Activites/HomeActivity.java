@@ -92,7 +92,8 @@ public class HomeActivity extends ParentClass {
 
         rv_categories = (RecyclerView) findViewById(R.id.rv_categories);
         categoriesAdapter = new CategoriesAdapter(HomeActivity.this);
-        linearLayoutManager = new LinearLayoutManager(HomeActivity.this, LinearLayout.HORIZONTAL, false);
+        linearLayoutManager = new LinearLayoutManager(HomeActivity.this, LinearLayout.HORIZONTAL, true);
+        linearLayoutManager.setReverseLayout(true);
         rv_categories.setLayoutManager(linearLayoutManager);
         rv_categories.setAdapter(categoriesAdapter);
     }

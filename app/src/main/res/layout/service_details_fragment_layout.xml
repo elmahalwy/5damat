@@ -129,6 +129,7 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="5dp"
+                android:gravity="right"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_toLeftOf="@+id/iv_dot"

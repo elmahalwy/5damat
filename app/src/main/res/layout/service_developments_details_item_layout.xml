@@ -4,62 +4,86 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/iv_dot"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
+        android:id="@+id/iv_choose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="3dp"
-        android:src="@drawable/dot" />
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:src="@mipmap/box"
 
-    <TextView
-        android:id="@+id/tv_details"
-        android:layout_width="wrap_content"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
-        android:layout_toLeftOf="@+id/iv_dot"
-        android:layout_toStartOf="@+id/iv_dot"
-        android:text=" lsfg lsfg lsfg flsmg sflg slf "
-        android:textColor="#989898"
-        android:textSize="14sp" />
+        android:layout_toStartOf="@+id/iv_choose"
+        android:layout_toLeftOf="@+id/iv_choose">
 
-    <ImageView
-        android:id="@+id/iv_dot_1"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/tv_details"
-        android:layout_marginTop="13dp"
-        android:src="@drawable/dot" />
 
-    <TextView
-        android:id="@+id/tv_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_details"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_toLeftOf="@+id/iv_dot"
-        android:layout_toStartOf="@+id/iv_dot"
-        android:text=" lsfg lsfg lsfg flsmg sflg slf "
-        android:textColor="#989898"
-        android:textSize="14sp" />
+        <ImageView
+            android:id="@+id/iv_dot"
 
-    <TextView
-        android:id="@+id/tv_sub_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_price"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:drawableEnd="@mipmap/price"
-        android:drawablePadding="5dp"
-        android:drawableRight="@mipmap/price"
-        android:gravity="center"
-        android:text="15$"
-        android:textColor="#000"
-        android:textSize="14sp" />
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/dot" />
+
+        <TextView
+            android:id="@+id/tv_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toStartOf="@+id/iv_dot"
+            android:layout_toLeftOf="@+id/iv_dot"
+            android:text=" lsfg lsfg lsfg flsmg sflg slf "
+            android:textColor="#989898"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/iv_dot_1"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_below="@+id/tv_details"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="13dp"
+            android:src="@drawable/dot" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_details"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toStartOf="@+id/iv_dot"
+            android:layout_toLeftOf="@+id/iv_dot"
+            android:text=" lsfg lsfg lsfg flsmg sflg slf "
+            android:textColor="#989898"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_sub_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_price"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:drawableEnd="@mipmap/price"
+            android:drawableRight="@mipmap/price"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:text="15$"
+            android:textColor="#000"
+            android:textSize="14sp" />
+    </RelativeLayout>
 </RelativeLayout>

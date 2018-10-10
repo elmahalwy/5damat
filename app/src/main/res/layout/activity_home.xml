@@ -13,9 +13,13 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_categories"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
-        android:orientation="vertical" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layoutDirection="rtl"
+        android:orientation="vertical"
+        android:textDirection="rtl" />
 
     <FrameLayout
         android:id="@+id/frame_container"
@@ -27,8 +31,8 @@
     <RelativeLayout
         android:id="@+id/relative_tab"
         android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_height="70dp">
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true">
 
 
         <LinearLayout

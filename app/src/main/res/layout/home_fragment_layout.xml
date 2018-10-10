@@ -7,6 +7,7 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_home"
         android:layout_width="match_parent"
+
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
@@ -14,10 +15,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="15dp"
+            android:outlineProvider="bounds"
+            android:clipToPadding="false"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginStart="15dp" />
     </android.support.v4.widget.SwipeRefreshLayout>
+
 
 
 </RelativeLayout>

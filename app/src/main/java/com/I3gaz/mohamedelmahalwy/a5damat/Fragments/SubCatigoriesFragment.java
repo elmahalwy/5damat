@@ -3,7 +3,6 @@ package com.I3gaz.mohamedelmahalwy.a5damat.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,21 +11,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.CategoriesAdapter;
-import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.HomeAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.SubCatigoriesAdapter;
-import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.HomeModel;
-import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.SubCatigoriesModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SubCategories.SubCategories;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

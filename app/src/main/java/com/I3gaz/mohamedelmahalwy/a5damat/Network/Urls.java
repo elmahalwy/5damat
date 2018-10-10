@@ -17,6 +17,7 @@ public class Urls {
     public final static String Spinner_add_service__Url = "settings/{category_id}";
     public final static String Spinner_sub_categoryUrl = "category/{category_id}";
     public final static String AddOrDeleteItemToFavourites = "fav_service";
-
-
+    public final static String MyServices = "my_services/{user_id}";
+    public final static String MyMessges ="user_messages";
+    public final static String ServiceDetails = "single-service";
 }

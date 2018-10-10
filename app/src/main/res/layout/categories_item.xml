@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_margin="10dp"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
 
     <TextView
         android:id="@+id/tv_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:textColor="#B2BBC9"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:gravity="right|center"
-        android:text="qaaaadadd"
-        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
         android:layout_centerHorizontal="true"
-        />
+        android:layout_centerVertical="true"
+        android:gravity="right|center"
+        android:padding="10dp"
+        android:text="qaaaadadd"
+        android:textColor="#B2BBC9"
+        android:textSize="17sp" />
 </RelativeLayout>

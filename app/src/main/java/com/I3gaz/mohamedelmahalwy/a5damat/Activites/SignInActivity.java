@@ -167,6 +167,9 @@ public class SignInActivity extends ParentClass {
                     if (response.body().isValue()) {
                         sharedPrefManager.setLoginStatus(true);
                         sharedPrefManager.setUserDate(response.body().getData());
+                        Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+                        startActivity(intent);
+
 
                     }
                 }

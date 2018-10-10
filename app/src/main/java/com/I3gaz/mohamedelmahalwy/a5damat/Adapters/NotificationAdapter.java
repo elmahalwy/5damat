@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.MessagesModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.NotificationModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
 
