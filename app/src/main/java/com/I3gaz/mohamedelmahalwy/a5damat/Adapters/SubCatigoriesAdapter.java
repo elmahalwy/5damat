@@ -10,23 +10,24 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import com.I3gaz.mohamedelmahalwy.a5damat.Models.SubCategories.SubCategoriesDatum;
-import com.I3gaz.mohamedelmahalwy.a5damat.Models.SubCategories.SubCategory;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.SubCategories.Datum;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SubCatigoriesAdapter extends RecyclerView.Adapter<SubCatigoriesAdapter.ViewHolder> {
-    List<SubCategory> sub_catigories_list;
+    List<Datum> sub_catigories_list;
     Context context;
     LayoutInflater layoutInflater;
     int lastPosition = -1;
     public static int id;
 
     public SubCatigoriesAdapter(Context context) {
+        sub_catigories_list = new ArrayList<>();
         this.context = context;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -63,7 +64,7 @@ public class SubCatigoriesAdapter extends RecyclerView.Adapter<SubCatigoriesAdap
         return sub_catigories_list.size();
     }
 
-    public void addAll(List<SubCategory> data) {
+    public void addAll(List<Datum> data) {
         sub_catigories_list.clear();
         sub_catigories_list.addAll(data);
         notifyDataSetChanged();

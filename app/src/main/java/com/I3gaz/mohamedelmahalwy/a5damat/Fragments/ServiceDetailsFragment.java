@@ -3,6 +3,8 @@ package com.I3gaz.mohamedelmahalwy.a5damat.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,10 +14,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.ServiceDetailsVideosAndImagesAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.ServiceDevelopmentsDetailsAdapter;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddOrDeleteItemsToFavourites.AddOrDeleteItemToFavourit;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails.ImagesVIdeosModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails.ServiceDetails;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
@@ -33,6 +38,7 @@ import retrofit2.Response;
 
 import static android.content.Context.LOCATION_SERVICE;
 import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.handleException;
+import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.makeToast;
 import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.sharedPrefManager;
 
 public class ServiceDetailsFragment extends Fragment {
@@ -67,6 +73,14 @@ public class ServiceDetailsFragment extends Fragment {
     TextView tv_total_price;
     @BindView(R.id.btn_edit)
     Button btn_edit;
+    @BindView(R.id.iv_share_for_service_owner)
+    ImageView iv_share_for_service_owner;
+    @BindView(R.id.btn_order_service)
+    Button btn_order_service;
+    @BindView(R.id.tv_title_owner)
+    TextView tv_title_owner;
+    @BindView(R.id.relative_service_ownner)
+    RelativeLayout relative_service_ownner;
     @BindView(R.id.iv_owner)
     ImageView iv_owner;
     @BindView(R.id.tv_service_owner)
@@ -79,6 +93,7 @@ public class ServiceDetailsFragment extends Fragment {
     ImageView iv_open_chat;
 
     String user_id = "";
+    Bundle args;
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -107,22 +122,55 @@ public class ServiceDetailsFragment extends Fragment {
         rv_developments.setLayoutManager(linearLayoutManagerDevlopmentsDetails);
 
         ///// end //////
+
+        tv_total_price_title.setVisibility(View.GONE);
+        tv_total_price.setVisibility(View.GONE);
+
+        if (user_id.equals(String.valueOf(sharedPrefManager.getUserDate().getId()))) {
+            btn_edit.setVisibility(View.VISIBLE);
+            iv_share_for_service_owner.setVisibility(View.VISIBLE);
+            btn_order_service.setVisibility(View.GONE);
+            tv_title_owner.setVisibility(View.GONE);
+            relative_service_ownner.setVisibility(View.GONE);
+
+
+        } else {
+
+            btn_edit.setVisibility(View.GONE);
+            iv_share_for_service_owner.setVisibility(View.GONE);
+            btn_order_service.setVisibility(View.VISIBLE);
+            tv_title_owner.setVisibility(View.VISIBLE);
+            relative_service_ownner.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initEventDriven() {
-        tv_total_price_title.setVisibility(View.GONE);
-        tv_total_price.setVisibility(View.GONE);
-        Log.e("user_id", user_id);
-        Log.e("iiiid", String.valueOf(sharedPrefManager.getUserDate().getId()));
-        if (user_id.equals(String.valueOf(sharedPrefManager.getUserDate().getId()))) {
-            iv_open_chat.setVisibility(View.GONE);
-            iv_like.setVisibility(View.GONE);
-            btn_edit.setText("تعديل الخدمة");
 
-        } else {
-            btn_edit.setText("طلب الخدمة");
+        btn_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                args = new Bundle();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                ServiceDetailsFragment serviceDetailsFragment = new ServiceDetailsFragment();
+                serviceDetailsFragment.setArguments(args);
 
-        }
+//                fragmentTransaction.replace(R.id.frame_container, ed);
+                fragmentTransaction.commit();
+            }
+        });
+        iv_like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_to_favourit();
+            }
+        });
+        btn_order_service.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 
@@ -149,6 +197,11 @@ public class ServiceDetailsFragment extends Fragment {
                                 }
                             }
                             rv_videos_and_images.setAdapter(serviceDetailsVideosAndImagesAdapter);
+                            if (response.body().getData().isLike()) {
+                                iv_like.setImageResource(R.mipmap.favourite);
+                            } else {
+                                iv_like.setImageResource(R.mipmap.add_favourite);
+                            }
                             tv_rate.setText(response.body().getData().getRate());
                             tv__service_title.setText(response.body().getData().getTitle());
                             tv_service_category.setText(response.body().getData().getCategory());
@@ -169,6 +222,7 @@ public class ServiceDetailsFragment extends Fragment {
                                 rv_developments.setAdapter(serviceDevelopmentsDetailsAdapter);
                             }
                         }
+                        args.putString("response", response + "");
 
                     }
 
@@ -178,6 +232,24 @@ public class ServiceDetailsFragment extends Fragment {
                         t.printStackTrace();
                     }
                 });
+    }
+
+    void add_to_favourit() {
+        RetroWeb.getClient().create(ServiceApi.class).add_or_item_to_favourites(String.valueOf(sharedPrefManager.getUserDate().getId()),
+                getArguments().getString("service_id")).enqueue(new Callback<AddOrDeleteItemToFavourit>() {
+            @Override
+            public void onResponse(Call<AddOrDeleteItemToFavourit> call, Response<AddOrDeleteItemToFavourit> response) {
+                if (response.body().isValue()) {
+                    makeToast(getContext(), response.body().getMsg());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AddOrDeleteItemToFavourit> call, Throwable t) {
+                handleException(getActivity(), t);
+                t.printStackTrace();
+            }
+        });
     }
 
 }

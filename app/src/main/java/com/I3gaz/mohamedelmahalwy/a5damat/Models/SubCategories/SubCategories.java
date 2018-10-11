@@ -12,7 +12,7 @@ public class SubCategories {
     private boolean value;
     @SerializedName("data")
     @Expose
-    private List<SubCategoriesDatum> data = null;
+    private List<Datum> data = null;
 
     public boolean isValue() {
         return value;
@@ -22,11 +22,11 @@ public class SubCategories {
         this.value = value;
     }
 
-    public List<SubCategoriesDatum> getData() {
+    public List<Datum> getData() {
         return data;
     }
 
-    public void setData(List<SubCategoriesDatum> data) {
+    public void setData(List<Datum> data) {
         this.data = data;
     }
 

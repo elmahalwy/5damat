@@ -1,6 +1,5 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Network;
 
-import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.CategoriesAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddOrDeleteItemsToFavourites.AddOrDeleteItemToFavourit;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddService;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AllServices.AllServices;
@@ -16,8 +15,6 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerssModelss;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SubCategories.SubCategories;
 
 import org.json.JSONObject;
-
-import java.net.URI;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -87,6 +84,7 @@ public interface ServiceApi {
     @FormUrlEncoded
     @POST(Urls.ServiceDetails)
     Call<ServiceDetails> get_service_details(@Field("service_id") String service_id);
+
     @POST(Urls.add_service)
     Call<AddService> add_service(@Body JSONObject main);
 }

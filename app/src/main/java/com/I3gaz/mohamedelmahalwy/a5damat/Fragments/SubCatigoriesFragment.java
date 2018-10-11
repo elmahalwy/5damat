@@ -55,21 +55,18 @@ public class SubCatigoriesFragment extends Fragment {
     }
 
     void get_sub_categroies() {
-        RetroWeb.getClient().create(ServiceApi.class).get_sub_categories(String.valueOf(CategoriesAdapter.id)).
-                enqueue(new Callback<SubCategories>() {
-                    @Override
-                    public void onResponse(Call<SubCategories> call, Response<SubCategories> response) {
-                        if (response.body().isValue()) {
-                            subCatigoriesAdapter.addAll(response.body().getData().get(0).getSubCategories());
 
-                        }
-                    }
+        RetroWeb.getClient().create(ServiceApi.class).get_sub_categories(String.valueOf(CategoriesAdapter.id)).enqueue(new Callback<SubCategories>() {
+            @Override
+            public void onResponse(Call<SubCategories> call, Response<SubCategories> response) {
+                subCatigoriesAdapter.addAll(response.body().getData());
+            }
 
-                    @Override
-                    public void onFailure(Call<SubCategories> call, Throwable t) {
-                        handleException(getContext(), t);
-                        t.printStackTrace();
-                    }
-                });
+            @Override
+            public void onFailure(Call<SubCategories> call, Throwable t) {
+                handleException(getActivity(), t);
+                t.printStackTrace();
+            }
+        });
     }
 }
