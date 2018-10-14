@@ -453,8 +453,7 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                             cancel = true;
                             Log.e("development_list_empty", development_list_is_empty);
 
-                        }
-                        else if (developments_list.get(0).getSp_time_for_development().equals("لا")){
+                        } else if (developments_list.get(0).getSp_time_for_development().equals("لا")) {
                             if (developments_list.get(0).getSp_price_for_development().equals("سعر التطوير") ||
                                     developments_list.get(0).getSp_time_for_development().equals("هل سيزيد من مدة التنفيذ") ||
                                     TextUtils.isEmpty(developments_list.get(0).getEt_developments())) {
@@ -463,8 +462,7 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                                 Log.e("development_list_emptyy", development_list_is_empty);
                             }
 
-                        }
-                        else if (developments_list.get(0).getSp_time_for_development().equals("نعم")){
+                        } else if (developments_list.get(0).getSp_time_for_development().equals("نعم")) {
                             if (developments_list.get(0).getSp_price_for_development().equals("سعر التطوير") || developments_list.get(0).getSp_time().equals("مده التسليم") ||
                                     developments_list.get(0).getSp_time_for_development().equals("هل سيزيد من مدة التنفيذ") || TextUtils.isEmpty(developments_list.get(0).getEt_developments())) {
                                 Toast.makeText(context, "برجاء اكمال كل بيانات التطوير", Toast.LENGTH_SHORT).show();
@@ -582,20 +580,23 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                     RetroWeb.getClient().create(ServiceApi.class).add_service(main).enqueue(new Callback<AddService>() {
                         @Override
                         public void onResponse(Call<AddService> call, Response<AddService> response) {
-                            Log.e("response_add_service", response.body().toString());
-                            if (response.body().isValue()) {
-                                Log.e("gggg", "in");
-                                FragmentManager fm = ((HomeActivity) context).getSupportFragmentManager();
-                                FragmentTransaction ft = fm.beginTransaction();
-                                ft.replace(R.id.frame_container, new HomeFragmnet());
-                                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-                                ft.remove(new AddServiceFragment());
-                                fm.popBackStack();
-                                ft.commit();
-                            } else {
-                                Toast.makeText(context, "حدث خطأ ما", Toast.LENGTH_SHORT).show();
-                            }
+                            try {
+                                Log.e("response_add_service", response.body().toString());
+                                if (response.body().isValue()) {
+                                    Log.e("gggg", "in");
+                                    FragmentManager fm = ((HomeActivity) context).getSupportFragmentManager();
+                                    FragmentTransaction ft = fm.beginTransaction();
+                                    ft.replace(R.id.frame_container, new HomeFragmnet());
+                                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+                                    ft.remove(new AddServiceFragment());
+                                    fm.popBackStack();
+                                    ft.commit();
+                                } else {
+                                    Toast.makeText(context, "حدث خطأ ما", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (Exception e) {
 
+                            }
                         }
 
                         @Override

@@ -152,11 +152,11 @@ public class ServiceDetailsFragment extends Fragment {
                 args = new Bundle();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                ServiceDetailsFragment serviceDetailsFragment = new ServiceDetailsFragment();
+                AddServiceFragment serviceDetailsFragment = new AddServiceFragment();
                 serviceDetailsFragment.setArguments(args);
-
-//                fragmentTransaction.replace(R.id.frame_container, ed);
+                fragmentTransaction.replace(R.id.frame_container, serviceDetailsFragment);
                 fragmentTransaction.commit();
+                ((HomeActivity) getActivity()).came_from = "edit";
             }
         });
         iv_like.setOnClickListener(new View.OnClickListener() {
@@ -168,7 +168,6 @@ public class ServiceDetailsFragment extends Fragment {
         btn_order_service.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((HomeActivity)getActivity()).came_from="edit";
             }
         });
 

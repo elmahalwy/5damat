@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,13 +69,19 @@ public class HomeFragmnet extends Fragment {
     }
 
     void get_home_data() {
+        Log.e("sub_Catigories_id", SubCatigoriesAdapter.id + "");
         if (SubCatigoriesAdapter.id == 0) {
             RetroWeb.getClient().create(ServiceApi.class).get_all_service().enqueue(new Callback<AllServices>() {
                 @Override
                 public void onResponse(Call<AllServices> call, Response<AllServices> response) {
-                    if (response.body().isValue()) {
-                        homeAdapter.addAll(response.body().getData());
-                        rv_home.setAdapter(homeAdapter);
+                    try {
+                        Log.e("home_respone", response.toString());
+                        if (response.body().isValue()) {
+                            homeAdapter.addAll(response.body().getData());
+                            rv_home.setAdapter(homeAdapter);
+                        }
+                    } catch (Exception e) {
+                        Log.e("e", String.valueOf(e));
                     }
                 }
 
@@ -82,6 +89,8 @@ public class HomeFragmnet extends Fragment {
                 public void onFailure(Call<AllServices> call, Throwable t) {
                     handleException(getActivity(), t);
                     t.printStackTrace();
+                    Log.e("t", String.valueOf(t));
+
                 }
 
             });

@@ -191,6 +191,9 @@ public class AddServiceFragment extends Fragment {
 
     private void initUI() {
         Log.e("came_from",((HomeActivity)getActivity()).came_from);
+        if ((((HomeActivity) getActivity()).came_from.equals("edit"))){
+            Log.e("arguments_edit",getArguments().getString("response"));
+        }
         ((HomeActivity) getActivity()).dismiss_keyboard();
         getsp_service_price();
         getsp_category();
