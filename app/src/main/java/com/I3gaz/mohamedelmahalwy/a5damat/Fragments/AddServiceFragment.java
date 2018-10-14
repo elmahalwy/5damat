@@ -384,9 +384,11 @@ public class AddServiceFragment extends Fragment {
     private void getsp_service_price() {
         sp_service_price_list = new ArrayList<>();
         sp_service_price_list.add("السعر");
+        ((HomeActivity)getActivity()).showdialog();
         RetroWeb.getClient().create(ServiceApi.class).fill_add_service_spinner("main_prices").enqueue(new Callback<SpinnerssModelss>() {
             @Override
             public void onResponse(Call<SpinnerssModelss> call, Response<SpinnerssModelss> response) {
+                ((HomeActivity)getActivity()).dismis_dialog();
                 try {
                     sp_service_price_list.addAll(response.body().getData());
                     ArrayAdapter<String> levels_list_adapter = new ArrayAdapter<String>(getContext(), R.layout.text_spinner, sp_service_price_list) {
@@ -456,6 +458,7 @@ public class AddServiceFragment extends Fragment {
 
             @Override
             public void onFailure(Call<SpinnerssModelss> call, Throwable t) {
+                ((HomeActivity)getActivity()).dismis_dialog();
                 ((HomeActivity) getActivity()).handleException(getContext(), t);
                 t.printStackTrace();
 
@@ -468,9 +471,12 @@ public class AddServiceFragment extends Fragment {
         sp_category_list_ids = new ArrayList<>();
         sp_category_list.add("القسم");
         sp_category_list_ids.add(0);
+        ((HomeActivity)getActivity()).showdialog();
+
         RetroWeb.getClient().create(ServiceApi.class).fill_spinner("category").enqueue(new Callback<SpinnerModel>() {
             @Override
             public void onResponse(Call<SpinnerModel> call, Response<SpinnerModel> response) {
+                ((HomeActivity)getActivity()).dismis_dialog();
                 try {
                     for (int i = 0; i < response.body().getData().size(); i++) {
                         sp_category_list.add(response.body().getData().get(i).getName());
@@ -545,6 +551,7 @@ public class AddServiceFragment extends Fragment {
 
             @Override
             public void onFailure(Call<SpinnerModel> call, Throwable t) {
+                ((HomeActivity)getActivity()).dismis_dialog();
                 ((HomeActivity) getActivity()).handleException(getContext(), t);
                 t.printStackTrace();
 
@@ -557,10 +564,12 @@ public class AddServiceFragment extends Fragment {
         sp_sub_category_list_ids = new ArrayList<>();
         sp_sub_category_list.add("القسم الفرعي");
         sp_sub_category_list_ids.add(0);
+        ((HomeActivity)getActivity()).showdialog();
         Log.e("sp_category_id", sp_category_id + "");
         RetroWeb.getClient().create(ServiceApi.class).fill_spinner_sub_category(String.valueOf(sp_category_id)).enqueue(new Callback<SpinnerModel>() {
             @Override
             public void onResponse(Call<SpinnerModel> call, Response<SpinnerModel> response) {
+                ((HomeActivity)getActivity()).dismis_dialog();
                 try {
                     for (int i = 0; i < response.body().getData().size(); i++) {
                         sp_sub_category_list.add(response.body().getData().get(i).getName());
@@ -634,6 +643,7 @@ public class AddServiceFragment extends Fragment {
 
             @Override
             public void onFailure(Call<SpinnerModel> call, Throwable t) {
+                ((HomeActivity)getActivity()).dismis_dialog();
                 ((HomeActivity) getActivity()).handleException(getContext(), t);
                 t.printStackTrace();
 
@@ -644,9 +654,11 @@ public class AddServiceFragment extends Fragment {
     private void getsp_service_delivery_time() {
         sp_service_delivery_time_list = new ArrayList<>();
         sp_service_delivery_time_list.add("مدة التسليم");
+        ((HomeActivity)getActivity()).showdialog();
         RetroWeb.getClient().create(ServiceApi.class).fill_add_service_spinner("deadlines").enqueue(new Callback<SpinnerssModelss>() {
             @Override
             public void onResponse(Call<SpinnerssModelss> call, Response<SpinnerssModelss> response) {
+                ((HomeActivity)getActivity()).dismis_dialog();
                 try {
                     sp_service_delivery_time_list.addAll(response.body().getData());
                     ArrayAdapter<String> levels_list_adapter = new ArrayAdapter<String>(getContext(), R.layout.text_spinner, sp_service_delivery_time_list) {
@@ -716,6 +728,7 @@ public class AddServiceFragment extends Fragment {
 
             @Override
             public void onFailure(Call<SpinnerssModelss> call, Throwable t) {
+                ((HomeActivity)getActivity()).dismis_dialog();
                 ((HomeActivity) getActivity()).handleException(getContext(), t);
                 t.printStackTrace();
 

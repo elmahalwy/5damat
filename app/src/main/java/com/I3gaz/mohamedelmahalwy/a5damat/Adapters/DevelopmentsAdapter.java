@@ -37,6 +37,7 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass;
 import com.I3gaz.mohamedelmahalwy.a5damat.Utils.SharedPrefManager;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -67,6 +68,7 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
     List<String> sp_time;
     String sp_time_name = "";
     String development_list_is_empty = "no";
+
 
     public DevelopmentsAdapter(List<DevelopmentModel> developments_list, Context context) {
         this.developments_list = developments_list;
@@ -157,9 +159,11 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
         if (!developments_list.get(position).isAdded_to_list()) {
             sp_price_for_development_list = new ArrayList<>();
             sp_price_for_development_list.add("سعر التطوير");
+            ((HomeActivity)context).showdialog();
             RetroWeb.getClient().create(ServiceApi.class).fill_add_service_spinner("sub_prices").enqueue(new Callback<SpinnerssModelss>() {
                 @Override
                 public void onResponse(Call<SpinnerssModelss> call, Response<SpinnerssModelss> response) {
+                    ((HomeActivity)context).dismis_dialog();
                     try {
                         sp_price_for_development_list.addAll(response.body().getData());
                         ArrayAdapter<String> levels_list_adapter = new ArrayAdapter<String>(context, R.layout.text_spinner, sp_price_for_development_list) {
@@ -230,6 +234,7 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
 
                 @Override
                 public void onFailure(Call<SpinnerssModelss> call, Throwable t) {
+                    ((HomeActivity)context).dismis_dialog();
                     ((HomeActivity) context).handleException(context, t);
                     t.printStackTrace();
 
@@ -311,9 +316,11 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
         if (!developments_list.get(position).isAdded_to_list()) {
             sp_time = new ArrayList<>();
             sp_time.add("مده التسليم");
+            ((HomeActivity)context).showdialog();
             RetroWeb.getClient().create(ServiceApi.class).fill_add_service_spinner("deadlines").enqueue(new Callback<SpinnerssModelss>() {
                 @Override
                 public void onResponse(Call<SpinnerssModelss> call, Response<SpinnerssModelss> response) {
+                    ((HomeActivity)context).dismis_dialog();
                     try {
                         sp_time.addAll(response.body().getData());
                         ArrayAdapter<String> levels_list_adapter = new ArrayAdapter<String>(context, R.layout.text_spinner, sp_time) {
@@ -385,6 +392,7 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
 
                 @Override
                 public void onFailure(Call<SpinnerssModelss> call, Throwable t) {
+                    ((HomeActivity)context).dismis_dialog();
                     ((HomeActivity) context).handleException(context, t);
                     t.printStackTrace();
 
@@ -490,6 +498,7 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                 if (cancel) {
 
                 } else {
+                    ((HomeActivity) context).showdialog();
                     JSONObject main = new JSONObject();
                     /////////////////////////////video_links///////////////////////////////////////
                     JSONArray video_links = new JSONArray();
@@ -580,6 +589,7 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                     RetroWeb.getClient().create(ServiceApi.class).add_service(main).enqueue(new Callback<AddService>() {
                         @Override
                         public void onResponse(Call<AddService> call, Response<AddService> response) {
+                            ((HomeActivity) context).dismis_dialog();
                             try {
                                 Log.e("response_add_service", response.body().toString());
                                 if (response.body().isValue()) {
@@ -601,6 +611,7 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
 
                         @Override
                         public void onFailure(Call<AddService> call, Throwable t) {
+                            ((HomeActivity) context).dismis_dialog();
                             handleException(context, t);
                             t.printStackTrace();
                         }

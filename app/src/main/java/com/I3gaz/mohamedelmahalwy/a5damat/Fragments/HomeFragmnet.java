@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 
+import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.HomeAdapter;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.SubCatigoriesAdapter;
@@ -20,6 +21,8 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.AllServices.AllServices;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
+import com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 
 import butterknife.ButterKnife;
@@ -70,12 +73,14 @@ public class HomeFragmnet extends Fragment {
 
     void get_home_data() {
         Log.e("sub_Catigories_id", SubCatigoriesAdapter.id + "");
+        ((HomeActivity)getActivity()).showdialog();
         if (SubCatigoriesAdapter.id == 0) {
             RetroWeb.getClient().create(ServiceApi.class).get_all_service().enqueue(new Callback<AllServices>() {
                 @Override
                 public void onResponse(Call<AllServices> call, Response<AllServices> response) {
                     try {
                         Log.e("home_respone", response.toString());
+                        ((HomeActivity)getActivity()).dismis_dialog();
                         if (response.body().isValue()) {
                             homeAdapter.addAll(response.body().getData());
                             rv_home.setAdapter(homeAdapter);
@@ -87,6 +92,7 @@ public class HomeFragmnet extends Fragment {
 
                 @Override
                 public void onFailure(Call<AllServices> call, Throwable t) {
+                    ((HomeActivity)getActivity()).dismis_dialog();
                     handleException(getActivity(), t);
                     t.printStackTrace();
                     Log.e("t", String.valueOf(t));
@@ -98,6 +104,7 @@ public class HomeFragmnet extends Fragment {
             RetroWeb.getClient().create(ServiceApi.class).get_service_category(String.valueOf(SubCatigoriesAdapter.id)).enqueue(new Callback<AllServices>() {
                 @Override
                 public void onResponse(Call<AllServices> call, Response<AllServices> response) {
+                    ((HomeActivity)getActivity()).dismis_dialog();
                     if (response.body().isValue()) {
                         homeAdapter.addAll(response.body().getData());
                         rv_home.setAdapter(homeAdapter);
@@ -106,6 +113,7 @@ public class HomeFragmnet extends Fragment {
 
                 @Override
                 public void onFailure(Call<AllServices> call, Throwable t) {
+                    ((HomeActivity)getActivity()).dismis_dialog();
                     handleException(getActivity(), t);
                     t.printStackTrace();
                 }

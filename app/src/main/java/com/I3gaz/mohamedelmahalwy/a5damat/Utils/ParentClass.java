@@ -51,6 +51,7 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 
 import org.json.JSONException;
@@ -80,6 +81,8 @@ public class ParentClass extends AppCompatActivity {
     public List<String> list_names;
     public List<Integer> list_idss;
     public List<SpinnerData> spinner_list;
+    KProgressHUD hud ;
+
 
 
     @Override
@@ -87,6 +90,8 @@ public class ParentClass extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         customLoadingDialog = new CustomLoadingDialog(ParentClass.this, R.style.DialogSlideAnim);
         sharedPrefManager = new SharedPrefManager(this);
+        hud = KProgressHUD.create(this);
+
     }
 
 
@@ -466,4 +471,17 @@ public class ParentClass extends AppCompatActivity {
 
         return result;
     }
+
+    public void showdialog() {
+        hud.setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("برجاء الانتظار")
+                .setCancellable(true)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+    }
+    public  void dismis_dialog(){
+        hud.dismiss();
+    }
+
 }
