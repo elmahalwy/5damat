@@ -168,7 +168,7 @@ public class ServiceDetailsFragment extends Fragment {
         btn_order_service.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ((HomeActivity)getActivity()).came_from="edit";
             }
         });
 

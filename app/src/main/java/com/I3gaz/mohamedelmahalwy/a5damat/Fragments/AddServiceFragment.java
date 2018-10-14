@@ -190,6 +190,7 @@ public class AddServiceFragment extends Fragment {
     }
 
     private void initUI() {
+        Log.e("came_from",((HomeActivity)getActivity()).came_from);
         ((HomeActivity) getActivity()).dismiss_keyboard();
         getsp_service_price();
         getsp_category();

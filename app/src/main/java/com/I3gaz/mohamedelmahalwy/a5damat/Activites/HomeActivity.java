@@ -78,6 +78,7 @@ public class HomeActivity extends ParentClass {
     MySettingsFragment mySettingsFragment;
     MyFavouritesFragment myFavouritesFragment;
     SubCatigoriesFragment subCatigoriesFragment;
+    public  String came_from = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,6 +183,7 @@ public class HomeActivity extends ParentClass {
             @Override
             public void onClick(View v) {
                 replaceFragment(addServiceFragment);
+                came_from = "add";
             }
         });
     }
