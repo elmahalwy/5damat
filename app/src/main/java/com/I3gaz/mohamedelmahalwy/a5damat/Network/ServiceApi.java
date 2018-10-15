@@ -16,6 +16,7 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails.ServiceDetails;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerssModelss;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SubCategories.SubCategories;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.UserNotifications.Notifications;
 
 import java.util.List;
 
@@ -104,4 +105,8 @@ public interface ServiceApi {
                                      @Field("service_id") String service_id,
                                      @Field("total_salary") String total_salary,
                                      @Field("sub_services") List<String> developments);
+
+    @GET(Urls.UserNotifications)
+    Call<Notifications> user_notifications(@Path("user_id") String user_id);
+
 }
