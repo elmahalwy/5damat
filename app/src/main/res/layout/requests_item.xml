@@ -11,9 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
+        android:layout_marginTop="20dp"
         android:text="2992929"
         android:textColor="#464646" />
 
@@ -21,11 +21,11 @@
         android:id="@+id/tv_request_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_toStartOf="@+id/tv_request_code"
+        android:layout_marginTop="20dp"
         android:layout_toLeftOf="@+id/tv_request_code"
+        android:layout_toStartOf="@+id/tv_request_code"
         android:text="cajcjajsjcajcjcasjcjc"
         android:textColor="#464646" />
 
@@ -34,11 +34,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_request_title"
-        android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_toStartOf="@+id/tv_request_code"
+        android:layout_marginTop="4dp"
         android:layout_toLeftOf="@+id/tv_request_code"
+        android:layout_toStartOf="@+id/tv_request_code"
         android:text="asjjjdjasdj"
         android:textColor="#464646" />
 
@@ -46,40 +46,53 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_category"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
         android:layout_marginBottom="20dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="20dp"
         android:weightSum="4">
 
-        <TextView
-            android:id="@+id/tv_refuse"
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="0.7"
-            android:background="@drawable/refuse_request"
-            android:gravity="center"
-            android:text="رفض"
-            android:textColor="#464646" />
+            android:layout_weight="0.7">
+
+            <TextView
+                android:id="@+id/tv_refuse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/refuse_request"
+                android:gravity="center"
+                android:text="رفض"
+                android:textColor="#464646" />
+        </RelativeLayout>
 
         <View
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_weight="0.2" />
 
-        <TextView
-            android:id="@+id/tv_accept"
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="0.7"
-            android:background="@drawable/accept_request"
-            android:gravity="center"
-            android:text="قبول"
-            android:textColor="#464646" />
+            android:layout_weight="0.7">
+
+            <TextView
+                android:id="@+id/tv_accept"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.7"
+                android:background="@drawable/accept_request"
+                android:gravity="center"
+                android:text="قبول"
+                android:textColor="#464646" />
+        </RelativeLayout>
+
 
         <View
             android:layout_width="0dp"

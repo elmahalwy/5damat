@@ -79,7 +79,7 @@ public class HomeActivity extends ParentClass {
     ImageView iv_profile_pic;
 
     AddServiceFragment addServiceFragment;
-    RecyclerView rv_categories;
+   public RecyclerView rv_categories;
 
     CategoriesAdapter categoriesAdapter;
     LinearLayoutManager linearLayoutManager;
@@ -151,6 +151,7 @@ public class HomeActivity extends ParentClass {
         homeFragmnet = new HomeFragmnet();
         mySettingsFragment = new MySettingsFragment();
         addServiceFragment = new AddServiceFragment();
+        requestsFragment = new RequestsFragment();
         myFavouritesFragment = new MyFavouritesFragment();
         subCatigoriesFragment = new SubCatigoriesFragment();
         messagesFragment = new MessagesFragment();
