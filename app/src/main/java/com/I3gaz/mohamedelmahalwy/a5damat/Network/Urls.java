@@ -4,7 +4,7 @@ package com.I3gaz.mohamedelmahalwy.a5damat.Network;
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.CategoriesAdapter;
 
 public class Urls {
-    public final static String BaseUrl = "http://5dmat.e3gaz.net/api/v1/";
+    public final static String BaseUrl = "http://e3gaz.net/5dmat/public/api/v1/";
     public final static String SignUp = "user";
     public final static String SignIn = "user/login";
     public final static String ResetPassword = "reset_password";
@@ -21,5 +21,8 @@ public class Urls {
     public final static String MyMessges ="user_messages";
     public final static String ServiceDetails = "single-service";
     public final static String add_service = "service";
+    public final static String incoming_orders = "incoming_orders/{user_id}/{status}";
+    public final static String purchases = "purchases/{user_id}/{status}";
+
 
 }

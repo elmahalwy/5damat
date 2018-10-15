@@ -2,17 +2,20 @@ package com.I3gaz.mohamedelmahalwy.a5damat.Network;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddOrDeleteItemsToFavourites.AddOrDeleteItemToFavourit;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddService;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddServiceJson.AddServiceJson;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AllServices.AllServices;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.LoginData.User;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MainCategories.MainCategories;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyFavourites.Favourites;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyMessages.MyMessages;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyServices.MyServices;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.RequestsModel.RequestsModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ResetPassword.ResetPassword;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails.ServiceDetails;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerssModelss;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SubCategories.SubCategories;
+import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
 
@@ -21,6 +24,8 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -85,6 +90,14 @@ public interface ServiceApi {
     @POST(Urls.ServiceDetails)
     Call<ServiceDetails> get_service_details(@Field("service_id") String service_id);
 
-    @POST(Urls.add_service)
-    Call<AddService> add_service(@Body JSONObject main);
+    @Headers("Accept: application/json")
+    @POST("service")
+    Call<AddService> add_service(@Body AddServiceJson main);
+
+    @GET(Urls.incoming_orders)
+    Call<RequestsModel> incoming_orders(@Path("user_id") String user_id, @Path("status") String status);
+
+    @GET(Urls.purchases)
+    Call<RequestsModel> purchases(@Path("user_id") String user_id, @Path("status") String status);
+
 }

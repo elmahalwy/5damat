@@ -1,5 +1,6 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -44,17 +45,22 @@ public class RequestsFragment extends Fragment {
     TextView tv_cancle;
     @BindView(R.id.tv_in_waiting)
     TextView tv_in_waiting;
-
-    @BindView(R.id.rv_requests)
     RecyclerView rv_requests;
     RequestsPurchaseAdapter requestsPurchaseAdapter;
     LinearLayoutManager linearLayoutManager;
     List<RequestsModel> list;
+    String in_tab = "requests";
+    String in_status = "waiting";
+    String status_color_selected = "#000000";
+    String status_color_unselected = "#7c7c7c";
+    String tab_selected = "#3558B9";
+    String tab_unselected = "#000000";
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.requests_fragment, container, false);
         ButterKnife.bind(this, view);
+        rv_requests = (RecyclerView) view.findViewById(R.id.rv_requests);
         list = new ArrayList<>();
         requestsPurchaseAdapter = new RequestsPurchaseAdapter(list, getContext());
         linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -71,6 +77,63 @@ public class RequestsFragment extends Fragment {
     }
 
     void initEventDrivn() {
-
+        relative_purchase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_purchase.setTextColor(Color.parseColor(tab_selected));
+                tv_requests.setTextColor(Color.parseColor(tab_unselected));
+                in_tab = "purchase";
+                in_status = "waiting";
+            }
+        });
+        relative_requests.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_purchase.setTextColor(Color.parseColor(tab_unselected));
+                tv_requests.setTextColor(Color.parseColor(tab_selected));
+                in_tab = "requests";
+                in_status = "waiting";
+            }
+        });
+        tv_in_done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_in_waiting.setTextColor(Color.parseColor(status_color_unselected));
+                tv_cancle.setTextColor(Color.parseColor(status_color_unselected));
+                tv_done.setTextColor(Color.parseColor(status_color_unselected));
+                tv_in_done.setTextColor(Color.parseColor(status_color_selected));
+                in_status = "in_progress";
+            }
+        });
+        tv_done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_in_waiting.setTextColor(Color.parseColor(status_color_unselected));
+                tv_cancle.setTextColor(Color.parseColor(status_color_unselected));
+                tv_done.setTextColor(Color.parseColor(status_color_selected));
+                tv_in_done.setTextColor(Color.parseColor(status_color_unselected));
+                in_status = "deliverd";
+            }
+        });
+        tv_cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_in_waiting.setTextColor(Color.parseColor(status_color_unselected));
+                tv_cancle.setTextColor(Color.parseColor(status_color_selected));
+                tv_done.setTextColor(Color.parseColor(status_color_unselected));
+                tv_in_done.setTextColor(Color.parseColor(status_color_unselected));
+                in_status = "rejected";
+            }
+        });
+        tv_in_waiting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_in_waiting.setTextColor(Color.parseColor(status_color_selected));
+                tv_cancle.setTextColor(Color.parseColor(status_color_unselected));
+                tv_done.setTextColor(Color.parseColor(status_color_unselected));
+                tv_in_done.setTextColor(Color.parseColor(status_color_unselected));
+                in_status = "waiting";
+            }
+        });
     }
 }

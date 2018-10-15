@@ -459,6 +459,7 @@ public class AddServiceFragment extends Fragment {
             @Override
             public void onFailure(Call<SpinnerssModelss> call, Throwable t) {
                 ((HomeActivity)getActivity()).dismis_dialog();
+
                 ((HomeActivity) getActivity()).handleException(getContext(), t);
                 t.printStackTrace();
 

@@ -29,15 +29,27 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.AddServiceFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.HomeFragmnet;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.DevelopmentModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddService;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddServiceJson.AddServiceJson;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddServiceJson.Development;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddServiceJson.Image;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddServiceJson.ImageFilesSize;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddServiceJson.ImagesLink;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddServiceJson.Video;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerssModelss;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
+import com.I3gaz.mohamedelmahalwy.a5damat.Network.Urls;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
-import com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass;
 import com.I3gaz.mohamedelmahalwy.a5damat.Utils.SharedPrefManager;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.kaopiz.kprogresshud.KProgressHUD;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,6 +63,8 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.handleException;
 
@@ -159,11 +173,11 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
         if (!developments_list.get(position).isAdded_to_list()) {
             sp_price_for_development_list = new ArrayList<>();
             sp_price_for_development_list.add("سعر التطوير");
-            ((HomeActivity)context).showdialog();
+            ((HomeActivity) context).showdialog();
             RetroWeb.getClient().create(ServiceApi.class).fill_add_service_spinner("sub_prices").enqueue(new Callback<SpinnerssModelss>() {
                 @Override
                 public void onResponse(Call<SpinnerssModelss> call, Response<SpinnerssModelss> response) {
-                    ((HomeActivity)context).dismis_dialog();
+                    ((HomeActivity) context).dismis_dialog();
                     try {
                         sp_price_for_development_list.addAll(response.body().getData());
                         ArrayAdapter<String> levels_list_adapter = new ArrayAdapter<String>(context, R.layout.text_spinner, sp_price_for_development_list) {
@@ -234,7 +248,7 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
 
                 @Override
                 public void onFailure(Call<SpinnerssModelss> call, Throwable t) {
-                    ((HomeActivity)context).dismis_dialog();
+                    ((HomeActivity) context).dismis_dialog();
                     ((HomeActivity) context).handleException(context, t);
                     t.printStackTrace();
 
@@ -316,11 +330,11 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
         if (!developments_list.get(position).isAdded_to_list()) {
             sp_time = new ArrayList<>();
             sp_time.add("مده التسليم");
-            ((HomeActivity)context).showdialog();
+            ((HomeActivity) context).showdialog();
             RetroWeb.getClient().create(ServiceApi.class).fill_add_service_spinner("deadlines").enqueue(new Callback<SpinnerssModelss>() {
                 @Override
                 public void onResponse(Call<SpinnerssModelss> call, Response<SpinnerssModelss> response) {
-                    ((HomeActivity)context).dismis_dialog();
+                    ((HomeActivity) context).dismis_dialog();
                     try {
                         sp_time.addAll(response.body().getData());
                         ArrayAdapter<String> levels_list_adapter = new ArrayAdapter<String>(context, R.layout.text_spinner, sp_time) {
@@ -392,7 +406,7 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
 
                 @Override
                 public void onFailure(Call<SpinnerssModelss> call, Throwable t) {
-                    ((HomeActivity)context).dismis_dialog();
+                    ((HomeActivity) context).dismis_dialog();
                     ((HomeActivity) context).handleException(context, t);
                     t.printStackTrace();
 
@@ -417,10 +431,10 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                     Toast.makeText(context, "برجاء تحديد القسم", Toast.LENGTH_SHORT).show();
                     cancel = true;
                 }
-                if (AddServiceFragment.sp_sub_category_id == 0) {
-                    Toast.makeText(context, "برجاء تحديد القسم الفرعي", Toast.LENGTH_SHORT).show();
-                    cancel = true;
-                }
+//                if (AddServiceFragment.sp_sub_category_id == 0) {
+//                    Toast.makeText(context, "برجاء تحديد القسم الفرعي", Toast.LENGTH_SHORT).show();
+//                    cancel = true;
+//                }
                 if (TextUtils.isEmpty(AddServiceFragment.et_service_details.getText().toString())) {
                     AddServiceFragment.et_service_details.setError("برجاء اكمال البيانات");
                     focusView = AddServiceFragment.et_service_details;
@@ -506,7 +520,7 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                         JSONObject jsonObject = new JSONObject();
                         try {
                             jsonObject.put("video_id", AddServiceFragment.video_links_list.get(i));
-                        } catch (JSONException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                         video_links.put(jsonObject);
@@ -517,7 +531,7 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                         JSONObject jsonObject = new JSONObject();
                         try {
                             jsonObject.put("image_link", AddServiceFragment.image_links_list.get(i));
-                        } catch (JSONException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                         image_links.put(jsonObject);
@@ -527,8 +541,8 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                     for (int i = 0; i < AddServiceFragment.image_files_list.size(); i++) {
                         JSONObject jsonObject = new JSONObject();
                         try {
-                            jsonObject.put("image", AddServiceFragment.image_files_list.get(i));
-                        } catch (JSONException e) {
+                            jsonObject.put("image", String.valueOf(AddServiceFragment.image_files_list.get(i)));
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                         image_files.put(jsonObject);
@@ -586,36 +600,56 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                         e.printStackTrace();
                     }
                     /////////////////////////////sending_request/////////////////////////////////////////////////////////
-                    RetroWeb.getClient().create(ServiceApi.class).add_service(main).enqueue(new Callback<AddService>() {
-                        @Override
-                        public void onResponse(Call<AddService> call, Response<AddService> response) {
-                            ((HomeActivity) context).dismis_dialog();
-                            try {
-                                Log.e("response_add_service", response.body().toString());
-                                if (response.body().isValue()) {
-                                    Log.e("gggg", "in");
-                                    FragmentManager fm = ((HomeActivity) context).getSupportFragmentManager();
-                                    FragmentTransaction ft = fm.beginTransaction();
-                                    ft.replace(R.id.frame_container, new HomeFragmnet());
-                                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-                                    ft.remove(new AddServiceFragment());
-                                    fm.popBackStack();
-                                    ft.commit();
-                                } else {
-                                    Toast.makeText(context, "حدث خطأ ما", Toast.LENGTH_SHORT).show();
+
+
+                    String url = "http://e3gaz.net/5dmat/public/api/v1/" + "service";
+                    AndroidNetworking.post(url)
+                            .addHeaders("Content-Type", "application/json")
+                            .addJSONObjectBody(main)
+                            .setPriority(Priority.MEDIUM)
+                            .build()
+                            .getAsJSONObject(new JSONObjectRequestListener() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    ((HomeActivity) context).dismis_dialog();
+
+                                    Log.e("response", response + "");
+                                    try {
+                                        Log.e("response_add_service", response.toString());
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
                                 }
-                            } catch (Exception e) {
 
-                            }
-                        }
+                                @Override
+                                public void onError(ANError error) {
+                                    ((HomeActivity) context).dismis_dialog();
 
-                        @Override
-                        public void onFailure(Call<AddService> call, Throwable t) {
-                            ((HomeActivity) context).dismis_dialog();
-                            handleException(context, t);
-                            t.printStackTrace();
-                        }
-                    });
+                                    if (error.getErrorCode() != 0) {
+
+                                        // received error from server
+                                        // error.getErrorCode() - the error code from server
+                                        // error.getErrorBody() - the error body from server
+                                        // error.getErrorDetail() - just an error detail
+                                        Log.e("onError errorCode : ", String.valueOf(error.getErrorCode()));
+                                        Log.e("onError errorBody : ", error.getErrorBody());
+                                        if (error.getErrorCode() == 400) {
+                                            Toast.makeText(context, "حدث خطأ ما...", Toast.LENGTH_SHORT).show();
+                                        }
+                                        if (error.getErrorCode() == 500) {
+                                            Toast.makeText(context, "خطأ فى الاتصال بالسيرفر...", Toast.LENGTH_SHORT).show();
+                                        }
+                                        // get parsed error object (If ApiError is your class)
+
+                                    } else {
+                                        // error.getErrorDetail() : connectionError, parseError, requestCancelledError
+                                        Log.e("onError errorDetail : ", error.getErrorDetail());
+                                        if (error.getErrorDetail().equals("connectionError")) {
+                                            Toast.makeText(context, "حطأ فى الاتصال بالانترنت...", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }
+                            });
 
                 }
             }
