@@ -1,5 +1,6 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Adapters;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -8,15 +9,25 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
 import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.RequestsFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.RequestsModel;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddOrDeleteItemsToFavourites.AddOrDeleteItemToFavourit;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.RequestsModel.Datum;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.RequestsModel.RequestsChangeStatusModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.RequestsModel.Requests_Tab_Model;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
+import com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +46,10 @@ public class RequestsPurchaseAdapter extends RecyclerView.Adapter<RequestsPurcha
     Context context;
     LayoutInflater layoutInflater;
     public static String type;
+    Dialog pop_up_cancel_request;
+    EditText et_reason_of_cancle_process;
+    Button btn_choose;
+    int id;
 
     public RequestsPurchaseAdapter(Context context) {
         this.requests_purchases_list = new ArrayList<>();
@@ -50,7 +65,19 @@ public class RequestsPurchaseAdapter extends RecyclerView.Adapter<RequestsPurcha
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+        pop_up_cancel_request = new Dialog(context);
+        pop_up_cancel_request.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        pop_up_cancel_request.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        pop_up_cancel_request.setContentView(R.layout.pop_cancle_process);
+
+        // to set width and height
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(pop_up_cancel_request.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        et_reason_of_cancle_process = (EditText) pop_up_cancel_request.findViewById(R.id.et_reason_of_cancle_process);
+        btn_choose = (Button) pop_up_cancel_request.findViewById(R.id.btn_choose);
         holder.tv_request_code.setText(String.valueOf(requests_purchases_list.get(position).getOrderId()));
         holder.tv_request_title.setText(requests_purchases_list.get(position).getTitle());
         holder.tv_category.setText(requests_purchases_list.get(position).getCategory());
@@ -79,12 +106,103 @@ public class RequestsPurchaseAdapter extends RecyclerView.Adapter<RequestsPurcha
         holder.tv_refuse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (type.equals("in_progress")) {
+                    pop_up_cancel_request.show();
+                    id = requests_purchases_list.get(position).getOrderId();
+                } else {
+                    ((HomeActivity) context).showdialog();
+                    RetroWeb.getClient().create(ServiceApi.class).change_request_status(
+                            String.valueOf(requests_purchases_list.get(position).getOrderId()), type, "").enqueue(new Callback<RequestsChangeStatusModel>() {
+                        @Override
+                        public void onResponse(Call<RequestsChangeStatusModel> call, Response<RequestsChangeStatusModel> response) {
+                            ((HomeActivity) context).dismis_dialog();
+                            try {
+                                Log.e("response_change_status", response.toString());
+                                if (response.body().isValue()) {
+                                    Toast.makeText(context, "تمت العمليه بنجاح", Toast.LENGTH_SHORT).show();
+                                    requests_purchases_list.remove(position);
+                                } else {
+                                    Toast.makeText(context, "حدث خطأ ما", Toast.LENGTH_SHORT).show();
 
+                                }
+                            } catch (Exception e) {
+
+                            }
+
+                        }
+                        @Override
+                        public void onFailure(Call<RequestsChangeStatusModel> call, Throwable t) {
+                            ((HomeActivity) context).dismis_dialog();
+                            handleException(context, t);
+                            t.printStackTrace();
+                        }
+                    });
+                }
             }
         });
         holder.tv_accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((HomeActivity) context).showdialog();
+                RetroWeb.getClient().create(ServiceApi.class).change_request_status(
+                        String.valueOf(requests_purchases_list.get(position).getOrderId()), type, "").enqueue(new Callback<RequestsChangeStatusModel>() {
+                    @Override
+                    public void onResponse(Call<RequestsChangeStatusModel> call, Response<RequestsChangeStatusModel> response) {
+                        ((HomeActivity) context).dismis_dialog();
+                        try {
+                            Log.e("response_change_status", response.toString());
+                            if (response.body().isValue()) {
+                                Toast.makeText(context, "تمت العمليه بنجاح", Toast.LENGTH_SHORT).show();
+                                requests_purchases_list.remove(position);
+                            } else {
+                                Toast.makeText(context, "حدث خطأ ما", Toast.LENGTH_SHORT).show();
+
+                            }
+                        } catch (Exception e) {
+
+                        }
+
+                    }
+                    @Override
+                    public void onFailure(Call<RequestsChangeStatusModel> call, Throwable t) {
+                        ((HomeActivity) context).dismis_dialog();
+                        handleException(context, t);
+                        t.printStackTrace();
+                    }
+                });
+            }
+        });
+        btn_choose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((HomeActivity) context).showdialog();
+                RetroWeb.getClient().create(ServiceApi.class).change_request_status(
+                        String.valueOf(id), type, et_reason_of_cancle_process.getText().toString()).enqueue(new Callback<RequestsChangeStatusModel>() {
+                    @Override
+                    public void onResponse(Call<RequestsChangeStatusModel> call, Response<RequestsChangeStatusModel> response) {
+                        ((HomeActivity) context).dismis_dialog();
+                        try {
+                            Log.e("response_change_status", response.toString());
+                            if (response.body().isValue()) {
+                                Toast.makeText(context, "تمت العمليه بنجاح", Toast.LENGTH_SHORT).show();
+                                requests_purchases_list.remove(position);
+                            } else {
+                                Toast.makeText(context, "حدث خطأ ما", Toast.LENGTH_SHORT).show();
+
+                            }
+                        } catch (Exception e) {
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<RequestsChangeStatusModel> call, Throwable t) {
+                        ((HomeActivity) context).dismis_dialog();
+                        handleException(context, t);
+                        t.printStackTrace();
+                    }
+                });
 
             }
         });
