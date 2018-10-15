@@ -2,6 +2,7 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Models.AllServices;
 
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -30,10 +31,13 @@ public class Datum {
     private List<Object> imagesLinks = null;
     @SerializedName("key_words")
     @Expose
-    private List<String> keyWords = null;
+    private String keyWords;
     @SerializedName("owner")
     @Expose
     private String owner;
+    @SerializedName("owner_id")
+    @Expose
+    private int ownerId;
     @SerializedName("price")
     @Expose
     private String price;
@@ -52,6 +56,7 @@ public class Datum {
     @SerializedName("created_date")
     @Expose
     private String createdDate;
+
 
     public int getId() {
         return id;
@@ -109,11 +114,11 @@ public class Datum {
         this.imagesLinks = imagesLinks;
     }
 
-    public List<String> getKeyWords() {
+    public String getKeyWords() {
         return keyWords;
     }
 
-    public void setKeyWords(List<String> keyWords) {
+    public void setKeyWords(String keyWords) {
         this.keyWords = keyWords;
     }
 
@@ -123,6 +128,14 @@ public class Datum {
 
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
     }
 
     public String getPrice() {
@@ -173,4 +186,7 @@ public class Datum {
         this.createdDate = createdDate;
     }
 
+
 }
+
+

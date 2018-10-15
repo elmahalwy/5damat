@@ -2,10 +2,12 @@ package com.I3gaz.mohamedelmahalwy.a5damat.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +30,8 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
     List<Datum> categories_list;
     Context context;
     LayoutInflater layoutInflater;
-    public  static int id;
+    public static int id;
+    int selected_postion = -1;
 
     public CategoriesAdapter(Context context) {
         categories_list = new ArrayList<>();
@@ -44,12 +47,16 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CategoriesAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final CategoriesAdapter.ViewHolder holder, final int position) {
         holder.tv_category.setText(categories_list.get(position).getName());
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 id = categories_list.get(position).getId();
+                selected_postion = holder.getAdapterPosition();
+                notifyDataSetChanged();
                 if (id == 0) {
                     FragmentManager fragmentManager = ((HomeActivity) context).getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -68,6 +75,12 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
 
             }
         });
+        if (selected_postion == position) {
+
+            holder.tv_category.setTextColor(Color.parseColor("#3558B9"));
+        } else {
+            holder.tv_category.setTextColor(Color.parseColor("#B2BBC9"));
+        }
     }
 
 
@@ -75,6 +88,11 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
     public int getItemCount() {
         return categories_list.size();
     }
+
+    public int getItemViewType(int position) {
+        return position;
+    }
+
 
     public void addAll(List<Datum> data) {
         categories_list.clear();

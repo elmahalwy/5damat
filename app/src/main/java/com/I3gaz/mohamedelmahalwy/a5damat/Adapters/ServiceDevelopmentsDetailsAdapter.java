@@ -11,7 +11,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails.SubService;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails.Development;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
 
 import java.util.ArrayList;
@@ -21,10 +21,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ServiceDevelopmentsDetailsAdapter extends RecyclerView.Adapter<ServiceDevelopmentsDetailsAdapter.ViewHolder> {
-    List<SubService> developments_list;
+    List<Development> developments_list;
     Context context;
     LayoutInflater layoutInflater;
     int lastPosition = -1;
+    List<String> selected_ids_devlopments;
 
 
     public ServiceDevelopmentsDetailsAdapter(Context context) {
@@ -42,9 +43,17 @@ public class ServiceDevelopmentsDetailsAdapter extends RecyclerView.Adapter<Serv
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        selected_ids_devlopments =  new ArrayList<>();
         holder.tv_details.setText(developments_list.get(position).getTitle());
         holder.tv_price.setText(developments_list.get(position).getDeadline());
-        holder.tv_sub_price.setText(developments_list.get(position).getSubPrices());
+        holder.tv_sub_price.setText(developments_list.get(position).getPrice());
+
+        holder.iv_choose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//selected_ids_devlopments.add()
+            }
+        });
 
 
         if (position > lastPosition) {
@@ -62,7 +71,7 @@ public class ServiceDevelopmentsDetailsAdapter extends RecyclerView.Adapter<Serv
         return developments_list.size();
     }
 
-    public void addAll(List<SubService> data) {
+    public void addAll(List<Development> data) {
         developments_list.clear();
         developments_list.addAll(data);
         notifyDataSetChanged();

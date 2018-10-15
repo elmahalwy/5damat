@@ -3,6 +3,8 @@ package com.I3gaz.mohamedelmahalwy.a5damat.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,12 +37,14 @@ public class MySettingsFragment extends Fragment {
     TextView tv_support;
     @BindView(R.id.tv_log_out)
     TextView tv_log_out;
-
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.my_settings_fragment, container, false);
         ButterKnife.bind(this, view);
-
+        fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
         initUI();
         initEventDriven();
         return view;
@@ -57,13 +61,17 @@ public class MySettingsFragment extends Fragment {
         tv_my_favourites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                MyFavouritesFragment myFavouritesFragment = new MyFavouritesFragment();
+                fragmentTransaction.replace(R.id.frame_container, myFavouritesFragment);
+                fragmentTransaction.commit();
             }
         });
         tv_edit_my_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                EditAccountFragment editAccountFragment = new EditAccountFragment();
+                fragmentTransaction.replace(R.id.frame_container, editAccountFragment);
+                fragmentTransaction.commit();
             }
         });
         tv_my_balance.setOnClickListener(new View.OnClickListener() {
@@ -76,13 +84,17 @@ public class MySettingsFragment extends Fragment {
         tv_my_services.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                MyServiceFragment myServiceFragment = new MyServiceFragment();
+                fragmentTransaction.replace(R.id.frame_container, myServiceFragment);
+                fragmentTransaction.commit();
             }
         });
         tv_support.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                AssistanceFragment assistanceFragment = new AssistanceFragment();
+                fragmentTransaction.replace(R.id.frame_container, assistanceFragment);
+                fragmentTransaction.commit();
             }
         });
         tv_log_out.setOnClickListener(new View.OnClickListener() {

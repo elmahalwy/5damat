@@ -36,7 +36,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.content.Context.LOCATION_SERVICE;
 import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.handleException;
 import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.makeToast;
 import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.sharedPrefManager;
@@ -107,6 +106,7 @@ public class ServiceDetailsFragment extends Fragment {
     }
 
     private void initUI() {
+        args = new Bundle();
         //// first recycler for images and videos ////
         imagesVIdeosModelList = new ArrayList<>();
         serviceDetailsVideosAndImagesAdapter = new ServiceDetailsVideosAndImagesAdapter(imagesVIdeosModelList, getContext());
@@ -149,7 +149,6 @@ public class ServiceDetailsFragment extends Fragment {
         btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                args = new Bundle();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 AddServiceFragment serviceDetailsFragment = new AddServiceFragment();
@@ -212,12 +211,12 @@ public class ServiceDetailsFragment extends Fragment {
                             user_id = "" + response.body().getData().getOwnerId();
                             Log.e("userid", "" + response.body().getData().getOwnerId());
 
-                            if (response.body().getData().getSubServices().isEmpty()) {
+                            if (response.body().getData().getDevelopments().isEmpty()) {
                                 rv_developments.setVisibility(View.GONE);
                                 tv_not_found_development.setVisibility(View.VISIBLE);
                             } else {
                                 tv_not_found_development.setVisibility(View.GONE);
-                                serviceDevelopmentsDetailsAdapter.addAll(response.body().getData().getSubServices());
+                                serviceDevelopmentsDetailsAdapter.addAll(response.body().getData().getDevelopments());
                                 rv_developments.setAdapter(serviceDevelopmentsDetailsAdapter);
                             }
                         }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.CategoriesAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.SubCatigoriesAdapter;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.MainCategories.MainCategories;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SubCategories.SubCategories;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;

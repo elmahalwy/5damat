@@ -158,16 +158,21 @@ public class SignInActivity extends ParentClass {
             // There was an error; don't attempt login and focus the first
             focusView.requestFocus();
         } else {
+            Log.e("email", et_email.getText().toString());
+            Log.e("password", et_password.getText().toString());
+            Log.e("mobile_token", mobile_token + "");
+            Log.e("serial", Build.SERIAL);
             show_custom_loading_dialog();
             RetroWeb.getClient().create(ServiceApi.class).Sign_in_response_call(et_email.getText().toString()
                     , et_password.getText().toString(), mobile_token, Build.SERIAL).enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
+                    Log.e("response_login", response + "");
                     dismiss_custom_loading_dialog();
                     if (response.body().isValue()) {
                         sharedPrefManager.setLoginStatus(true);
                         sharedPrefManager.setUserDate(response.body().getData());
-                        Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                         startActivity(intent);
 
 
@@ -206,7 +211,7 @@ public class SignInActivity extends ParentClass {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         } else {
-            Log.e("jjjjj","kkk");
+            Log.e("jjjjj", "kkk");
 
         }
     }
@@ -240,14 +245,14 @@ public class SignInActivity extends ParentClass {
                     @Override
                     public void onCancel() {
                         // App code
-                        Log.e("facebook_token",  "face");
+                        Log.e("facebook_token", "face");
 
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
                         // App code
-                        Log.e("facebook_exception",  exception+"execption");
+                        Log.e("facebook_exception", exception + "execption");
 
                     }
                 });

@@ -7,6 +7,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Data {
 
+    @SerializedName("like")
+    @Expose
+    private boolean like;
     @SerializedName("id")
     @Expose
     private int id;
@@ -16,9 +19,12 @@ public class Data {
     @SerializedName("note")
     @Expose
     private String note;
-    @Expose
     @SerializedName("category")
+    @Expose
     private String category;
+    @SerializedName("owner_image")
+    @Expose
+    private String ownerImage;
     @SerializedName("images")
     @Expose
     private List<String> images = null;
@@ -27,7 +33,7 @@ public class Data {
     private List<String> videos = null;
     @SerializedName("key_words")
     @Expose
-    private List<String> keyWords = null;
+    private Object keyWords;
     @SerializedName("owner")
     @Expose
     private String owner;
@@ -43,9 +49,6 @@ public class Data {
     @SerializedName("roles")
     @Expose
     private String roles;
-    @SerializedName("like")
-    @Expose
-    private boolean like;
     @SerializedName("rate")
     @Expose
     private String rate;
@@ -55,9 +58,17 @@ public class Data {
     @SerializedName("created_date")
     @Expose
     private String createdDate;
-    @SerializedName("sub_services")
+    @SerializedName("developments")
     @Expose
-    private List<SubService> subServices = null;
+    private List<Development> developments = null;
+
+    public boolean isLike() {
+        return like;
+    }
+
+    public void setLike(boolean like) {
+        this.like = like;
+    }
 
     public int getId() {
         return id;
@@ -83,6 +94,22 @@ public class Data {
         this.note = note;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getOwnerImage() {
+        return ownerImage;
+    }
+
+    public void setOwnerImage(String ownerImage) {
+        this.ownerImage = ownerImage;
+    }
+
     public List<String> getImages() {
         return images;
     }
@@ -99,11 +126,11 @@ public class Data {
         this.videos = videos;
     }
 
-    public List<String> getKeyWords() {
+    public Object getKeyWords() {
         return keyWords;
     }
 
-    public void setKeyWords(List<String> keyWords) {
+    public void setKeyWords(Object keyWords) {
         this.keyWords = keyWords;
     }
 
@@ -171,28 +198,12 @@ public class Data {
         this.createdDate = createdDate;
     }
 
-    public List<SubService> getSubServices() {
-        return subServices;
+    public List<Development> getDevelopments() {
+        return developments;
     }
 
-    public void setSubServices(List<SubService> subServices) {
-        this.subServices = subServices;
+    public void setDevelopments(List<Development> developments) {
+        this.developments = developments;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-
-    public boolean isLike() {
-        return like;
-    }
-
-    public void setLike(boolean like) {
-        this.like = like;
-    }
 }

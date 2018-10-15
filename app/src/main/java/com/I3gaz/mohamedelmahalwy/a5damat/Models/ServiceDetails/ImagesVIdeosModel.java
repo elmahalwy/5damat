@@ -1,7 +1,7 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails;
 
 public class ImagesVIdeosModel {
-    String type , video_image;
+    String type, video_image;
 
     public String getType() {
         return type;

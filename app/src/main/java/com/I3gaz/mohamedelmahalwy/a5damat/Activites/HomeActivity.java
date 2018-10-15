@@ -19,8 +19,12 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.CategoriesAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.HomeAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.AddServiceFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.HomeFragmnet;
+import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.MessagesFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.MyFavouritesFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.MySettingsFragment;
+import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.NotificationsFragment;
+import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.RequestsFragment;
+import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.SearchFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.SubCatigoriesFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MainCategories.MainCategories;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
@@ -67,6 +71,13 @@ public class HomeActivity extends ParentClass {
     @BindView(R.id.iv_add)
     ImageView iv_add;
 
+    @BindView(R.id.iv_notification)
+    ImageView iv_notification;
+    @BindView(R.id.tv_toolbar_title)
+    TextView tv_toolbar_title;
+    @BindView(R.id.iv_profile_pic)
+    ImageView iv_profile_pic;
+
     AddServiceFragment addServiceFragment;
     RecyclerView rv_categories;
 
@@ -78,7 +89,13 @@ public class HomeActivity extends ParentClass {
     MySettingsFragment mySettingsFragment;
     MyFavouritesFragment myFavouritesFragment;
     SubCatigoriesFragment subCatigoriesFragment;
-    public  String came_from = "";
+    MessagesFragment messagesFragment;
+    RequestsFragment requestsFragment;
+    SearchFragment searchFragment;
+    NotificationsFragment notificationsFragment;
+
+
+    public String came_from = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,16 +108,19 @@ public class HomeActivity extends ParentClass {
         initEventDriven();
         handle_clicks_bottom_tab();
         get_main_categories();
-        Log.e("iiid", "" + sharedPrefManager.getUserDate().getId());
+        Log.e("iiid", "" + String.valueOf(sharedPrefManager.getUserDate().getId()));
         Log.e("user_name", "" + sharedPrefManager.getUserDate().getUsername());
         Log.e("email", "" + sharedPrefManager.getUserDate().getEmail());
         Log.e("token", "" + sharedPrefManager.getUserDate().getApiToken());
         Log.e("mobile", "" + sharedPrefManager.getUserDate().getMobile());
         Log.e("image", "" + sharedPrefManager.getUserDate().getImage());
 
+
     }
 
     void initUi() {
+        tv_home.setTextColor(Color.parseColor("#174BB0"));
+        iv_home.setImageResource(R.mipmap.home);
 
         rv_categories = (RecyclerView) findViewById(R.id.rv_categories);
         categoriesAdapter = new CategoriesAdapter(HomeActivity.this);
@@ -111,7 +131,19 @@ public class HomeActivity extends ParentClass {
     }
 
     void initEventDriven() {
+        iv_profile_pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment(mySettingsFragment);
 
+            }
+        });
+        iv_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment(notificationsFragment);
+            }
+        });
 
     }
 
@@ -121,6 +153,9 @@ public class HomeActivity extends ParentClass {
         addServiceFragment = new AddServiceFragment();
         myFavouritesFragment = new MyFavouritesFragment();
         subCatigoriesFragment = new SubCatigoriesFragment();
+        messagesFragment = new MessagesFragment();
+        searchFragment = new SearchFragment();
+        notificationsFragment = new NotificationsFragment();
     }
 
     void handle_clicks_bottom_tab() {
@@ -142,6 +177,7 @@ public class HomeActivity extends ParentClass {
         relative_requests.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                replaceFragment(requestsFragment);
                 tv_home.setTextColor(Color.parseColor("#B2BBC9"));
                 iv_home.setImageResource(R.mipmap.home_grey);
                 tv_messages.setTextColor(Color.parseColor("#B2BBC9"));
@@ -156,6 +192,7 @@ public class HomeActivity extends ParentClass {
         relative_messages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                replaceFragment(messagesFragment);
                 tv_home.setTextColor(Color.parseColor("#B2BBC9"));
                 iv_home.setImageResource(R.mipmap.home_grey);
                 tv_messages.setTextColor(Color.parseColor("#174BB0"));
@@ -169,6 +206,7 @@ public class HomeActivity extends ParentClass {
         relative_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                replaceFragment(searchFragment);
                 tv_home.setTextColor(Color.parseColor("#B2BBC9"));
                 iv_home.setImageResource(R.mipmap.home_grey);
                 tv_messages.setTextColor(Color.parseColor("#B2BBC9"));

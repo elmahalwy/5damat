@@ -12,7 +12,7 @@ public class AllServices {
     private boolean value;
     @SerializedName("data")
     @Expose
-    private List<Datum> data = null;
+    private List< Datum> data = null;
 
     public boolean isValue() {
         return value;

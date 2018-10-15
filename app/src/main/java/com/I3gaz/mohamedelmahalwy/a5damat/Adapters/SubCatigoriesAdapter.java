@@ -1,7 +1,11 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +13,11 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+
+
+import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
+import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.HomeFragmnet;
+
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SubCategories.Datum;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
@@ -47,6 +56,11 @@ public class SubCatigoriesAdapter extends RecyclerView.Adapter<SubCatigoriesAdap
             @Override
             public void onClick(View v) {
                 id = sub_catigories_list.get(position).getId();
+                FragmentManager fragmentManager = ((HomeActivity) context).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                HomeFragmnet homeFragmnet = new HomeFragmnet();
+                fragmentTransaction.replace(R.id.frame_container, homeFragmnet);
+                fragmentTransaction.commit();
 
             }
         });
