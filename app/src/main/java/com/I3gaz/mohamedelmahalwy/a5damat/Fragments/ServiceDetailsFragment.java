@@ -18,9 +18,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
+import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.DevelopmentsAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.ServiceDetailsVideosAndImagesAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.ServiceDevelopmentsDetailsAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddOrDeleteItemsToFavourites.AddOrDeleteItemToFavourit;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.OrderService.OrderService;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails.Development;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails.ImagesVIdeosModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails.ServiceDetails;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
@@ -56,8 +59,8 @@ public class ServiceDetailsFragment extends Fragment {
     TextView tv_service_category;
     @BindView(R.id.tv_details)
     TextView tv_details;
-    @BindView(R.id.tv_main_price)
-    TextView tv_main_price;
+    //    @BindView(R.id.tv_main_price)
+    public static TextView tv_main_price;
     @BindView(R.id.tv_delivery_time)
     TextView tv_delivery_time;
     @BindView(R.id.rv_developments)
@@ -66,10 +69,10 @@ public class ServiceDetailsFragment extends Fragment {
     LinearLayoutManager linearLayoutManagerDevlopmentsDetails;
     @BindView(R.id.tv_not_found_development)
     TextView tv_not_found_development;
-    @BindView(R.id.tv_total_price_title)
-    TextView tv_total_price_title;
-    @BindView(R.id.tv_total_price)
-    TextView tv_total_price;
+    //    @BindView(R.id.tv_total_price_title)
+    public static TextView tv_total_price_title;
+    //    @BindView(R.id.tv_total_price)
+    public static TextView tv_total_price;
     @BindView(R.id.btn_edit)
     Button btn_edit;
     @BindView(R.id.iv_share_for_service_owner)
@@ -98,6 +101,9 @@ public class ServiceDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.service_details_fragment_layout, container, false);
         ButterKnife.bind(this, view);
+        tv_main_price = view.findViewById(R.id.tv_main_price);
+        tv_total_price_title = view.findViewById(R.id.tv_total_price_title);
+        tv_total_price = view.findViewById(R.id.tv_total_price);
         Log.e("service_id", getArguments().getString("service_id"));
         initUI();
         get_service_details();
@@ -167,6 +173,7 @@ public class ServiceDetailsFragment extends Fragment {
         btn_order_service.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                order_service();
             }
         });
 
@@ -196,7 +203,7 @@ public class ServiceDetailsFragment extends Fragment {
                             }
                             rv_videos_and_images.setAdapter(serviceDetailsVideosAndImagesAdapter);
                             if (response.body().getData().isLike()) {
-                                iv_like.setImageResource(R.mipmap.favourite);
+                                iv_like.setImageResource(R.mipmap.favourited);
                             } else {
                                 iv_like.setImageResource(R.mipmap.add_favourite);
                             }
@@ -204,7 +211,7 @@ public class ServiceDetailsFragment extends Fragment {
                             tv__service_title.setText(response.body().getData().getTitle());
                             tv_service_category.setText(response.body().getData().getCategory());
                             tv_details.setText(response.body().getData().getNote());
-                            tv_main_price.setText("السعر الاساسي " + response.body().getData().getPrice());
+                            tv_main_price.setText(response.body().getData().getPrice());
                             tv_delivery_time.setText("مدة التسليم " + response.body().getData().getDeadline() + " يوم");
                             tv_service_owner.setText(response.body().getData().getOwner());
 
@@ -249,5 +256,27 @@ public class ServiceDetailsFragment extends Fragment {
             }
         });
     }
+
+    void order_service() {
+
+        RetroWeb.getClient().create(ServiceApi.class).order_service(String.valueOf(sharedPrefManager.getUserDate().getId()), getArguments().getString("service_id"),
+                tv_total_price.getText().toString(), ServiceDevelopmentsDetailsAdapter.selected_ids_devlopments).enqueue(new Callback<OrderService>() {
+            @Override
+            public void onResponse(Call<OrderService> call, Response<OrderService> response) {
+                if (response.body().isValue()) {
+                    makeToast(getContext(), "تم ارسال طلبك بنجاح...");
+                } else {
+                    makeToast(getContext(), "حدث خطأ ما...");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrderService> call, Throwable t) {
+                handleException(getActivity(), t);
+                t.printStackTrace();
+            }
+        });
+    }
+
 
 }

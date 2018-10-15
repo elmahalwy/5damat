@@ -9,12 +9,15 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.MainCategories.MainCategories;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyFavourites.Favourites;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyMessages.MyMessages;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyServices.MyServices;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.OrderService.OrderService;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.RequestsModel.Requests_Tab_Model;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ResetPassword.ResetPassword;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails.ServiceDetails;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerssModelss;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SubCategories.SubCategories;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -96,4 +99,9 @@ public interface ServiceApi {
     @GET(Urls.purchases)
     Call<Requests_Tab_Model> purchases(@Path("user_id") String user_id, @Path("status") String status);
 
+    @POST(Urls.OrderService)
+    Call<OrderService> order_service(@Field("user_id") String user_id,
+                                     @Field("service_id") String service_id,
+                                     @Field("total_salary") String total_salary,
+                                     @Field("sub_services") List<String> developments);
 }

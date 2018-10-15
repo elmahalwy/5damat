@@ -18,11 +18,12 @@ public class Urls {
     public final static String Spinner_sub_categoryUrl = "category/{category_id}";
     public final static String AddOrDeleteItemToFavourites = "fav_service";
     public final static String MyServices = "my_services/{user_id}";
-    public final static String MyMessges ="user_messages";
+    public final static String MyMessges = "user_messages";
     public final static String ServiceDetails = "single-service";
     public final static String add_service = "service";
     public final static String incoming_orders = "incoming_orders/{user_id}/{status}";
     public final static String purchases = "purchases/{user_id}/{status}";
+    public final static String OrderService = "order_service";
 
 
 }
