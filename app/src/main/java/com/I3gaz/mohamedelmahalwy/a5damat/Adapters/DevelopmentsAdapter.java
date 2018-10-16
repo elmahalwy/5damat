@@ -40,6 +40,7 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.Urls;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
+import com.I3gaz.mohamedelmahalwy.a5damat.Utils.ServiceGenerator;
 import com.I3gaz.mohamedelmahalwy.a5damat.Utils.SharedPrefManager;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -60,6 +61,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -82,6 +84,7 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
     List<String> sp_time;
     String sp_time_name = "";
     String development_list_is_empty = "no";
+    public static String service_id = "";
 
 
     public DevelopmentsAdapter(List<DevelopmentModel> developments_list, Context context) {
@@ -612,10 +615,16 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                                 @Override
                                 public void onResponse(JSONObject response) {
                                     ((HomeActivity) context).dismis_dialog();
-
-                                    Log.e("response", response + "");
                                     try {
                                         Log.e("response_add_service", response.toString());
+                                        if (response.getString("value").equals("true")) {
+                                            service_id = response.getString("data");
+                                            Log.e("service_id", service_id+"popopop");
+//                                            AddServiceFragment.upload_images();
+                                        }
+                                        else {
+                                            Log.e("false","false");
+                                        }
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
@@ -655,6 +664,7 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
             }
         });
     }
+
 
     @Override
     public int getItemCount() {

@@ -40,20 +40,28 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.DevelopmentModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.VideoAndImageModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerssModelss;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.UploadImage;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.UploadImage1;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.Urls;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
+import com.I3gaz.mohamedelmahalwy.a5damat.Utils.ServiceGenerator;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -118,11 +126,14 @@ public class AddServiceFragment extends Fragment {
     String filePath;
     File file;
     public static ScrollView scrol_view;
+    public static List<MultipartBody.Part> parts;
+    public static MultipartBody.Part[] fileParts;
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.add_service_fragment_layout, container, false);
         ButterKnife.bind(this, view);
+        ((HomeActivity) getActivity()).rv_categories.setVisibility(View.GONE);
         scrol_view = (ScrollView) view.findViewById(R.id.scrol_view);
         et_what_would_you_do_for_exchange_of_this_service = (EditText) view.findViewById(R.id.et_what_would_you_do_for_exchange_of_this_service);
         tv_add_service = (TextView) view.findViewById(R.id.tv_sign_up);
@@ -190,9 +201,9 @@ public class AddServiceFragment extends Fragment {
     }
 
     private void initUI() {
-        Log.e("came_from",((HomeActivity)getActivity()).came_from);
-        if ((((HomeActivity) getActivity()).came_from.equals("edit"))){
-            Log.e("arguments_edit",getArguments().getString("response"));
+        Log.e("came_from", ((HomeActivity) getActivity()).came_from);
+        if ((((HomeActivity) getActivity()).came_from.equals("edit"))) {
+            Log.e("arguments_edit", getArguments().getString("response"));
         }
         ((HomeActivity) getActivity()).dismiss_keyboard();
         getsp_service_price();
@@ -343,6 +354,18 @@ public class AddServiceFragment extends Fragment {
 
                 rv_videos_and_images.getAdapter().notifyDataSetChanged();
                 rv_videos_and_images.scrollToPosition(videoAndImageList.size() - 1);
+                ////////////////////////////////////////////////////////////////////////
+//                parts = new ArrayList<>();
+//                if (imageUri != null) {
+//                    parts.add(prepareFilePart("photo", imageUri));
+//                }
+//                MediaType mediaType = MediaType.parse("");//Based on the Postman logs,it's not specifying Content-Type, this is why I've made this empty content/mediaType
+//                fileParts = new MultipartBody.Part[image_files_list.size()];
+//                for (int i = 0; i < image_files_list.size(); i++) {
+//                    RequestBody fileBody = RequestBody.create(mediaType, file);
+//                    //Setting the file name as an empty string here causes the same issue, which is sending the request successfully without saving the files in the backend, so don't neglect the file name parameter.
+//                    fileParts[i] = MultipartBody.Part.createFormData(String.format(Locale.ENGLISH, "files[%d]", i), file.getName(), fileBody);
+//                }
             } catch (Exception e) {
                 e.printStackTrace();
                 Toast.makeText(getActivity(), "حدث خطأ ما", Toast.LENGTH_LONG).show();
@@ -384,11 +407,11 @@ public class AddServiceFragment extends Fragment {
     private void getsp_service_price() {
         sp_service_price_list = new ArrayList<>();
         sp_service_price_list.add("السعر");
-        ((HomeActivity)getActivity()).showdialog();
+        ((HomeActivity) getActivity()).showdialog();
         RetroWeb.getClient().create(ServiceApi.class).fill_add_service_spinner("main_prices").enqueue(new Callback<SpinnerssModelss>() {
             @Override
             public void onResponse(Call<SpinnerssModelss> call, Response<SpinnerssModelss> response) {
-                ((HomeActivity)getActivity()).dismis_dialog();
+                ((HomeActivity) getActivity()).dismis_dialog();
                 try {
                     sp_service_price_list.addAll(response.body().getData());
                     ArrayAdapter<String> levels_list_adapter = new ArrayAdapter<String>(getContext(), R.layout.text_spinner, sp_service_price_list) {
@@ -458,7 +481,7 @@ public class AddServiceFragment extends Fragment {
 
             @Override
             public void onFailure(Call<SpinnerssModelss> call, Throwable t) {
-                ((HomeActivity)getActivity()).dismis_dialog();
+                ((HomeActivity) getActivity()).dismis_dialog();
 
                 ((HomeActivity) getActivity()).handleException(getContext(), t);
                 t.printStackTrace();
@@ -472,12 +495,12 @@ public class AddServiceFragment extends Fragment {
         sp_category_list_ids = new ArrayList<>();
         sp_category_list.add("القسم");
         sp_category_list_ids.add(0);
-        ((HomeActivity)getActivity()).showdialog();
+        ((HomeActivity) getActivity()).showdialog();
 
         RetroWeb.getClient().create(ServiceApi.class).fill_spinner("category").enqueue(new Callback<SpinnerModel>() {
             @Override
             public void onResponse(Call<SpinnerModel> call, Response<SpinnerModel> response) {
-                ((HomeActivity)getActivity()).dismis_dialog();
+                ((HomeActivity) getActivity()).dismis_dialog();
                 try {
                     for (int i = 0; i < response.body().getData().size(); i++) {
                         sp_category_list.add(response.body().getData().get(i).getName());
@@ -552,7 +575,7 @@ public class AddServiceFragment extends Fragment {
 
             @Override
             public void onFailure(Call<SpinnerModel> call, Throwable t) {
-                ((HomeActivity)getActivity()).dismis_dialog();
+                ((HomeActivity) getActivity()).dismis_dialog();
                 ((HomeActivity) getActivity()).handleException(getContext(), t);
                 t.printStackTrace();
 
@@ -565,12 +588,12 @@ public class AddServiceFragment extends Fragment {
         sp_sub_category_list_ids = new ArrayList<>();
         sp_sub_category_list.add("القسم الفرعي");
         sp_sub_category_list_ids.add(0);
-        ((HomeActivity)getActivity()).showdialog();
+        ((HomeActivity) getActivity()).showdialog();
         Log.e("sp_category_id", sp_category_id + "");
         RetroWeb.getClient().create(ServiceApi.class).fill_spinner_sub_category(String.valueOf(sp_category_id)).enqueue(new Callback<SpinnerModel>() {
             @Override
             public void onResponse(Call<SpinnerModel> call, Response<SpinnerModel> response) {
-                ((HomeActivity)getActivity()).dismis_dialog();
+                ((HomeActivity) getActivity()).dismis_dialog();
                 try {
                     for (int i = 0; i < response.body().getData().size(); i++) {
                         sp_sub_category_list.add(response.body().getData().get(i).getName());
@@ -644,7 +667,7 @@ public class AddServiceFragment extends Fragment {
 
             @Override
             public void onFailure(Call<SpinnerModel> call, Throwable t) {
-                ((HomeActivity)getActivity()).dismis_dialog();
+                ((HomeActivity) getActivity()).dismis_dialog();
                 ((HomeActivity) getActivity()).handleException(getContext(), t);
                 t.printStackTrace();
 
@@ -655,11 +678,11 @@ public class AddServiceFragment extends Fragment {
     private void getsp_service_delivery_time() {
         sp_service_delivery_time_list = new ArrayList<>();
         sp_service_delivery_time_list.add("مدة التسليم");
-        ((HomeActivity)getActivity()).showdialog();
+        ((HomeActivity) getActivity()).showdialog();
         RetroWeb.getClient().create(ServiceApi.class).fill_add_service_spinner("deadlines").enqueue(new Callback<SpinnerssModelss>() {
             @Override
             public void onResponse(Call<SpinnerssModelss> call, Response<SpinnerssModelss> response) {
-                ((HomeActivity)getActivity()).dismis_dialog();
+                ((HomeActivity) getActivity()).dismis_dialog();
                 try {
                     sp_service_delivery_time_list.addAll(response.body().getData());
                     ArrayAdapter<String> levels_list_adapter = new ArrayAdapter<String>(getContext(), R.layout.text_spinner, sp_service_delivery_time_list) {
@@ -729,7 +752,7 @@ public class AddServiceFragment extends Fragment {
 
             @Override
             public void onFailure(Call<SpinnerssModelss> call, Throwable t) {
-                ((HomeActivity)getActivity()).dismis_dialog();
+                ((HomeActivity) getActivity()).dismis_dialog();
                 ((HomeActivity) getActivity()).handleException(getContext(), t);
                 t.printStackTrace();
 
@@ -747,6 +770,51 @@ public class AddServiceFragment extends Fragment {
 
         developmentList.add(developmentModel);
     }
+
+//    @NonNull
+//    private RequestBody createPartFromString(String descriptionString) {
+//        return RequestBody.create(
+//                okhttp3.MultipartBody.FORM, descriptionString);
+//    }
+//
+//    @NonNull
+//    private MultipartBody.Part prepareFilePart(String partName, Uri fileUri) {
+//
+//        // create RequestBody instance from file
+//        RequestBody requestFile =
+//                RequestBody.create(
+//                        MediaType.parse(getActivity().getContentResolver().getType(fileUri)),
+//                        file
+//                );
+//
+//        // MultipartBody.Part is used to send also the actual file name
+//        return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
+//    }
+
+//    public static void upload_images() {
+//        Log.e("service_id_upload", DevelopmentsAdapter.service_id);
+//        Log.e("parts", fileParts.toString());
+//        MultipartBody.Part[] image = fileParts;
+//        RetroWeb.getClient().create(ServiceApi.class).uploadMultipleFilesDynamic(image, DevelopmentsAdapter.service_id).enqueue(new Callback<UploadImage1>() {
+//            @Override
+//            public void onResponse(Call<UploadImage1> call, Response<UploadImage1> response) {
+//                try {
+//                    Log.e("response_upload", response.toString());
+//                    Log.e("response_upload1", response.body() + "");
+//
+//                } catch (Exception e) {
+//                    Log.e("upload_eror", e.toString());
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<UploadImage1> call, Throwable t) {
+//                Log.e("upload_eror", t.toString());
+//
+//            }
+//        });
+//    }
 
 
 }

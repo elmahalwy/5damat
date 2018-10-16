@@ -18,17 +18,24 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails.ServiceDetails;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerssModelss;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SubCategories.SubCategories;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.UploadImage;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.UploadImage1;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.UserNotifications.Notifications;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface ServiceApi {
@@ -123,4 +130,10 @@ public interface ServiceApi {
     @POST(Urls.search)
     Call<AllServices> search(@Field("service") String search_key);
 
+    @Multipart
+    @POST(Urls.upload_image)
+    Call<UploadImage1> uploadMultipleFilesDynamic(
+            @Part MultipartBody.Part[] image, @Part("service_id") String service_id);
+
 }
+
