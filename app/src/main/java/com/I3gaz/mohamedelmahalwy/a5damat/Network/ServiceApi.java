@@ -10,6 +10,7 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyFavourites.Favourites;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyMessages.MyMessages;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyServices.MyServices;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.OrderService.OrderService;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.RequestsModel.RequestDetailsModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.RequestsModel.RequestsChangeStatusModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.RequestsModel.Requests_Tab_Model;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ResetPassword.ResetPassword;
@@ -114,5 +115,8 @@ public interface ServiceApi {
     @POST(Urls.change_request_status)
     Call<RequestsChangeStatusModel> change_request_status(@Field("order_id") String order_id,
                                                           @Field("status") String status, @Field("refuse") String refuse);
+
+    @GET(Urls.single_request)
+    Call<RequestDetailsModel> single_request(@Path("order_id") String order_id);
 
 }

@@ -24,9 +24,9 @@ public class Urls {
     public final static String incoming_orders = "incoming_orders/{user_id}/{status}";
     public final static String purchases = "purchases/{user_id}/{status}";
     public final static String OrderService = "order_service";
-    public final static  String UserNotifications = "notifications/{user_id}";
-    public final static  String change_request_status = "order_status";
-
+    public final static String UserNotifications = "notifications/{user_id}";
+    public final static String change_request_status = "order_status";
+    public final static String single_request = "single_order/{order_id}";
 
 
 }
