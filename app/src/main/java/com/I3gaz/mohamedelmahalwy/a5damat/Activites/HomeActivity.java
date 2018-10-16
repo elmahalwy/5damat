@@ -96,6 +96,7 @@ public class HomeActivity extends ParentClass {
 
 
     public String came_from = "";
+    Bundle args ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +120,7 @@ public class HomeActivity extends ParentClass {
     }
 
     void initUi() {
+
         tv_home.setTextColor(Color.parseColor("#174BB0"));
         iv_home.setImageResource(R.mipmap.home);
 
@@ -134,6 +136,7 @@ public class HomeActivity extends ParentClass {
         iv_profile_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 replaceFragment(mySettingsFragment);
 
             }
@@ -149,6 +152,11 @@ public class HomeActivity extends ParentClass {
 
     void init_fragments() {
         homeFragmnet = new HomeFragmnet();
+        args = new Bundle();
+        args.putString("type","home");
+        args.putString("search_key", "");
+        homeFragmnet.setArguments(args);
+
         mySettingsFragment = new MySettingsFragment();
         addServiceFragment = new AddServiceFragment();
         requestsFragment = new RequestsFragment();
@@ -163,6 +171,7 @@ public class HomeActivity extends ParentClass {
         relative_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 replaceFragment(homeFragmnet);
                 tv_home.setTextColor(Color.parseColor("#174BB0"));
                 iv_home.setImageResource(R.mipmap.home);

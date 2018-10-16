@@ -39,6 +39,7 @@ public class HomeFragmnet extends Fragment {
 
     LinearLayoutManager linearLayoutManager;
 
+
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_fragment_layout, container, false);
         ButterKnife.bind(this, view);
@@ -51,7 +52,12 @@ public class HomeFragmnet extends Fragment {
 
         initUI();
         initEventDrivn();
-        get_home_data();
+        if (getArguments().getString("type").equals("search")) {
+            search();
+        }
+        if (getArguments().getString("type").equals("home")) {
+            get_home_data();
+        }
         return view;
     }
 
@@ -63,8 +69,12 @@ public class HomeFragmnet extends Fragment {
             @Override
             public void onRefresh() {
 //                search_bar.setText("");
+                if (getArguments().getString("type").equals("search")) {
+                    search();
+                } else {
+                    get_home_data();
+                }
 
-                get_home_data();
                 // Load complete
                 onItemsLoadComplete();
             }
@@ -73,14 +83,14 @@ public class HomeFragmnet extends Fragment {
 
     void get_home_data() {
         Log.e("sub_Catigories_id", SubCatigoriesAdapter.id + "");
-        ((HomeActivity)getActivity()).showdialog();
+        ((HomeActivity) getActivity()).showdialog();
         if (SubCatigoriesAdapter.id == 0) {
             RetroWeb.getClient().create(ServiceApi.class).get_all_service().enqueue(new Callback<AllServices>() {
                 @Override
                 public void onResponse(Call<AllServices> call, Response<AllServices> response) {
                     try {
                         Log.e("home_respone", response.toString());
-                        ((HomeActivity)getActivity()).dismis_dialog();
+                        ((HomeActivity) getActivity()).dismis_dialog();
                         if (response.body().isValue()) {
                             homeAdapter.addAll(response.body().getData());
                             rv_home.setAdapter(homeAdapter);
@@ -92,7 +102,7 @@ public class HomeFragmnet extends Fragment {
 
                 @Override
                 public void onFailure(Call<AllServices> call, Throwable t) {
-                    ((HomeActivity)getActivity()).dismis_dialog();
+                    ((HomeActivity) getActivity()).dismis_dialog();
                     handleException(getActivity(), t);
                     t.printStackTrace();
                     Log.e("t", String.valueOf(t));
@@ -101,10 +111,11 @@ public class HomeFragmnet extends Fragment {
 
             });
         } else {
+
             RetroWeb.getClient().create(ServiceApi.class).get_service_category(String.valueOf(SubCatigoriesAdapter.id)).enqueue(new Callback<AllServices>() {
                 @Override
                 public void onResponse(Call<AllServices> call, Response<AllServices> response) {
-                    ((HomeActivity)getActivity()).dismis_dialog();
+                    ((HomeActivity) getActivity()).dismis_dialog();
                     if (response.body().isValue()) {
                         homeAdapter.addAll(response.body().getData());
                         rv_home.setAdapter(homeAdapter);
@@ -113,7 +124,7 @@ public class HomeFragmnet extends Fragment {
 
                 @Override
                 public void onFailure(Call<AllServices> call, Throwable t) {
-                    ((HomeActivity)getActivity()).dismis_dialog();
+                    ((HomeActivity) getActivity()).dismis_dialog();
                     handleException(getActivity(), t);
                     t.printStackTrace();
                 }
@@ -121,6 +132,29 @@ public class HomeFragmnet extends Fragment {
 
         }
     }
+
+    void search() {
+        ((HomeActivity) getActivity()).showdialog();
+        RetroWeb.getClient().create(ServiceApi.class).search(getArguments().getString("search_key")).enqueue(new Callback<AllServices>() {
+            @Override
+            public void onResponse(Call<AllServices> call, Response<AllServices> response) {
+                ((HomeActivity) getActivity()).dismis_dialog();
+                if (response.body().isValue()) {
+                    homeAdapter.addAll(response.body().getData());
+                    rv_home.setAdapter(homeAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AllServices> call, Throwable t) {
+                ((HomeActivity) getActivity()).dismis_dialog();
+                handleException(getActivity(), t);
+                t.printStackTrace();
+            }
+        });
+
+    }
+
 
     void onItemsLoadComplete() {
         // Update the adapter and notify data set changed

@@ -112,6 +112,7 @@ public class ServiceDetailsFragment extends Fragment {
     }
 
     private void initUI() {
+        ((HomeActivity) getActivity()).rv_categories.setVisibility(View.GONE);
         args = new Bundle();
         //// first recycler for images and videos ////
         imagesVIdeosModelList = new ArrayList<>();
@@ -180,10 +181,12 @@ public class ServiceDetailsFragment extends Fragment {
     }
 
     void get_service_details() {
+        ((HomeActivity) getActivity()).showdialog();
         RetroWeb.getClient().create(ServiceApi.class).get_service_details(getArguments().getString("service_id"))
                 .enqueue(new Callback<ServiceDetails>() {
                     @Override
                     public void onResponse(Call<ServiceDetails> call, Response<ServiceDetails> response) {
+                        ((HomeActivity) getActivity()).dismis_dialog();
                         if (response.body().isValue()) {
                             if (!response.body().getData().getImages().isEmpty()) {
                                 for (int i = 0; i < response.body().getData().getImages().size(); i++) {
@@ -233,6 +236,7 @@ public class ServiceDetailsFragment extends Fragment {
 
                     @Override
                     public void onFailure(Call<ServiceDetails> call, Throwable t) {
+                        ((HomeActivity) getActivity()).dismis_dialog();
                         handleException(getActivity(), t);
                         t.printStackTrace();
                     }
@@ -258,11 +262,12 @@ public class ServiceDetailsFragment extends Fragment {
     }
 
     void order_service() {
-
+        ((HomeActivity) getActivity()).showdialog();
         RetroWeb.getClient().create(ServiceApi.class).order_service(String.valueOf(sharedPrefManager.getUserDate().getId()), getArguments().getString("service_id"),
                 tv_total_price.getText().toString(), ServiceDevelopmentsDetailsAdapter.selected_ids_devlopments).enqueue(new Callback<OrderService>() {
             @Override
             public void onResponse(Call<OrderService> call, Response<OrderService> response) {
+                ((HomeActivity) getActivity()).dismis_dialog();
                 if (response.body().isValue()) {
                     makeToast(getContext(), "تم ارسال طلبك بنجاح...");
                 } else {
@@ -272,6 +277,7 @@ public class ServiceDetailsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<OrderService> call, Throwable t) {
+                ((HomeActivity) getActivity()).dismis_dialog();
                 handleException(getActivity(), t);
                 t.printStackTrace();
             }

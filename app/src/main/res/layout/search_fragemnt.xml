@@ -3,49 +3,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/iv_search_icon"
-        android:layout_width="170dp"
-        android:layout_height="170dp"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/search"
-        android:layout_marginTop="30dp" />
-
-
-    <View
-        android:id="@+id/v1"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/iv_search_icon"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:background="#E9E9E9" />
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_search_icon"
+                android:layout_width="170dp"
+                android:layout_height="170dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/search" />
 
 
-    <EditText
-        android:id="@+id/et_search"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_below="@+id/v1"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/edit_text_update_profile"
-        android:hint="ابحث هنا...."
-        android:textColor="#A7A7A7" />
+            <View
+                android:id="@+id/v1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/iv_search_icon"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:background="#E9E9E9" />
 
-    <ImageView
-        android:id="@+id/iv_search"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_below="@+id/et_search"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/search2"
-        android:layout_marginTop="30dp" />
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_below="@+id/v1"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/edit_text_update_profile"
+                android:hint="ابحث هنا...."
+                android:textColor="#A7A7A7" />
+
+            <ImageView
+                android:id="@+id/iv_search"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_below="@+id/et_search"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/search2" />
+        </RelativeLayout>
+    </ScrollView>
+
 
 </RelativeLayout>

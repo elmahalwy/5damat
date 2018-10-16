@@ -27,6 +27,7 @@ public class Urls {
     public final static String UserNotifications = "notifications/{user_id}";
     public final static String change_request_status = "order_status";
     public final static String single_request = "single_order/{order_id}";
+    public final static String search = "search";
 
 
 }

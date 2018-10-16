@@ -119,4 +119,8 @@ public interface ServiceApi {
     @GET(Urls.single_request)
     Call<RequestDetailsModel> single_request(@Path("order_id") String order_id);
 
+    @FormUrlEncoded
+    @POST(Urls.search)
+    Call<AllServices> search(@Field("service") String search_key);
+
 }
