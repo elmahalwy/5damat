@@ -35,30 +35,32 @@ import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.handleExcepti
 import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.sharedPrefManager;
 
 public class RequestsFragment extends Fragment {
-    public static RelativeLayout relative_purchase;
-    public static TextView tv_purchase;
-    public static View view_purchaes;
-    public static RelativeLayout relative_requests;
-    public static TextView tv_requests;
-    public static View view_requests;
-    public static TextView tv_in_done;
-    public static TextView tv_done;
-    public static TextView tv_cancle;
-    public static TextView tv_in_waiting;
-    public static RecyclerView rv_requests;
-    public static RequestsPurchaseAdapter requestsPurchaseAdapter;
+    public RelativeLayout relative_purchase;
+    public TextView tv_purchase;
+    public View view_purchaes;
+    public RelativeLayout relative_requests;
+    public TextView tv_requests;
+    public View view_requests;
+    public TextView tv_in_done;
+    public TextView tv_done;
+    public TextView tv_cancle;
+    public TextView tv_in_waiting;
+    public RecyclerView rv_requests;
+    public RequestsPurchaseAdapter requestsPurchaseAdapter;
     LinearLayoutManager linearLayoutManager;
-    public static String in_tab = "requests";
-    public static String in_status = "waiting";
-    public static String status_color_selected = "#000000";
-    public static String status_color_unselected = "#7c7c7c";
-    public static String tab_selected = "#3558B9";
-    public static String tab_unselected = "#000000";
+    public String in_tab = "requests";
+    public String in_status = "waiting";
+    public String status_color_selected = "#000000";
+    public String status_color_unselected = "#7c7c7c";
+    public String tab_selected = "#3558B9";
+    public String tab_unselected = "#000000";
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.requests_fragment, container, false);
         ButterKnife.bind(this, view);
+        in_tab = "requests";
+        in_status = "waiting";
         ((HomeActivity) getActivity()).rv_categories.setVisibility(View.GONE);
         tv_purchase = (TextView) view.findViewById(R.id.tv_purchase);
         view_purchaes = (View) view.findViewById(R.id.view_purchaes);
@@ -130,10 +132,10 @@ public class RequestsFragment extends Fragment {
                 tv_done.setTextColor(Color.parseColor(status_color_unselected));
                 tv_in_done.setTextColor(Color.parseColor(status_color_selected));
                 in_status = "in_progress";
-                if (RequestsFragment.in_tab.equals("purchase")) {
+                if (in_tab.equals("purchase")) {
                     get_purchaes();
                 }
-                if (RequestsFragment.in_tab.equals("requests")) {
+                if (in_tab.equals("requests")) {
                     get_incoming_orders();
                 }
             }
@@ -145,11 +147,11 @@ public class RequestsFragment extends Fragment {
                 tv_cancle.setTextColor(Color.parseColor(status_color_unselected));
                 tv_done.setTextColor(Color.parseColor(status_color_selected));
                 tv_in_done.setTextColor(Color.parseColor(status_color_unselected));
-                in_status = "deliverd";
-                if (RequestsFragment.in_tab.equals("purchase")) {
+                in_status = "delivered";
+                if (in_tab.equals("purchase")) {
                     get_purchaes();
                 }
-                if (RequestsFragment.in_tab.equals("requests")) {
+                if (in_tab.equals("requests")) {
                     get_incoming_orders();
                 }
             }
@@ -162,10 +164,10 @@ public class RequestsFragment extends Fragment {
                 tv_done.setTextColor(Color.parseColor(status_color_unselected));
                 tv_in_done.setTextColor(Color.parseColor(status_color_unselected));
                 in_status = "rejected";
-                if (RequestsFragment.in_tab.equals("purchase")) {
+                if (in_tab.equals("purchase")) {
                     get_purchaes();
                 }
-                if (RequestsFragment.in_tab.equals("requests")) {
+                if (in_tab.equals("requests")) {
                     get_incoming_orders();
                 }
             }
@@ -178,10 +180,10 @@ public class RequestsFragment extends Fragment {
                 tv_done.setTextColor(Color.parseColor(status_color_unselected));
                 tv_in_done.setTextColor(Color.parseColor(status_color_unselected));
                 in_status = "waiting";
-                if (RequestsFragment.in_tab.equals("purchase")) {
+                if (in_tab.equals("purchase")) {
                     get_purchaes();
                 }
-                if (RequestsFragment.in_tab.equals("requests")) {
+                if (in_tab.equals("requests")) {
                     get_incoming_orders();
                 }
             }
@@ -224,7 +226,8 @@ public class RequestsFragment extends Fragment {
                 try {
                     Log.e("incoming_orders", response.body().toString());
                     if (response.body().isValue()) {
-                        requestsPurchaseAdapter.type=in_status;
+                        requestsPurchaseAdapter.type = in_status;
+                        InComingOrdersFragment.type_of_request = in_status;
                         requestsPurchaseAdapter.addAll(response.body().getData());
                         rv_requests.setAdapter(requestsPurchaseAdapter);
                     }

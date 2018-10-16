@@ -3,7 +3,10 @@ package com.I3gaz.mohamedelmahalwy.a5damat.Adapters;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
+import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.AddServiceFragment;
+import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.InComingOrdersFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.RequestsFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.RequestsModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddOrDeleteItemsToFavourites.AddOrDeleteItemToFavourit;
@@ -95,7 +100,7 @@ public class RequestsPurchaseAdapter extends RecyclerView.Adapter<RequestsPurcha
             holder.tv_accept.setText("تمت العملية");
             holder.tv_refuse.setText("الغاء");
         }
-        if (type.equals("deliverd")) {
+        if (type.equals("delivered")) {
             holder.tv_accept.setVisibility(View.GONE);
             holder.tv_refuse.setVisibility(View.GONE);
         }
@@ -112,7 +117,7 @@ public class RequestsPurchaseAdapter extends RecyclerView.Adapter<RequestsPurcha
                 } else {
                     ((HomeActivity) context).showdialog();
                     RetroWeb.getClient().create(ServiceApi.class).change_request_status(
-                            String.valueOf(requests_purchases_list.get(position).getOrderId()), type, "").enqueue(new Callback<RequestsChangeStatusModel>() {
+                            String.valueOf(requests_purchases_list.get(position).getOrderId()), "rejected", "").enqueue(new Callback<RequestsChangeStatusModel>() {
                         @Override
                         public void onResponse(Call<RequestsChangeStatusModel> call, Response<RequestsChangeStatusModel> response) {
                             ((HomeActivity) context).dismis_dialog();
@@ -121,6 +126,7 @@ public class RequestsPurchaseAdapter extends RecyclerView.Adapter<RequestsPurcha
                                 if (response.body().isValue()) {
                                     Toast.makeText(context, "تمت العمليه بنجاح", Toast.LENGTH_SHORT).show();
                                     requests_purchases_list.remove(position);
+                                    notifyDataSetChanged();
                                 } else {
                                     Toast.makeText(context, "حدث خطأ ما", Toast.LENGTH_SHORT).show();
 
@@ -130,6 +136,7 @@ public class RequestsPurchaseAdapter extends RecyclerView.Adapter<RequestsPurcha
                             }
 
                         }
+
                         @Override
                         public void onFailure(Call<RequestsChangeStatusModel> call, Throwable t) {
                             ((HomeActivity) context).dismis_dialog();
@@ -143,9 +150,17 @@ public class RequestsPurchaseAdapter extends RecyclerView.Adapter<RequestsPurcha
         holder.tv_accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String status_to_send = "";
+                if (type.equals("waiting")) {
+                    status_to_send = "in_progress";
+                }
+                if (type.equals("in_progress")) {
+                    status_to_send = "delivered";
+
+                }
                 ((HomeActivity) context).showdialog();
                 RetroWeb.getClient().create(ServiceApi.class).change_request_status(
-                        String.valueOf(requests_purchases_list.get(position).getOrderId()), type, "").enqueue(new Callback<RequestsChangeStatusModel>() {
+                        String.valueOf(requests_purchases_list.get(position).getOrderId()), status_to_send, "").enqueue(new Callback<RequestsChangeStatusModel>() {
                     @Override
                     public void onResponse(Call<RequestsChangeStatusModel> call, Response<RequestsChangeStatusModel> response) {
                         ((HomeActivity) context).dismis_dialog();
@@ -154,6 +169,7 @@ public class RequestsPurchaseAdapter extends RecyclerView.Adapter<RequestsPurcha
                             if (response.body().isValue()) {
                                 Toast.makeText(context, "تمت العمليه بنجاح", Toast.LENGTH_SHORT).show();
                                 requests_purchases_list.remove(position);
+                                notifyDataSetChanged();
                             } else {
                                 Toast.makeText(context, "حدث خطأ ما", Toast.LENGTH_SHORT).show();
 
@@ -163,6 +179,7 @@ public class RequestsPurchaseAdapter extends RecyclerView.Adapter<RequestsPurcha
                         }
 
                     }
+
                     @Override
                     public void onFailure(Call<RequestsChangeStatusModel> call, Throwable t) {
                         ((HomeActivity) context).dismis_dialog();
@@ -177,7 +194,7 @@ public class RequestsPurchaseAdapter extends RecyclerView.Adapter<RequestsPurcha
             public void onClick(View v) {
                 ((HomeActivity) context).showdialog();
                 RetroWeb.getClient().create(ServiceApi.class).change_request_status(
-                        String.valueOf(id), type, et_reason_of_cancle_process.getText().toString()).enqueue(new Callback<RequestsChangeStatusModel>() {
+                        String.valueOf(id), "rejected", et_reason_of_cancle_process.getText().toString()).enqueue(new Callback<RequestsChangeStatusModel>() {
                     @Override
                     public void onResponse(Call<RequestsChangeStatusModel> call, Response<RequestsChangeStatusModel> response) {
                         ((HomeActivity) context).dismis_dialog();
@@ -186,6 +203,8 @@ public class RequestsPurchaseAdapter extends RecyclerView.Adapter<RequestsPurcha
                             if (response.body().isValue()) {
                                 Toast.makeText(context, "تمت العمليه بنجاح", Toast.LENGTH_SHORT).show();
                                 requests_purchases_list.remove(position);
+                                pop_up_cancel_request.dismiss();
+                                notifyDataSetChanged();
                             } else {
                                 Toast.makeText(context, "حدث خطأ ما", Toast.LENGTH_SHORT).show();
 
@@ -204,6 +223,21 @@ public class RequestsPurchaseAdapter extends RecyclerView.Adapter<RequestsPurcha
                     }
                 });
 
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle args = new Bundle();
+                args.putString("order_id", String.valueOf(requests_purchases_list.get(position).getOrderId()));
+                FragmentManager fragmentManager = ((HomeActivity) context).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                InComingOrdersFragment serviceDetailsFragment = new InComingOrdersFragment();
+                serviceDetailsFragment.setArguments(args);
+                fragmentTransaction.replace(R.id.frame_container, serviceDetailsFragment);
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
 
