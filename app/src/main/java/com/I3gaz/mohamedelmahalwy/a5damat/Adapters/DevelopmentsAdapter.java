@@ -76,7 +76,7 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
     Context context;
     LayoutInflater layoutInflater;
     int lastPosition = -1;
-    int size = 1;
+    public static int size = 1;
     SharedPrefManager sharedPrefManager;
     List<String> sp_price_for_development_list;
     String sp_price_for_development_name;

@@ -215,8 +215,10 @@ public class AddServiceFragment extends Fragment {
         getsp_sub_category();
         getsp_service_delivery_time();
         if ((((HomeActivity) getActivity()).came_from.equals("edit"))) {
-            DevelopmentModel developmentModel = new DevelopmentModel();
+            DevelopmentsAdapter.size=serviceDetails.getData().getDevelopments().size();
+
             for (int i = 0; i < serviceDetails.getData().getDevelopments().size(); i++) {
+                DevelopmentModel developmentModel = new DevelopmentModel();
                 developmentModel.setEt_developments(serviceDetails.getData().getDevelopments().get(i).getTitle());
                 developmentModel.setSp_price_for_development(serviceDetails.getData().getDevelopments().get(i).getPrice());
                 if (serviceDetails.getData().getDevelopments().get(i).getDeadline().equals("")) {
@@ -231,6 +233,7 @@ public class AddServiceFragment extends Fragment {
         }
         if ((((HomeActivity) getActivity()).came_from.equals("add"))) {
             initialize_list();
+            DevelopmentsAdapter.size=1;
 
         }
     }
