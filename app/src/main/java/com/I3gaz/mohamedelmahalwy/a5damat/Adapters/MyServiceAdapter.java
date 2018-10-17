@@ -44,7 +44,7 @@ public class MyServiceAdapter extends RecyclerView.Adapter<MyServiceAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.tv_category.setText(my_service_list.get(position).getCategory());
         holder.tv_service_name.setText(my_service_list.get(position).getTitle());
-        holder.tv_status.setText(my_service_list.get(position).getOrderCount());
+        holder.tv_status.setText(String.valueOf(my_service_list.get(position).getOrderCount()));
         Picasso.with(context)
                 .load(my_service_list.get(position).getImages().get(0))
                 .into(holder.iv_my_service);

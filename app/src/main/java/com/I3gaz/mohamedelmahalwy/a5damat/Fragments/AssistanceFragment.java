@@ -21,6 +21,7 @@ public class AssistanceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.assistance_fragmant, container, false);
         ButterKnife.bind(this, view);
+        ((HomeActivity) getActivity()).rv_categories.setVisibility(View.GONE);
         initUI();
         initEventDriven();
         return view;

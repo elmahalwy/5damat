@@ -36,6 +36,7 @@ public class MyServiceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.my_services_fragment, container, false);
         ButterKnife.bind(this, view);
+        ((HomeActivity) getActivity()).rv_categories.setVisibility(View.GONE);
         myServiceAdapter = new MyServiceAdapter(getContext());
         linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false);
         rv_my_service.setLayoutManager(linearLayoutManager);

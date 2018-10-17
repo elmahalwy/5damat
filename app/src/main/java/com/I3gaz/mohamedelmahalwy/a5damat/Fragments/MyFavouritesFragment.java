@@ -39,6 +39,7 @@ public class MyFavouritesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.my_favourites_fragment, container, false);
         ButterKnife.bind(this, view);
+        ((HomeActivity) getActivity()).rv_categories.setVisibility(View.GONE);
         myFavouritesAdapter = new MyFavouritesAdapter(getContext());
         linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false);
         rv_my_favourites.setLayoutManager(linearLayoutManager);

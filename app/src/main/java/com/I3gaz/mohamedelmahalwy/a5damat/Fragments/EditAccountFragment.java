@@ -57,6 +57,8 @@ public class EditAccountFragment extends Fragment {
 
     void initEventDriven() {
         ((HomeActivity)getContext()).tv_toolbar_title.setText("تعديل الحساب");
+        ((HomeActivity) getActivity()).rv_categories.setVisibility(View.GONE);
+
 
     }
 }

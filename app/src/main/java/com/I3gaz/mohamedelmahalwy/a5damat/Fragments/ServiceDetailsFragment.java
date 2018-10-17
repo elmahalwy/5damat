@@ -60,7 +60,6 @@ public class ServiceDetailsFragment extends Fragment {
     TextView tv_service_category;
     @BindView(R.id.tv_details)
     TextView tv_details;
-    //    @BindView(R.id.tv_main_price)
     public static TextView tv_main_price;
     @BindView(R.id.tv_delivery_time)
     TextView tv_delivery_time;
@@ -70,9 +69,7 @@ public class ServiceDetailsFragment extends Fragment {
     LinearLayoutManager linearLayoutManagerDevlopmentsDetails;
     @BindView(R.id.tv_not_found_development)
     TextView tv_not_found_development;
-    //    @BindView(R.id.tv_total_price_title)
     public static TextView tv_total_price_title;
-    //    @BindView(R.id.tv_total_price)
     public static TextView tv_total_price;
     @BindView(R.id.btn_edit)
     Button btn_edit;
@@ -95,7 +92,7 @@ public class ServiceDetailsFragment extends Fragment {
     @BindView(R.id.iv_open_chat)
     ImageView iv_open_chat;
 
-    String user_id = "";
+  public   static String user_id = "";
     Bundle args;
 
 
@@ -206,7 +203,7 @@ public class ServiceDetailsFragment extends Fragment {
                             tv_delivery_time.setText("مدة التسليم " + response.body().getData().getDeadline() + " يوم");
                             tv_service_owner.setText(response.body().getData().getOwner());
 
-                            user_id = "" + response.body().getData().getOwnerId();
+                            user_id = String.valueOf(response.body().getData().getOwnerId());
                             Log.e("userid", "" + response.body().getData().getOwnerId());
 
                             if (response.body().getData().getDevelopments().isEmpty()) {
@@ -225,6 +222,7 @@ public class ServiceDetailsFragment extends Fragment {
                             btn_order_service.setVisibility(View.GONE);
                             tv_title_owner.setVisibility(View.GONE);
                             relative_service_ownner.setVisibility(View.GONE);
+                            iv_like.setVisibility(View.GONE);
 
 
                         } else {
@@ -234,6 +232,7 @@ public class ServiceDetailsFragment extends Fragment {
                             btn_order_service.setVisibility(View.VISIBLE);
                             tv_title_owner.setVisibility(View.VISIBLE);
                             relative_service_ownner.setVisibility(View.VISIBLE);
+                            iv_like.setVisibility(View.VISIBLE);
                         }
 
                     }

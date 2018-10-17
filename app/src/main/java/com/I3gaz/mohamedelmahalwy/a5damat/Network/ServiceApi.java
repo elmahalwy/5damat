@@ -73,7 +73,8 @@ public interface ServiceApi {
     @GET(Urls.ServiceCategory)
     Call<AllServices> get_service_category(@Path("category_id") String category_id);
 
-    @GET(Urls.MyFavourites)
+    @FormUrlEncoded
+    @POST(Urls.MyFavourites)
     Call<Favourites> get_my_favourites(@Field("user_id") String user_id);
 
     @GET(Urls.Spinner_add_service__Url)
@@ -141,7 +142,6 @@ public interface ServiceApi {
     @FormUrlEncoded
     @POST(Urls.search)
     Call<AllServices> search(@Field("service") String search_key);
-
 
 
 }

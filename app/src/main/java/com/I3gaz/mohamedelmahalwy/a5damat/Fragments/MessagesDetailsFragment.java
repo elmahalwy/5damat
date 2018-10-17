@@ -1,5 +1,6 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Fragments;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -65,6 +68,9 @@ public class MessagesDetailsFragment extends Fragment {
     Button btn_send;
     boolean check_no_socials = false;
     boolean check_read_instructions = false;
+    Dialog dialog_report;
+    Button btn_yes;
+    Button btn_no;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.message_details_fragment_layout, container, false);
@@ -104,13 +110,25 @@ public class MessagesDetailsFragment extends Fragment {
 
             }
         });
+
+        dialog_report = new Dialog(getContext());
+        dialog_report.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog_report.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog_report.setContentView(R.layout.pop_up_notifications_prevertion);
+        // to set width and height
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog_report.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        btn_no = (Button) dialog_report.findViewById(R.id.btn_no);
+        btn_yes = (Button) dialog_report.findViewById(R.id.btn_yes);
     }
 
     void initEventDriven() {
         relative_report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                report();
+                dialog_report.show();
             }
         });
         btn_send.setOnClickListener(new View.OnClickListener() {
@@ -120,7 +138,18 @@ public class MessagesDetailsFragment extends Fragment {
             }
         });
 
-
+        btn_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                report();
+            }
+        });
+        btn_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog_report.dismiss();
+            }
+        });
     }
 
     void get_single_message() {

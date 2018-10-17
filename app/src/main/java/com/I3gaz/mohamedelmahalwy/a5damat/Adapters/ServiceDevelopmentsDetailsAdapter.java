@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.ServiceDetailsFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails.Development;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
+import com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,15 +55,13 @@ public class ServiceDevelopmentsDetailsAdapter extends RecyclerView.Adapter<Serv
         holder.tv_details.setText(developments_list.get(position).getTitle());
         holder.tv_price.setText(developments_list.get(position).getDeadline());
         holder.tv_sub_price.setText(developments_list.get(position).getPrice());
-
+        if (ServiceDetailsFragment.user_id.equals(String.valueOf(ParentClass.sharedPrefManager.getUserDate().getId()))) {
+            holder.iv_choose.setVisibility(View.GONE);
+        }
 
         holder.iv_choose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (toal_price != 0) {
-//
-//
-//                }
                 if (!selected_ids_devlopments.contains(String.valueOf(developments_list.get(position).getId()))) {
                     ServiceDetailsFragment.tv_total_price_title.setVisibility(View.VISIBLE);
                     ServiceDetailsFragment.tv_total_price.setVisibility(View.VISIBLE);
