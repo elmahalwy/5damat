@@ -1,18 +1,17 @@
 
-package com.I3gaz.mohamedelmahalwy.a5damat.Models;
+package com.I3gaz.mohamedelmahalwy.a5damat.Models.SendMessage;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UploadImage {
+public class SendMessage {
 
     @SerializedName("value")
     @Expose
     private boolean value;
-    @SerializedName("data")
+    @SerializedName("msg")
     @Expose
-    private List<String> data = null;
+    private String msg;
 
     public boolean isValue() {
         return value;
@@ -22,12 +21,12 @@ public class UploadImage {
         this.value = value;
     }
 
-    public List<String> getData() {
-        return data;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setData(List<String> data) {
-        this.data = data;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
 }

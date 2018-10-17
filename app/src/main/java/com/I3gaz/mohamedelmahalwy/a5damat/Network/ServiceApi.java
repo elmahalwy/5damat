@@ -10,32 +10,28 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyFavourites.Favourites;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyMessages.MyMessages;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyServices.MyServices;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.OrderService.OrderService;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.ReportMessage.ReportMessage;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.RequestsModel.RequestDetailsModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.RequestsModel.RequestsChangeStatusModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.RequestsModel.Requests_Tab_Model;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ResetPassword.ResetPassword;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.SendMessage.SendMessage;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails.ServiceDetails;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.SingleMessage.SingleMessage;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerssModelss;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SubCategories.SubCategories;
-import com.I3gaz.mohamedelmahalwy.a5damat.Models.UploadImage;
-import com.I3gaz.mohamedelmahalwy.a5damat.Models.UploadImage1;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.UserNotifications.Notifications;
 
 import java.util.List;
 
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface ServiceApi {
@@ -96,6 +92,22 @@ public interface ServiceApi {
     Call<MyMessages> get_my_messages(@Field("user_id") String user_id);
 
     @FormUrlEncoded
+    @POST(Urls.single_message)
+    Call<SingleMessage> get_single_message(@Field("message_id") String message_id);
+
+    @FormUrlEncoded
+    @POST(Urls.report_message)
+    Call<ReportMessage> report_message(@Field("reporter_id") String reporter_id,
+                                       @Field("reported_id") String reported_id,
+                                       @Field("message_id") String message_id);
+
+    @FormUrlEncoded
+    @POST(Urls.send_message)
+    Call<SendMessage> send_message(@Field("sender_id") String sender_id,
+                                   @Field("service_id") String service_id,
+                                   @Field("msg") String msg);
+
+    @FormUrlEncoded
     @POST(Urls.ServiceDetails)
     Call<ServiceDetails> get_service_details(@Field("service_id") String service_id);
 
@@ -130,10 +142,7 @@ public interface ServiceApi {
     @POST(Urls.search)
     Call<AllServices> search(@Field("service") String search_key);
 
-    @Multipart
-    @POST(Urls.upload_image)
-    Call<UploadImage1> uploadMultipleFilesDynamic(
-            @Part MultipartBody.Part[] image, @Part("service_id") String service_id);
+
 
 }
 

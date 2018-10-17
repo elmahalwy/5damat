@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFF">
@@ -18,11 +19,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginEnd="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
                 android:text="تصميم التطبيقات و المواقع UI UX"
                 android:textColor="#000"
                 android:textSize="14sp" />
@@ -31,12 +32,12 @@
                 android:id="@+id/view"
                 android:layout_width="100dp"
                 android:layout_height="1dp"
+                android:layout_below="@+id/tv_title"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_below="@+id/tv_title"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp"
                 android:background="#F4F4F4" />
 
             <RelativeLayout
@@ -45,11 +46,11 @@
                 android:layout_height="40dp"
                 android:layout_below="@+id/view"
                 android:layout_centerHorizontal="true"
-                android:layout_marginEnd="60dp"
-                android:layout_marginLeft="60dp"
-                android:layout_marginRight="60dp"
                 android:layout_marginStart="60dp"
+                android:layout_marginLeft="60dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="60dp"
+                android:layout_marginRight="60dp"
                 android:background="@drawable/et_add_more_developments">
 
                 <RelativeLayout
@@ -71,8 +72,8 @@
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
                         android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_toEndOf="@+id/tv_report"
                         android:layout_toRightOf="@+id/tv_report"
                         android:src="@mipmap/proplem" />
@@ -84,64 +85,114 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below="@+id/relative_report"
-                android:layout_marginEnd="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
                 android:background="#F4F4F4" />
 
             <TextView
                 android:id="@+id/tv_messgaes_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/view1"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_below="@+id/view1"
-                android:layout_marginEnd="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
                 android:text="الرسائل:"
                 android:textColor="#000"
                 android:textSize="14sp" />
 
-            <android.support.v7.widget.RecyclerView
+            <RelativeLayout
                 android:id="@+id/rv_messages"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_messgaes_title"
-                android:layout_marginEnd="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp" />
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_user_message"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="10dp"
+                    android:src="@mipmap/logo"
+                    app:civ_border_color="#EF8A5D"
+                    app:civ_border_width="1dp" />
+
+                <TextView
+                    android:id="@+id/tv_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toStartOf="@+id/iv_user_message"
+                    android:layout_toLeftOf="@+id/iv_user_message"
+                    android:text="asjjsajd"
+                    android:textColor="#2C2C2C" />
+
+                <TextView
+                    android:id="@+id/tv_message_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_user_name"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toStartOf="@+id/iv_user_message"
+                    android:layout_toLeftOf="@+id/iv_user_message"
+                    android:drawableEnd="@mipmap/calender"
+                    android:drawableRight="@mipmap/calender"
+                    android:drawablePadding="5dp"
+                    android:text="aksjdasjjsda"
+                    android:textColor="#A4A4A4" />
+
+                <TextView
+                    android:id="@+id/tv_message_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_message_date"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toStartOf="@+id/iv_user_message"
+                    android:layout_toLeftOf="@+id/iv_user_message"
+                    android:text="aksjdasjjsda"
+                    android:textColor="#A4A4A4" />
+            </RelativeLayout>
 
             <View
                 android:id="@+id/view2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below="@+id/rv_messages"
-                android:layout_marginEnd="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
                 android:background="#F4F4F4" />
 
             <TextView
                 android:id="@+id/tv_comment_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/view2"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_below="@+id/view2"
-                android:layout_marginEnd="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
                 android:text="اكتب الرد الذي تريد ارساله الي المستخدم:"
                 android:textColor="#000"
                 android:textSize="14sp" />
@@ -151,11 +202,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_below="@+id/tv_comment_title"
-                android:layout_marginEnd="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
                 android:background="@drawable/et_message_details"
                 android:gravity="top|right"
                 android:hint="اكتب هنا..."
@@ -169,11 +220,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/et_add_comment"
-                android:layout_marginEnd="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp">
 
                 <ImageView
                     android:id="@+id/iv_check"
@@ -191,8 +242,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/iv_check"
                     android:layout_toStartOf="@+id/iv_check"
+                    android:layout_toLeftOf="@+id/iv_check"
                     android:text="هذه الرساله لا تحتوي علي وسائل تواصل خارجية"
                     android:textColor="#000"
                     android:textSize="14sp" />
@@ -203,11 +254,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/no_socials"
-                android:layout_marginEnd="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp">
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp">
 
 
                 <ImageView
@@ -226,8 +277,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/iv_check1"
                     android:layout_toStartOf="@+id/iv_check1"
+                    android:layout_toLeftOf="@+id/iv_check1"
                     android:text="لقد راجعت شروط تطبيق خدمات هذه الرساله لا تخالفها في شيء"
                     android:textColor="#000"
                     android:textSize="14sp" />
@@ -238,12 +289,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_below="@+id/read_instructions"
-                android:layout_marginBottom="20dp"
-                android:layout_marginEnd="55dp"
-                android:layout_marginLeft="55dp"
-                android:layout_marginRight="55dp"
                 android:layout_marginStart="55dp"
+                android:layout_marginLeft="55dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="55dp"
+                android:layout_marginRight="55dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/btn_sign_in"
                 android:gravity="center"
                 android:text="ارسل الرسالة"

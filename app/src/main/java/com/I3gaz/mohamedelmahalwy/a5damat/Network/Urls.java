@@ -19,6 +19,9 @@ public class Urls {
     public final static String AddOrDeleteItemToFavourites = "fav_service";
     public final static String MyServices = "my_services/{user_id}";
     public final static String MyMessges = "user_messages";
+    public final static String single_message = "single_message";
+    public final static String send_message = "send_message";
+    public final static String report_message = "make_report";
     public final static String ServiceDetails = "single-service";
     public final static String add_service = "service";
     public final static String incoming_orders = "incoming_orders/{user_id}/{status}";
@@ -29,7 +32,6 @@ public class Urls {
     public final static String single_request = "single_order/{order_id}";
     public final static String search = "search";
     public final static String upload_image = "service_image";
-
 
 
 }
