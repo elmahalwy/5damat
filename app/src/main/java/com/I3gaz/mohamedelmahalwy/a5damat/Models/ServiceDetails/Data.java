@@ -64,6 +64,9 @@ public class Data {
     @SerializedName("developments")
     @Expose
     private List<Development> developments = null;
+    @SerializedName("images_links")
+    @Expose
+    private List<String> imagesLinks = null;
 
     public boolean isLike() {
         return like;
@@ -215,5 +218,13 @@ public class Data {
 
     public void setKey_words(String key_words) {
         this.key_words = key_words;
+    }
+
+    public List<String> getImagesLinks() {
+        return imagesLinks;
+    }
+
+    public void setImagesLinks(List<String> imagesLinks) {
+        this.imagesLinks = imagesLinks;
     }
 }

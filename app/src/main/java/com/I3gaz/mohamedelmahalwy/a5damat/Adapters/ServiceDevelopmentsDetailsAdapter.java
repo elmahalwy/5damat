@@ -23,9 +23,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.I3gaz.mohamedelmahalwy.a5damat.Fragments.ServiceDetailsFragment.tv_total_price;
-import static com.I3gaz.mohamedelmahalwy.a5damat.Fragments.ServiceDetailsFragment.tv_total_price_title;
-
 public class ServiceDevelopmentsDetailsAdapter extends RecyclerView.Adapter<ServiceDevelopmentsDetailsAdapter.ViewHolder> {
     List<Development> developments_list;
     Context context;

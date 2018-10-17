@@ -18,19 +18,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
-import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.DevelopmentsAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.ServiceDetailsVideosAndImagesAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.ServiceDevelopmentsDetailsAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddOrDeleteItemsToFavourites.AddOrDeleteItemToFavourit;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.OrderService.OrderService;
-import com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails.Development;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails.ImagesVIdeosModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails.ServiceDetails;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,7 +89,7 @@ public class ServiceDetailsFragment extends Fragment {
     @BindView(R.id.iv_open_chat)
     ImageView iv_open_chat;
 
-  public   static String user_id = "";
+    public static String user_id = "";
     Bundle args;
 
 
@@ -181,6 +178,14 @@ public class ServiceDetailsFragment extends Fragment {
                                     imagesVIdeosModelList.add(imagesVIdeosModel);
                                 }
                             }
+                            if (!response.body().getData().getImagesLinks().isEmpty()) {
+                                for (int i = 0; i < response.body().getData().getImages().size(); i++) {
+                                    ImagesVIdeosModel imagesVIdeosModel = new ImagesVIdeosModel();
+                                    imagesVIdeosModel.setType("image");
+                                    imagesVIdeosModel.setVideo_image(response.body().getData().getImagesLinks().get(i));
+                                    imagesVIdeosModelList.add(imagesVIdeosModel);
+                                }
+                            }
                             if (!response.body().getData().getVideos().isEmpty()) {
                                 for (int i = 0; i < response.body().getData().getVideos().size(); i++) {
                                     ImagesVIdeosModel imagesVIdeosModel = new ImagesVIdeosModel();
@@ -215,7 +220,7 @@ public class ServiceDetailsFragment extends Fragment {
                                 rv_developments.setAdapter(serviceDevelopmentsDetailsAdapter);
                             }
                         }
-                        args.putParcelable("response",  response.body());
+                        args.putParcelable("response", response.body());
                         if (user_id.equals(String.valueOf(sharedPrefManager.getUserDate().getId()))) {
                             btn_edit.setVisibility(View.VISIBLE);
                             iv_share_for_service_owner.setVisibility(View.VISIBLE);
