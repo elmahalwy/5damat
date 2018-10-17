@@ -1,8 +1,5 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Network;
 
-
-import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.CategoriesAdapter;
-
 public class Urls {
     public final static String BaseUrl = "http://e3gaz.net/5dmat/public/api/v1/";
     public final static String SignUp = "user";
@@ -32,6 +29,7 @@ public class Urls {
     public final static String single_request = "single_order/{order_id}";
     public final static String search = "search";
     public final static String upload_image = "service_image";
+    public final static String about_us = "settings/page";
 
 
 }

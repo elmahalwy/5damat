@@ -4,6 +4,7 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddOrDeleteItemsToFavourites.Ad
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddService;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddServiceJson.AddServiceJson;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AllServices.AllServices;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.Assistance.Assisatnce;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.LoginData.User;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MainCategories.MainCategories;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyFavourites.Favourites;
@@ -142,6 +143,9 @@ public interface ServiceApi {
     @FormUrlEncoded
     @POST(Urls.search)
     Call<AllServices> search(@Field("service") String search_key);
+
+    @GET(Urls.about_us)
+    Call<Assisatnce> assisatnce();
 
 
 }
