@@ -134,9 +134,11 @@ public class HomeActivity extends ParentClass {
     }
 
     void initEventDriven() {
-        Picasso.with(this)
-                .load(sharedPrefManager.getUserDate().getImage())
-                .into(iv_profile_pic);
+        if (!sharedPrefManager.getUserDate().getImage().isEmpty()) {
+            Picasso.with(this)
+                    .load(sharedPrefManager.getUserDate().getImage())
+                    .into(iv_profile_pic);
+        }
         iv_profile_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

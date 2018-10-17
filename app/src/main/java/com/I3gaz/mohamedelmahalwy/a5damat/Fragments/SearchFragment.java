@@ -36,6 +36,7 @@ public class SearchFragment extends Fragment {
     }
 
     void initEventDriven() {
+        ((HomeActivity)getContext()).tv_toolbar_title.setText("البحث المتقدم");
         iv_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

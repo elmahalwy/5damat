@@ -49,7 +49,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.tv_message_title.setText(messagesModelList.get(position).getServiceTitle());
         holder.tv_user_name.setText(messagesModelList.get(position).getSender());
-        holder.tv_number_of_comments.setText(messagesModelList.get(position).getCount());
+        holder.tv_number_of_comments.setText(String.valueOf(messagesModelList.get(position).getCount()));
         holder.tv_date.setText(messagesModelList.get(position).getCreatedDate());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

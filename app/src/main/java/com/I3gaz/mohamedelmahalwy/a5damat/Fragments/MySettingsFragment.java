@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
+import com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass;
 import com.squareup.picasso.Picasso;
 
 
@@ -52,9 +53,11 @@ public class MySettingsFragment extends Fragment {
 
     void initUI() {
         ((HomeActivity)getContext()).tv_toolbar_title.setText("صفحتى الشخصية");
-        Picasso.with(getActivity())
-                .load(((HomeActivity) getContext()).sharedPrefManager.getUserDate().getImage())
-                .into(iv_profile_pic);
+        if (!ParentClass.sharedPrefManager.getUserDate().getImage().isEmpty()) {
+            Picasso.with(getActivity())
+                    .load(((HomeActivity) getContext()).sharedPrefManager.getUserDate().getImage())
+                    .into(iv_profile_pic);
+        }
         tv_user_name.setText(((HomeActivity) getContext()).sharedPrefManager.getUserDate().getUsername());
     }
 

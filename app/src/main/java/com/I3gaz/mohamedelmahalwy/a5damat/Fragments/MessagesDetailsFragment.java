@@ -3,6 +3,8 @@ package com.I3gaz.mohamedelmahalwy.a5damat.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -74,15 +76,15 @@ public class MessagesDetailsFragment extends Fragment {
     }
 
     void initUI() {
-        ((HomeActivity)getContext()).tv_toolbar_title.setText("الرسائل");
+        ((HomeActivity) getActivity()).rv_categories.setVisibility(View.GONE);
+        ((HomeActivity) getContext()).tv_toolbar_title.setText("الرسائل");
         no_socials.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (check_no_socials == false) {
                     check_no_socials = true;
                     iv_check.setImageResource(R.mipmap.circle2);
-                }
-                if (check_no_socials == true) {
+                } else if (check_no_socials == true) {
                     check_no_socials = false;
                     iv_check.setImageResource(R.mipmap.circle_grey);
                 }
@@ -95,10 +97,9 @@ public class MessagesDetailsFragment extends Fragment {
                 if (check_read_instructions == false) {
                     check_read_instructions = true;
                     iv_check1.setImageResource(R.mipmap.circle2);
-                }
-                if (check_read_instructions == true) {
+                } else if (check_read_instructions == true) {
                     check_read_instructions = false;
-                    iv_check1.setImageResource(R.mipmap.circle2);
+                    iv_check1.setImageResource(R.mipmap.circle_grey);
                 }
 
             }
@@ -181,8 +182,13 @@ public class MessagesDetailsFragment extends Fragment {
             cancel = true;
         }
         if (check_read_instructions == false) {
-            makeToast(getContext(), "برجاء التأكد ان هذه الرسالة لا تحتوي علي وسائل تواصل خارجية");
+            makeToast(getContext(), "برجاء مراجعة شروط استخدام التطبيق");
             focusView = read_instructions;
+            cancel = true;
+        }
+        if (TextUtils.isEmpty(et_add_comment.getText().toString())) {
+            et_add_comment.setError("برجاء ادخال نص الرسالة");
+            focusView = et_add_comment;
             cancel = true;
         }
         if (cancel) {
@@ -195,6 +201,14 @@ public class MessagesDetailsFragment extends Fragment {
                     ((HomeActivity) getActivity()).dismis_dialog();
                     if (response.body().isValue()) {
                         makeToast(getContext(), "تم ارسال رسالتك بنجاح...");
+                        FragmentManager fragmentManager = ((HomeActivity) getActivity()).getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        MessagesFragment messagesFragment = new MessagesFragment();
+                        fragmentTransaction.replace(R.id.frame_container, messagesFragment);
+                        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                        fragmentTransaction.remove(new MessagesDetailsFragment());
+                        fragmentTransaction.commit();
+                        fragmentManager.popBackStack();
                     }
 
                 }
