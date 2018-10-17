@@ -55,8 +55,7 @@ dependencies {
     implementation 'com.github.ShogoMizumoto:ZDepthShadowLayout:1.0.4'
     implementation 'com.kaopiz:kprogresshud:1.0.2'
     implementation 'com.amitshekhar.android:android-networking:1.0.1'
-
-
+    implementation 'id.zelory:compressor:2.1.0'
 
 }
 apply plugin: 'com.google.gms.google-services'

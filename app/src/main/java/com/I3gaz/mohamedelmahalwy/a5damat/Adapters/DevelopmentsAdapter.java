@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
 import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.AddServiceFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.HomeFragmnet;
+import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.InComingOrdersFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.DevelopmentModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddService;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddServiceJson.AddServiceJson;
@@ -457,7 +458,7 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                     focusView = AddServiceFragment.et_service_instructions_to_buyer_title;
                     cancel = true;
                 }
-                if (AddServiceFragment.image_files_list.size() == 0 &&
+                if (AddServiceFragment.compressedImageFileList.size() == 0 &&
                         AddServiceFragment.image_links_list.size() == 0 &&
                         AddServiceFragment.video_links_list.size() == 0) {
                     Toast.makeText(context, "برجاء اختيار علي الاقل صوره واحده او فيديو واحد", Toast.LENGTH_SHORT).show();
@@ -541,10 +542,10 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                     }
                     /////////////////////////////image_files///////////////////////////////////////
                     JSONArray image_files = new JSONArray();
-                    for (int i = 0; i < AddServiceFragment.image_files_list.size(); i++) {
+                    for (int i = 0; i < AddServiceFragment.compressedImageFileList.size(); i++) {
                         JSONObject jsonObject = new JSONObject();
                         try {
-                            jsonObject.put("image", String.valueOf(AddServiceFragment.image_files_list.get(i)));
+                            jsonObject.put("image", String.valueOf(AddServiceFragment.compressedImageFileList.get(i)));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -603,8 +604,6 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                         e.printStackTrace();
                     }
                     /////////////////////////////sending_request/////////////////////////////////////////////////////////
-
-
                     String url = "http://e3gaz.net/5dmat/public/api/v1/" + "service";
                     AndroidNetworking.post(url)
                             .addHeaders("Content-Type", "application/json")
@@ -619,11 +618,17 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                                         Log.e("response_add_service", response.toString());
                                         if (response.getString("value").equals("true")) {
                                             service_id = response.getString("data");
-                                            Log.e("service_id", service_id+"popopop");
-//                                            AddServiceFragment.upload_images();
-                                        }
-                                        else {
-                                            Log.e("false","false");
+                                            Log.e("service_id", service_id + "popopop");
+                                            FragmentManager fragmentManager = ((HomeActivity) context).getSupportFragmentManager();
+                                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                            HomeFragmnet serviceDetailsFragment = new HomeFragmnet();
+                                            fragmentTransaction.replace(R.id.frame_container, serviceDetailsFragment);
+                                            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                                            fragmentTransaction.remove(new AddServiceFragment());
+                                            fragmentTransaction.commit();
+                                            fragmentManager.popBackStack();
+                                        } else {
+                                            Toast.makeText(context, "حدث خطأ ما", Toast.LENGTH_SHORT).show();
                                         }
                                     } catch (Exception e) {
                                         e.printStackTrace();

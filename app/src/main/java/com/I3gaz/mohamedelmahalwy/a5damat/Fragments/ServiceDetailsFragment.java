@@ -105,8 +105,8 @@ public class ServiceDetailsFragment extends Fragment {
         tv_total_price_title = view.findViewById(R.id.tv_total_price_title);
         tv_total_price = view.findViewById(R.id.tv_total_price);
         Log.e("service_id", getArguments().getString("service_id"));
-        initUI();
         get_service_details();
+        initUI();
         initEventDriven();
         return view;
     }
@@ -132,23 +132,8 @@ public class ServiceDetailsFragment extends Fragment {
 
         tv_total_price_title.setVisibility(View.GONE);
         tv_total_price.setVisibility(View.GONE);
+        Log.e("userrrr_idddd", user_id);
 
-        if (user_id.equals(String.valueOf(sharedPrefManager.getUserDate().getId()))) {
-            btn_edit.setVisibility(View.VISIBLE);
-            iv_share_for_service_owner.setVisibility(View.VISIBLE);
-            btn_order_service.setVisibility(View.GONE);
-            tv_title_owner.setVisibility(View.GONE);
-            relative_service_ownner.setVisibility(View.GONE);
-
-
-        } else {
-
-            btn_edit.setVisibility(View.GONE);
-            iv_share_for_service_owner.setVisibility(View.GONE);
-            btn_order_service.setVisibility(View.VISIBLE);
-            tv_title_owner.setVisibility(View.VISIBLE);
-            relative_service_ownner.setVisibility(View.VISIBLE);
-        }
     }
 
     private void initEventDriven() {
@@ -188,6 +173,8 @@ public class ServiceDetailsFragment extends Fragment {
                     public void onResponse(Call<ServiceDetails> call, Response<ServiceDetails> response) {
                         ((HomeActivity) getActivity()).dismis_dialog();
                         if (response.body().isValue()) {
+                            Log.e("servicw_details", response.body().getData().toString());
+                            Log.e("my_id", String.valueOf(sharedPrefManager.getUserDate().getId()));
                             if (!response.body().getData().getImages().isEmpty()) {
                                 for (int i = 0; i < response.body().getData().getImages().size(); i++) {
                                     ImagesVIdeosModel imagesVIdeosModel = new ImagesVIdeosModel();
@@ -231,6 +218,22 @@ public class ServiceDetailsFragment extends Fragment {
                             }
                         }
                         args.putString("response", response + "");
+                        if (user_id.equals(String.valueOf(sharedPrefManager.getUserDate().getId()))) {
+                            btn_edit.setVisibility(View.VISIBLE);
+                            iv_share_for_service_owner.setVisibility(View.VISIBLE);
+                            btn_order_service.setVisibility(View.GONE);
+                            tv_title_owner.setVisibility(View.GONE);
+                            relative_service_ownner.setVisibility(View.GONE);
+
+
+                        } else {
+
+                            btn_edit.setVisibility(View.GONE);
+                            iv_share_for_service_owner.setVisibility(View.GONE);
+                            btn_order_service.setVisibility(View.VISIBLE);
+                            tv_title_owner.setVisibility(View.VISIBLE);
+                            relative_service_ownner.setVisibility(View.VISIBLE);
+                        }
 
                     }
 

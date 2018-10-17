@@ -47,6 +47,12 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.Urls;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
 import com.I3gaz.mohamedelmahalwy.a5damat.Utils.ServiceGenerator;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,6 +64,7 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import id.zelory.compressor.Compressor;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -119,15 +126,15 @@ public class AddServiceFragment extends Fragment {
     Button btn_choose;
     String type = "null";
     static final int PICK_IMAGE_REQUEST = 1;
-    public static List<File> image_files_list = new ArrayList<>();
+//    public static List<File> image_files_list = new ArrayList<>();
     public static List<Integer> image_file_size_list = new ArrayList<>();
     public static List<String> image_links_list = new ArrayList<>();
     public static List<String> video_links_list = new ArrayList<>();
     String filePath;
     File file;
     public static ScrollView scrol_view;
-    public static List<MultipartBody.Part> parts;
-    public static MultipartBody.Part[] fileParts;
+    File compressedImageFile;
+    public static List<String> compressedImageFileList = new ArrayList<>();
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -335,14 +342,17 @@ public class AddServiceFragment extends Fragment {
             file = new File(filePath);
             Log.e("file", "" + file);
             try {
+                compressedImageFile = new Compressor(getActivity()).compressToFile(file);
                 pop_up_add_photo_video.dismiss();
                 tv_add_photo_or_video.setVisibility(View.GONE);
                 view_for_add_image_at_first_Time.setVisibility(View.GONE);
                 rv_videos_and_images.setVisibility(View.VISIBLE);
                 add_more.setVisibility(View.VISIBLE);
                 int file_size = Integer.parseInt(String.valueOf(file.length() / 1024));
-                image_file_size_list.add(file_size);
+                int compressed_image_file_size = Integer.parseInt(String.valueOf(compressedImageFile.length() / 1024));
+                image_file_size_list.add(compressed_image_file_size);
                 Log.e("file_size", file_size + "MB");
+                Log.e("compressed_file_size", compressed_image_file_size + "MB");
                 VideoAndImageModel videoAndImageModel = new VideoAndImageModel();
                 videoAndImageModel.setIv_service("empty");
                 videoAndImageModel.setYoutube_player_view("empty");
@@ -350,22 +360,11 @@ public class AddServiceFragment extends Fragment {
                 videoAndImageModel.setType("file");
                 videoAndImageModel.setFile_size(file_size);
                 videoAndImageList.add(videoAndImageModel);
-                image_files_list.add(file);
-
+//                image_files_list.add(file);
                 rv_videos_and_images.getAdapter().notifyDataSetChanged();
                 rv_videos_and_images.scrollToPosition(videoAndImageList.size() - 1);
                 ////////////////////////////////////////////////////////////////////////
-//                parts = new ArrayList<>();
-//                if (imageUri != null) {
-//                    parts.add(prepareFilePart("photo", imageUri));
-//                }
-//                MediaType mediaType = MediaType.parse("");//Based on the Postman logs,it's not specifying Content-Type, this is why I've made this empty content/mediaType
-//                fileParts = new MultipartBody.Part[image_files_list.size()];
-//                for (int i = 0; i < image_files_list.size(); i++) {
-//                    RequestBody fileBody = RequestBody.create(mediaType, file);
-//                    //Setting the file name as an empty string here causes the same issue, which is sending the request successfully without saving the files in the backend, so don't neglect the file name parameter.
-//                    fileParts[i] = MultipartBody.Part.createFormData(String.format(Locale.ENGLISH, "files[%d]", i), file.getName(), fileBody);
-//                }
+                upload_image();
             } catch (Exception e) {
                 e.printStackTrace();
                 Toast.makeText(getActivity(), "حدث خطأ ما", Toast.LENGTH_LONG).show();
@@ -771,50 +770,57 @@ public class AddServiceFragment extends Fragment {
         developmentList.add(developmentModel);
     }
 
-//    @NonNull
-//    private RequestBody createPartFromString(String descriptionString) {
-//        return RequestBody.create(
-//                okhttp3.MultipartBody.FORM, descriptionString);
-//    }
-//
-//    @NonNull
-//    private MultipartBody.Part prepareFilePart(String partName, Uri fileUri) {
-//
-//        // create RequestBody instance from file
-//        RequestBody requestFile =
-//                RequestBody.create(
-//                        MediaType.parse(getActivity().getContentResolver().getType(fileUri)),
-//                        file
-//                );
-//
-//        // MultipartBody.Part is used to send also the actual file name
-//        return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
-//    }
+    void upload_image() {
+        String url = "http://e3gaz.net/5dmat/public/api/v1/" + "service_image";
+        AndroidNetworking.upload(url)
+                .addMultipartFile("image", compressedImageFile)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        ((HomeActivity) getActivity()).dismis_dialog();
+                        try {
+                            Log.e("response_add_image", response.toString());
+                            if (response.getString("value").equals("true")) {
+                                compressedImageFileList.add(response.getString("data"));
+                            } else {
+                                Log.e("false", "false");
+                                Toast.makeText(getActivity(), "حدث خطأ ما", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
 
-//    public static void upload_images() {
-//        Log.e("service_id_upload", DevelopmentsAdapter.service_id);
-//        Log.e("parts", fileParts.toString());
-//        MultipartBody.Part[] image = fileParts;
-//        RetroWeb.getClient().create(ServiceApi.class).uploadMultipleFilesDynamic(image, DevelopmentsAdapter.service_id).enqueue(new Callback<UploadImage1>() {
-//            @Override
-//            public void onResponse(Call<UploadImage1> call, Response<UploadImage1> response) {
-//                try {
-//                    Log.e("response_upload", response.toString());
-//                    Log.e("response_upload1", response.body() + "");
-//
-//                } catch (Exception e) {
-//                    Log.e("upload_eror", e.toString());
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<UploadImage1> call, Throwable t) {
-//                Log.e("upload_eror", t.toString());
-//
-//            }
-//        });
-//    }
+                    @Override
+                    public void onError(ANError error) {
+                        ((HomeActivity) getActivity()).dismis_dialog();
 
+                        if (error.getErrorCode() != 0) {
 
+                            // received error from server
+                            // error.getErrorCode() - the error code from server
+                            // error.getErrorBody() - the error body from server
+                            // error.getErrorDetail() - just an error detail
+                            Log.e("onError errorCode : ", String.valueOf(error.getErrorCode()));
+                            Log.e("onError errorBody : ", error.getErrorBody());
+                            if (error.getErrorCode() == 400) {
+                                Toast.makeText(getActivity(), "حدث خطأ ما...", Toast.LENGTH_SHORT).show();
+                            }
+                            if (error.getErrorCode() == 500) {
+                                Toast.makeText(getActivity(), "خطأ فى الاتصال بالسيرفر...", Toast.LENGTH_SHORT).show();
+                            }
+                            // get parsed error object (If ApiError is your class)
+
+                        } else {
+                            // error.getErrorDetail() : connectionError, parseError, requestCancelledError
+                            Log.e("onError errorDetail : ", error.getErrorDetail());
+                            if (error.getErrorDetail().equals("connectionError")) {
+                                Toast.makeText(getActivity(), "حطأ فى الاتصال بالانترنت...", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
+    }
 }
