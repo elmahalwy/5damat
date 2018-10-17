@@ -1,7 +1,10 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +13,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
+import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.MessagesDetailsFragment;
+import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.ServiceDetailsFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyMessages.Datum;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
 
@@ -40,12 +46,27 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.tv_message_title.setText(messagesModelList.get(position).getServiceTitle());
         holder.tv_user_name.setText(messagesModelList.get(position).getSender());
         holder.tv_number_of_comments.setText(messagesModelList.get(position).getCount());
         holder.tv_date.setText(messagesModelList.get(position).getCreatedDate());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle args = new Bundle();
+                args.putString("message_id", String.valueOf(messagesModelList.get(position).getId()));
+                args.putString("user_id", String.valueOf(messagesModelList.get(position).getSender_id()));
+                args.putString("service_id", String.valueOf(messagesModelList.get(position).getService_id()));
+                FragmentManager fragmentManager = ((HomeActivity) context).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                MessagesDetailsFragment messagesDetailsFragment = new MessagesDetailsFragment();
+                messagesDetailsFragment.setArguments(args);
 
+                fragmentTransaction.replace(R.id.frame_container, messagesDetailsFragment);
+                fragmentTransaction.commit();
+            }
+        });
 
         if (position > lastPosition) {
 

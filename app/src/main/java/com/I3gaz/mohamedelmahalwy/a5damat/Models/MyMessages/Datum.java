@@ -24,6 +24,13 @@ public class Datum {
     @SerializedName("created_date")
     @Expose
     private String createdDate;
+    @SerializedName("service_id")
+    @Expose
+    private int service_id;
+    @SerializedName("sender_id")
+    @Expose
+    private int sender_id;
+
 
     public int getId() {
         return id;
@@ -73,4 +80,19 @@ public class Datum {
         this.createdDate = createdDate;
     }
 
+    public int getService_id() {
+        return service_id;
+    }
+
+    public void setService_id(int service_id) {
+        this.service_id = service_id;
+    }
+
+    public int getSender_id() {
+        return sender_id;
+    }
+
+    public void setSender_id(int sender_id) {
+        this.sender_id = sender_id;
+    }
 }

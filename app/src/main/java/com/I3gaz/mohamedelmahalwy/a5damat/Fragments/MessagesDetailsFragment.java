@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ReportMessage.ReportMessage;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.SendMessage.SendMessage;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SingleMessage.SingleMessage;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
@@ -33,6 +34,7 @@ import retrofit2.Response;
 
 import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.handleException;
 import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.makeToast;
+import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.sharedPrefManager;
 
 public class MessagesDetailsFragment extends Fragment {
     @BindView(R.id.tv_title)
@@ -109,6 +111,12 @@ public class MessagesDetailsFragment extends Fragment {
                 report();
             }
         });
+        btn_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                send_message();
+            }
+        });
 
 
     }
@@ -178,7 +186,25 @@ public class MessagesDetailsFragment extends Fragment {
         }
         if (cancel) {
         } else {
-//RetroWeb.getClient().create(ServiceApi.class).send_message()
+            ((HomeActivity) getActivity()).showdialog();
+            RetroWeb.getClient().create(ServiceApi.class).send_message(String.valueOf(sharedPrefManager.getUserDate().getId()),
+                    getArguments().getString("service_id"), et_add_comment.getText().toString()).enqueue(new Callback<SendMessage>() {
+                @Override
+                public void onResponse(Call<SendMessage> call, Response<SendMessage> response) {
+                    ((HomeActivity) getActivity()).dismis_dialog();
+                    if (response.body().isValue()) {
+                        makeToast(getContext(), "تم ارسال رسالتك بنجاح...");
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<SendMessage> call, Throwable t) {
+                    ((HomeActivity) getActivity()).dismis_dialog();
+                    handleException(getActivity(), t);
+                    t.printStackTrace();
+                }
+            });
         }
     }
 
