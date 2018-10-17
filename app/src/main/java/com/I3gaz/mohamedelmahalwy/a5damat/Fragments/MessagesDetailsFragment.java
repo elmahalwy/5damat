@@ -190,6 +190,7 @@ public class MessagesDetailsFragment extends Fragment {
                 ((HomeActivity) getActivity()).dismis_dialog();
                 if (response.body().isValue()) {
                     makeToast(getContext(), "تم ارسال بلاغك سيتم مراجعته في اقرب وقت");
+                    dialog_report.dismiss();
                 }
             }
 
