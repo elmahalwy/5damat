@@ -124,7 +124,7 @@ public class AddServiceFragment extends Fragment {
     public static ScrollView scrol_view;
     File compressedImageFile;
     public static List<String> compressedImageFileList = new ArrayList<>();
-
+    ServiceDetails serviceDetails;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.add_service_fragment_layout, container, false);
@@ -199,13 +199,16 @@ public class AddServiceFragment extends Fragment {
     private void initUI() {
         Log.e("came_from", ((HomeActivity) getActivity()).came_from);
         if ((((HomeActivity) getActivity()).came_from.equals("edit"))) {
-            ((HomeActivity)getContext()).tv_toolbar_title.setText("تعديل الخدمة");
-            ServiceDetails serviceDetails = (ServiceDetails) getArguments().getParcelable("response");
+            ((HomeActivity) getContext()).tv_toolbar_title.setText("تعديل الخدمة");
+            serviceDetails = (ServiceDetails) getArguments().getParcelable("response");
             Log.e("iddddddd", serviceDetails.getData().getId() + "");
             et_what_would_you_do_for_exchange_of_this_service.setText(serviceDetails.getData().getTitle());
+            et_service_details.setText(serviceDetails.getData().getNote());
+            et_key_words.setText(serviceDetails.getData().getKey_words());
+            et_service_instructions_to_buyer_title.setText(serviceDetails.getData().getRoles());
 
         }
-        ((HomeActivity)getContext()).tv_toolbar_title.setText("اضافة الخدمة");
+        ((HomeActivity) getContext()).tv_toolbar_title.setText("اضافة الخدمة");
         ((HomeActivity) getActivity()).dismiss_keyboard();
         getsp_service_price();
         getsp_category();
@@ -466,7 +469,15 @@ public class AddServiceFragment extends Fragment {
                         @Override
                         public void onNothingSelected(AdapterView<?> adapterView) {
                         }
+
                     });
+                    if ((((HomeActivity) getActivity()).came_from.equals("edit"))) {
+                        if (!serviceDetails.getData().getPrice().isEmpty()) {
+                            int spinnerPosition = levels_list_adapter.getPosition(serviceDetails.getData().getPrice());
+                            sp_service_price.setSelection(spinnerPosition);
+                        }
+                    }
+
                 } catch (Exception e) {
 
                 }
@@ -561,6 +572,12 @@ public class AddServiceFragment extends Fragment {
                         public void onNothingSelected(AdapterView<?> adapterView) {
                         }
                     });
+                    if ((((HomeActivity) getActivity()).came_from.equals("edit"))) {
+                        if (!serviceDetails.getData().getCategory().isEmpty()) {
+                            int spinnerPosition = levels_list_adapter.getPosition(serviceDetails.getData().getCategory());
+                            sp_category.setSelection(spinnerPosition);
+                        }
+                    }
                 } catch (Exception e) {
 
                 }
@@ -653,6 +670,12 @@ public class AddServiceFragment extends Fragment {
                         public void onNothingSelected(AdapterView<?> adapterView) {
                         }
                     });
+                    if ((((HomeActivity) getActivity()).came_from.equals("edit"))) {
+                        if (!serviceDetails.getData().getSub_category().isEmpty()) {
+                            int spinnerPosition = levels_list_adapter.getPosition(serviceDetails.getData().getSub_category());
+                            sp_sub_category.setSelection(spinnerPosition);
+                        }
+                    }
                 } catch (Exception e) {
 
                 }
@@ -738,6 +761,12 @@ public class AddServiceFragment extends Fragment {
                         public void onNothingSelected(AdapterView<?> adapterView) {
                         }
                     });
+                    if ((((HomeActivity) getActivity()).came_from.equals("edit"))) {
+                        if (!serviceDetails.getData().getDeadline().isEmpty()) {
+                            int spinnerPosition = levels_list_adapter.getPosition(serviceDetails.getData().getDeadline());
+                            sp_service_delivery_time.setSelection(spinnerPosition);
+                        }
+                    }
                 } catch (Exception e) {
 
                 }

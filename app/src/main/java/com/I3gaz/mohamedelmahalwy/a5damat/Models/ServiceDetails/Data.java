@@ -2,11 +2,14 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails;
 
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Data {
-
+    @SerializedName("sub_category")
+    @Expose
+    private String sub_category;
     @SerializedName("like")
     @Expose
     private boolean like;
@@ -33,7 +36,7 @@ public class Data {
     private List<String> videos = null;
     @SerializedName("key_words")
     @Expose
-    private Object keyWords;
+    private String key_words;
     @SerializedName("owner")
     @Expose
     private String owner;
@@ -126,14 +129,6 @@ public class Data {
         this.videos = videos;
     }
 
-    public Object getKeyWords() {
-        return keyWords;
-    }
-
-    public void setKeyWords(Object keyWords) {
-        this.keyWords = keyWords;
-    }
-
     public String getOwner() {
         return owner;
     }
@@ -206,4 +201,19 @@ public class Data {
         this.developments = developments;
     }
 
+    public String getSub_category() {
+        return sub_category;
+    }
+
+    public void setSub_category(String sub_category) {
+        this.sub_category = sub_category;
+    }
+
+    public String getKey_words() {
+        return key_words;
+    }
+
+    public void setKey_words(String key_words) {
+        this.key_words = key_words;
+    }
 }
