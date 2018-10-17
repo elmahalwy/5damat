@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.AllMessagesModel;
-import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.NotificationModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
 
 import java.util.ArrayList;

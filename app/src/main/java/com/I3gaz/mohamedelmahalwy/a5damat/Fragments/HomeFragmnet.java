@@ -53,9 +53,11 @@ public class HomeFragmnet extends Fragment {
         initUI();
         initEventDrivn();
         if (getArguments().getString("type").equals("search")) {
+            ((HomeActivity) getContext()).tv_toolbar_title.setText("البحث المتقدم");
             search();
         }
         if (getArguments().getString("type").equals("home")) {
+            ((HomeActivity) getContext()).tv_toolbar_title.setText("الرئيسية");
             get_home_data();
         }
         return view;
@@ -71,7 +73,8 @@ public class HomeFragmnet extends Fragment {
 //                search_bar.setText("");
                 if (getArguments().getString("type").equals("search")) {
                     search();
-                } else {
+                }
+                if (getArguments().getString("type").equals("home")) {
                     get_home_data();
                 }
 

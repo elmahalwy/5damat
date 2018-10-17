@@ -74,6 +74,7 @@ public class MessagesDetailsFragment extends Fragment {
     }
 
     void initUI() {
+        ((HomeActivity)getContext()).tv_toolbar_title.setText("الرسائل");
         no_socials.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

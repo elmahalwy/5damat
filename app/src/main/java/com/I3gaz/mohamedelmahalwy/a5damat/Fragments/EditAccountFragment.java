@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
 import com.rilixtech.CountryCodePicker;
 
@@ -55,6 +56,7 @@ public class EditAccountFragment extends Fragment {
     }
 
     void initEventDriven() {
+        ((HomeActivity)getContext()).tv_toolbar_title.setText("تعديل الحساب");
 
     }
 }

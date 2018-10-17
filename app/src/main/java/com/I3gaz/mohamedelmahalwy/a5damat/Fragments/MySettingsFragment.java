@@ -51,6 +51,7 @@ public class MySettingsFragment extends Fragment {
     }
 
     void initUI() {
+        ((HomeActivity)getContext()).tv_toolbar_title.setText("صفحتى الشخصية");
         Picasso.with(getActivity())
                 .load(((HomeActivity) getContext()).sharedPrefManager.getUserDate().getImage())
                 .into(iv_profile_pic);

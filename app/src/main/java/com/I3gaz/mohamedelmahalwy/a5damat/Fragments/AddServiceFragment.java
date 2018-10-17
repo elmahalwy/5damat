@@ -199,11 +199,13 @@ public class AddServiceFragment extends Fragment {
     private void initUI() {
         Log.e("came_from", ((HomeActivity) getActivity()).came_from);
         if ((((HomeActivity) getActivity()).came_from.equals("edit"))) {
+            ((HomeActivity)getContext()).tv_toolbar_title.setText("تعديل الخدمة");
             ServiceDetails serviceDetails = (ServiceDetails) getArguments().getParcelable("response");
             Log.e("iddddddd", serviceDetails.getData().getId() + "");
             et_what_would_you_do_for_exchange_of_this_service.setText(serviceDetails.getData().getTitle());
 
         }
+        ((HomeActivity)getContext()).tv_toolbar_title.setText("اضافة الخدمة");
         ((HomeActivity) getActivity()).dismiss_keyboard();
         getsp_service_price();
         getsp_category();

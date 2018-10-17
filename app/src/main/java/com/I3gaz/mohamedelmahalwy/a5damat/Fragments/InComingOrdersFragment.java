@@ -33,7 +33,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.handleException;
-import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.sharedPrefManager;
 
 public class InComingOrdersFragment extends Fragment {
     @BindView(R.id.tv_title)
@@ -88,7 +87,7 @@ public class InComingOrdersFragment extends Fragment {
     }
 
     private void initUI() {
-        Log.e("type_of_request",type_of_request+"OOO");
+        Log.e("type_of_request", type_of_request + "OOO");
         get_request_details();
         if (type_of_request.equals("waiting")) {
             relative_btns.setVisibility(View.VISIBLE);
@@ -131,8 +130,8 @@ public class InComingOrdersFragment extends Fragment {
                 }
                 if (type_of_request.equals("in_progress")) {
                     status_to_be_sent = "delivered";
-                    Log.e("order_id",String.valueOf(id));
-                    Log.e("status_to_be_sentt",status_to_be_sent);
+                    Log.e("order_id", String.valueOf(id));
+                    Log.e("status_to_be_sentt", status_to_be_sent);
                 }
                 change_status_out_side_dialog(status_to_be_sent);
             }

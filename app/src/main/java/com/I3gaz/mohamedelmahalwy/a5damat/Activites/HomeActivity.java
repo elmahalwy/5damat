@@ -31,6 +31,7 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
 import com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,12 +75,12 @@ public class HomeActivity extends ParentClass {
     @BindView(R.id.iv_notification)
     ImageView iv_notification;
     @BindView(R.id.tv_toolbar_title)
-    TextView tv_toolbar_title;
+   public TextView tv_toolbar_title;
     @BindView(R.id.iv_profile_pic)
     ImageView iv_profile_pic;
 
     AddServiceFragment addServiceFragment;
-   public RecyclerView rv_categories;
+    public RecyclerView rv_categories;
 
     CategoriesAdapter categoriesAdapter;
     LinearLayoutManager linearLayoutManager;
@@ -96,7 +97,7 @@ public class HomeActivity extends ParentClass {
 
 
     public String came_from = "";
-    Bundle args ;
+    Bundle args;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +134,9 @@ public class HomeActivity extends ParentClass {
     }
 
     void initEventDriven() {
+        Picasso.with(this)
+                .load(sharedPrefManager.getUserDate().getImage())
+                .into(iv_profile_pic);
         iv_profile_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,7 +157,7 @@ public class HomeActivity extends ParentClass {
     void init_fragments() {
         homeFragmnet = new HomeFragmnet();
         args = new Bundle();
-        args.putString("type","home");
+        args.putString("type", "home");
         args.putString("search_key", "");
         homeFragmnet.setArguments(args);
 

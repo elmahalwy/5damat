@@ -43,6 +43,7 @@ public class MyFavouritesFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false);
         rv_my_favourites.setLayoutManager(linearLayoutManager);
         rv_my_favourites.setAdapter(myFavouritesAdapter);
+        ((HomeActivity)getContext()).tv_toolbar_title.setText("المفضلة");
         get_my_favourites();
         return view;
     }

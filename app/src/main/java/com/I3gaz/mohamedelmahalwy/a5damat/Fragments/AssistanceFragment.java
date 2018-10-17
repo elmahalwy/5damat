@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
+import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
 
 import butterknife.BindView;
@@ -30,6 +31,6 @@ public class AssistanceFragment extends Fragment {
     }
 
     void initEventDriven() {
-
+        ((HomeActivity)getContext()).tv_toolbar_title.setText("مركز المساعدة");
     }
 }

@@ -86,7 +86,7 @@ public class RequestsFragment extends Fragment {
     }
 
     void initUI() {
-
+        ((HomeActivity)getContext()).tv_toolbar_title.setText("الطلبات والمشتريات");
     }
 
     void initEventDrivn() {

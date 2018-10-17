@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.MyServiceAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyServices.MyServices;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
@@ -38,7 +39,7 @@ public class MyServiceFragment extends Fragment {
         myServiceAdapter = new MyServiceAdapter(getContext());
         linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false);
         rv_my_service.setLayoutManager(linearLayoutManager);
-
+        ((HomeActivity)getContext()).tv_toolbar_title.setText("خدماتى");
         get_my_services();
         return view;
     }

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.MessagesAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyMessages.MyMessages;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
@@ -37,7 +38,7 @@ public class MessagesFragment extends Fragment {
         messagesAdapter = new MessagesAdapter(getContext());
         linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false);
         rv_messages.setLayoutManager(linearLayoutManager);
-
+        ((HomeActivity)getContext()).tv_toolbar_title.setText("الرسائل");
         get_my_messages();
         return view;
     }

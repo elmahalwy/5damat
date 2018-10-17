@@ -45,6 +45,7 @@ public class NotificationsFragment extends Fragment {
     }
 
     void initUI() {
+        ((HomeActivity)getContext()).tv_toolbar_title.setText("الاشعارات");
         ((HomeActivity) getActivity()).rv_categories.setVisibility(View.GONE);
         notificationAdapter = new NotificationAdapter(getContext());
         linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false);
