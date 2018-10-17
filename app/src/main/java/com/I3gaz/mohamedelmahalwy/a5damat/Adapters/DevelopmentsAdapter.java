@@ -245,6 +245,14 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                             public void onNothingSelected(AdapterView<?> adapterView) {
                             }
                         });
+                        if ((((HomeActivity) context).came_from.equals("edit"))) {
+                            for (int i =0; i<developments_list.size();i++){
+                                if (!developments_list.get(i).getSp_price_for_development().isEmpty()) {
+                                    int spinnerPosition = levels_list_adapter.getPosition(developments_list.get(i).getSp_price_for_development());
+                                    holder.sp_price_for_development.setSelection(spinnerPosition);
+                                }
+                            }
+                        }
                     } catch (Exception e) {
 
                     }
@@ -330,6 +338,14 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                 public void onNothingSelected(AdapterView<?> adapterView) {
                 }
             });
+            if ((((HomeActivity) context).came_from.equals("edit"))) {
+                for (int i =0; i<developments_list.size();i++){
+                    if (!developments_list.get(i).getSp_time_for_development().isEmpty()) {
+                        int spinnerPosition = levels_list_adapter.getPosition(developments_list.get(i).getSp_time_for_development());
+                        holder.sp_time_for_development.setSelection(spinnerPosition);
+                    }
+                }
+            }
         }
         if (!developments_list.get(position).isAdded_to_list()) {
             sp_time = new ArrayList<>();
@@ -403,6 +419,14 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                             public void onNothingSelected(AdapterView<?> adapterView) {
                             }
                         });
+                        if ((((HomeActivity) context).came_from.equals("edit"))) {
+                            for (int i =0; i<developments_list.size();i++){
+                                if (!developments_list.get(i).getSp_time().isEmpty()) {
+                                    int spinnerPosition = levels_list_adapter.getPosition(developments_list.get(i).getSp_time());
+                                    holder.sp_time.setSelection(spinnerPosition);
+                                }
+                            }
+                        }
                     } catch (Exception e) {
 
                     }

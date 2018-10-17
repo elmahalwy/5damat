@@ -214,7 +214,25 @@ public class AddServiceFragment extends Fragment {
         getsp_category();
         getsp_sub_category();
         getsp_service_delivery_time();
-        initialize_list();
+        if ((((HomeActivity) getActivity()).came_from.equals("edit"))) {
+            DevelopmentModel developmentModel = new DevelopmentModel();
+            for (int i = 0; i < serviceDetails.getData().getDevelopments().size(); i++) {
+                developmentModel.setEt_developments(serviceDetails.getData().getDevelopments().get(i).getTitle());
+                developmentModel.setSp_price_for_development(serviceDetails.getData().getDevelopments().get(i).getPrice());
+                if (serviceDetails.getData().getDevelopments().get(i).getDeadline().equals("")) {
+                    developmentModel.setSp_time_for_development("لا");
+                } else {
+                    developmentModel.setSp_time_for_development("نعم");
+                }
+                developmentModel.setSp_time(serviceDetails.getData().getDevelopments().get(i).getDeadline());
+                developmentModel.setAdded(true);
+                developmentList.add(developmentModel);
+            }
+        }
+        if ((((HomeActivity) getActivity()).came_from.equals("add"))) {
+            initialize_list();
+
+        }
     }
 
     private void initEventDrivn() {
