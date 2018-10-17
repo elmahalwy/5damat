@@ -36,6 +36,7 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.DevelopmentsAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.VideoAndImageAdapater;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.DevelopmentModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.VideoAndImageModel;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails.ServiceDetails;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerssModelss;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
@@ -114,7 +115,7 @@ public class AddServiceFragment extends Fragment {
     Button btn_choose;
     String type = "null";
     static final int PICK_IMAGE_REQUEST = 1;
-//    public static List<File> image_files_list = new ArrayList<>();
+    //    public static List<File> image_files_list = new ArrayList<>();
     public static List<Integer> image_file_size_list = new ArrayList<>();
     public static List<String> image_links_list = new ArrayList<>();
     public static List<String> video_links_list = new ArrayList<>();
@@ -198,7 +199,10 @@ public class AddServiceFragment extends Fragment {
     private void initUI() {
         Log.e("came_from", ((HomeActivity) getActivity()).came_from);
         if ((((HomeActivity) getActivity()).came_from.equals("edit"))) {
-            Log.e("arguments_edit", getArguments().getString("response"));
+            ServiceDetails serviceDetails = (ServiceDetails) getArguments().getParcelable("response");
+            Log.e("iddddddd", serviceDetails.getData().getId() + "");
+            et_what_would_you_do_for_exchange_of_this_service.setText(serviceDetails.getData().getTitle());
+
         }
         ((HomeActivity) getActivity()).dismiss_keyboard();
         getsp_service_price();

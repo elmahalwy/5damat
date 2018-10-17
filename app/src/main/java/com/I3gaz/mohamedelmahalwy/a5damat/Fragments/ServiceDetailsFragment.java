@@ -30,6 +30,7 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -217,7 +218,7 @@ public class ServiceDetailsFragment extends Fragment {
                                 rv_developments.setAdapter(serviceDevelopmentsDetailsAdapter);
                             }
                         }
-                        args.putString("response", response + "");
+                        args.putParcelable("response",  response.body());
                         if (user_id.equals(String.valueOf(sharedPrefManager.getUserDate().getId()))) {
                             btn_edit.setVisibility(View.VISIBLE);
                             iv_share_for_service_owner.setVisibility(View.VISIBLE);
