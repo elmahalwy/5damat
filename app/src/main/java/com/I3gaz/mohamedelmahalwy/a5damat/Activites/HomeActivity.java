@@ -25,8 +25,10 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.MySettingsFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.NotificationsFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.RequestsFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.SearchFragment;
+import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.ServiceDetailsFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.SubCatigoriesFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MainCategories.MainCategories;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails.ServiceDetails;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
@@ -75,7 +77,7 @@ public class HomeActivity extends ParentClass {
     @BindView(R.id.iv_notification)
     ImageView iv_notification;
     @BindView(R.id.tv_toolbar_title)
-   public TextView tv_toolbar_title;
+    public TextView tv_toolbar_title;
     @BindView(R.id.iv_profile_pic)
     ImageView iv_profile_pic;
 
@@ -94,10 +96,11 @@ public class HomeActivity extends ParentClass {
     RequestsFragment requestsFragment;
     SearchFragment searchFragment;
     NotificationsFragment notificationsFragment;
-
+    ServiceDetailsFragment serviceDetailsFragment;
 
     public String came_from = "";
     Bundle args;
+    public String service_details_came_from = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +108,7 @@ public class HomeActivity extends ParentClass {
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
         init_fragments();
+
         replaceFragment(homeFragmnet);
         initUi();
         initEventDriven();
@@ -121,6 +125,12 @@ public class HomeActivity extends ParentClass {
     }
 
     void initUi() {
+        if (getIntent().getStringExtra("type").equals("deep_link")) {
+            Bundle args = new Bundle();
+            args.putString("service_id", getIntent().getStringExtra("service_id"));
+            serviceDetailsFragment.setArguments(args);
+            replaceFragment(serviceDetailsFragment);
+        }
 
         tv_home.setTextColor(Color.parseColor("#174BB0"));
         iv_home.setImageResource(R.mipmap.home);
@@ -171,6 +181,7 @@ public class HomeActivity extends ParentClass {
         messagesFragment = new MessagesFragment();
         searchFragment = new SearchFragment();
         notificationsFragment = new NotificationsFragment();
+        serviceDetailsFragment = new ServiceDetailsFragment();
     }
 
     void handle_clicks_bottom_tab() {

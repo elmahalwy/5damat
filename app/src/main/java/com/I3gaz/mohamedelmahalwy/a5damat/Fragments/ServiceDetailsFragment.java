@@ -316,7 +316,7 @@ public class ServiceDetailsFragment extends Fragment {
         // Add data to the intent, the receiving app will decide
         // what to do with it.
         share.putExtra(Intent.EXTRA_SUBJECT, tv__service_title.getText().toString());
-        share.putExtra(Intent.EXTRA_TEXT, "http://e3gaz.net/auto_click/"+getArguments().getString("service_id"));
+        share.putExtra(Intent.EXTRA_TEXT, "http://e3gaz.net/5dmat/public/?id="+getArguments().getString("service_id"));
         share.putExtra(Intent.EXTRA_COMPONENT_NAME, getArguments().getString("service_id"));
         share.putExtra("service_id", getArguments().getString("service_id"));
         startActivity(Intent.createChooser(share, "Share link!"));

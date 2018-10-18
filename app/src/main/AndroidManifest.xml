@@ -32,6 +32,7 @@
                     android:host="myhost"
                     android:pathPrefix="/login"
                     android:scheme="myapp"
+                    android:pathPattern="/.*"
                     />
             </intent-filter>
         </activity>

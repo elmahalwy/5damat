@@ -79,7 +79,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
-                android:text="خدمات تصميم و واجهات المواقع "
+                android:text=""
                 android:textColor="#000"
                 android:textSize="14sp" />
 
@@ -94,7 +94,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
-                android:text="UI - UX"
+                android:text=""
                 android:textColor="#000"
                 android:textSize="14sp" />
 
@@ -135,7 +135,7 @@
                 android:layout_toStartOf="@+id/iv_dot"
                 android:layout_toLeftOf="@+id/iv_dot"
                 android:gravity="right"
-                android:text="kkmgklsfgklsmgksfmglkfsmglsmgklsfmglsfg lsfg lsfg lsfg flsmg sflg slf "
+                android:text=""
                 android:textColor="#989898"
                 android:textSize="14sp" />
 
@@ -164,7 +164,7 @@
                         android:drawableRight="@mipmap/price"
                         android:drawablePadding="5dp"
                         android:gravity="center"
-                        android:text="السعر الاساسي:١٥ دولار"
+                        android:text=""
                         android:textColor="#000"
                         android:textSize="14sp" />
                 </RelativeLayout>
@@ -184,7 +184,7 @@
                         android:drawableRight="@mipmap/price"
                         android:drawablePadding="5dp"
                         android:gravity="center"
-                        android:text="مدة التسليم يومين "
+                        android:text=""
                         android:textColor="#000"
                         android:textSize="12sp" />
                 </RelativeLayout>
@@ -284,7 +284,7 @@
                 android:drawableRight="@mipmap/price"
                 android:drawablePadding="5dp"
                 android:gravity="center"
-                android:text="15$"
+                android:text=""
                 android:textColor="#000"
                 android:textSize="14sp" />
 
@@ -384,7 +384,7 @@
                     android:layout_marginRight="5dp"
                     android:layout_toStartOf="@+id/iv_owner"
                     android:layout_toLeftOf="@+id/iv_owner"
-                    android:text="عمر نجاح"
+                    android:text=""
                     android:textColor="#000"
                     android:textSize="14sp" />
 
@@ -398,7 +398,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_toStartOf="@+id/iv_owner"
                     android:layout_toLeftOf="@+id/iv_owner"
-                    android:text="بائع جديد"
+                    android:text=""
                     android:textColor="#989898"
                     android:textSize="14sp" />
 
