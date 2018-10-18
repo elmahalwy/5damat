@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.LoginData.User;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
@@ -174,8 +175,9 @@ public class SignInActivity extends ParentClass {
                         sharedPrefManager.setUserDate(response.body().getData());
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                         startActivity(intent);
-
-
+                    }
+                    else {
+                        Toast.makeText(SignInActivity.this, "حدث خطأ ما", Toast.LENGTH_SHORT).show();
                     }
                 }
 

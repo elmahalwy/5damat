@@ -1,6 +1,10 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Fragments;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -27,7 +31,9 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails.ServiceDetails;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
+import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,7 +97,8 @@ public class ServiceDetailsFragment extends Fragment {
 
     public static String user_id = "";
     Bundle args;
-
+    String service_id = "";
+    String url = "";
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.service_details_fragment_layout, container, false);
@@ -157,6 +164,12 @@ public class ServiceDetailsFragment extends Fragment {
                 order_service();
             }
         });
+        iv_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareTextUrl();
+            }
+        });
 
     }
 
@@ -177,6 +190,7 @@ public class ServiceDetailsFragment extends Fragment {
                                     imagesVIdeosModel.setVideo_image(response.body().getData().getImages().get(i));
                                     imagesVIdeosModelList.add(imagesVIdeosModel);
                                 }
+                                url = response.body().getData().getImages().get(0);
                             }
                             if (!response.body().getData().getImagesLinks().isEmpty()) {
                                 for (int i = 0; i < response.body().getData().getImages().size(); i++) {
@@ -185,6 +199,8 @@ public class ServiceDetailsFragment extends Fragment {
                                     imagesVIdeosModel.setVideo_image(response.body().getData().getImagesLinks().get(i));
                                     imagesVIdeosModelList.add(imagesVIdeosModel);
                                 }
+                                url = response.body().getData().getImagesLinks().get(0);
+
                             }
                             if (!response.body().getData().getVideos().isEmpty()) {
                                 for (int i = 0; i < response.body().getData().getVideos().size(); i++) {
@@ -292,5 +308,18 @@ public class ServiceDetailsFragment extends Fragment {
         });
     }
 
+    private void shareTextUrl() {
+        Intent share = new Intent(android.content.Intent.ACTION_SEND);
+        share.setType("text/plain");
+        share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+
+        // Add data to the intent, the receiving app will decide
+        // what to do with it.
+        share.putExtra(Intent.EXTRA_SUBJECT, tv__service_title.getText().toString());
+        share.putExtra(Intent.EXTRA_TEXT, "http://e3gaz.net/auto_click/"+getArguments().getString("service_id"));
+        share.putExtra(Intent.EXTRA_COMPONENT_NAME, getArguments().getString("service_id"));
+        share.putExtra("service_id", getArguments().getString("service_id"));
+        startActivity(Intent.createChooser(share, "Share link!"));
+    }
 
 }

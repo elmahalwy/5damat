@@ -22,6 +22,18 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter android:label="5dmat">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="myhost"
+                    android:pathPrefix="/login"
+                    android:scheme="myapp"
+                    />
+            </intent-filter>
         </activity>
         <activity android:name=".Activites.SignUpActivity" />
         <activity android:name=".Activites.ForgetPasswordActivity" />
