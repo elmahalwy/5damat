@@ -8,6 +8,7 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.Assistance.Assisatnce;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.EditProfile.EditProfile;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.LoginData.User;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MainCategories.MainCategories;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyBalance.Balance;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyFavourites.Favourites;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyMessages.MyMessages;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyServices.MyServices;
@@ -171,7 +172,8 @@ public interface ServiceApi {
 
     @GET(Urls.user_profile)
     Call<UserProfile> user_profile(@Path("user_id") String user_id);
-
+@GET(Urls.balance)
+    Call<Balance> my_balance(@Path("user_id")String user_id);
 
 }
 
