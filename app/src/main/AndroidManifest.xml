@@ -30,10 +30,9 @@
 
                 <data
                     android:host="myhost"
-                    android:pathPrefix="/login"
-                    android:scheme="myapp"
                     android:pathPattern="/.*"
-                    />
+                    android:pathPrefix="/login"
+                    android:scheme="myapp" />
             </intent-filter>
         </activity>
         <activity android:name=".Activites.SignUpActivity" />
@@ -50,8 +49,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".Activites.HomeActivity"></activity>
-        <activity android:name=".Activites.SignInActivity"></activity>
+        <activity android:name=".Activites.HomeActivity" />
+        <activity android:name=".Activites.SignInActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -73,7 +72,9 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".Activites.FirstInstructionActivity" />
+        <activity android:name=".Activites.SecondInstructionActivity" />
+        <activity android:name=".Activites.ThirdInstructionActivity"></activity>
     </application>
 
 </manifest>
