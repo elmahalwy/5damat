@@ -53,6 +53,7 @@ public class MySettingsFragment extends Fragment {
 
     void initUI() {
         ((HomeActivity)getContext()).tv_toolbar_title.setText("صفحتى الشخصية");
+        ((HomeActivity) getActivity()).rv_categories.setVisibility(View.GONE);
         if (!ParentClass.sharedPrefManager.getUserDate().getImage().isEmpty()) {
             Picasso.with(getActivity())
                     .load(((HomeActivity) getContext()).sharedPrefManager.getUserDate().getImage())
@@ -88,7 +89,10 @@ public class MySettingsFragment extends Fragment {
         tv_my_services.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle args = new Bundle();
+                args.putString("user_id", String.valueOf(ParentClass.sharedPrefManager.getUserDate().getId()));
                 MyServiceFragment myServiceFragment = new MyServiceFragment();
+                myServiceFragment.setArguments(args);
                 fragmentTransaction.replace(R.id.frame_container, myServiceFragment);
                 fragmentTransaction.commit();
             }

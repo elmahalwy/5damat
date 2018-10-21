@@ -30,6 +30,7 @@ public class Urls {
     public final static String search = "search";
     public final static String upload_image = "service_image";
     public final static String about_us = "settings/page";
-
+    public final static String update_profile = "update_profile";
+    public final static String user_profile = "user_profile/{user_id}";
 
 }

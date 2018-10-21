@@ -40,14 +40,14 @@ public class MyServiceFragment extends Fragment {
         myServiceAdapter = new MyServiceAdapter(getContext());
         linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false);
         rv_my_service.setLayoutManager(linearLayoutManager);
-        ((HomeActivity)getContext()).tv_toolbar_title.setText("خدماتى");
+        ((HomeActivity) getContext()).tv_toolbar_title.setText("خدماتى");
         get_my_services();
         return view;
     }
 
     void get_my_services() {
         RetroWeb.getClient().create(ServiceApi.class).get_my_services(
-                String.valueOf(ParentClass.sharedPrefManager.getUserDate().getId()))
+                getArguments().getString("user_id"))
                 .enqueue(new Callback<MyServices>() {
                     @Override
                     public void onResponse(Call<MyServices> call, Response<MyServices> response) {

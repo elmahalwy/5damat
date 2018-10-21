@@ -49,8 +49,12 @@ public class MessagesFragment extends Fragment {
                 String.valueOf(ParentClass.sharedPrefManager.getUserDate().getId())).enqueue(new Callback<MyMessages>() {
             @Override
             public void onResponse(Call<MyMessages> call, Response<MyMessages> response) {
-                messagesAdapter.addAll(response.body().getData());
-                rv_messages.setAdapter(messagesAdapter);
+                if (response.body().isValue()) {
+                    if (!response.body().getData().isEmpty()) {
+                        messagesAdapter.addAll(response.body().getData());
+                        rv_messages.setAdapter(messagesAdapter);
+                    }
+                }
             }
 
             @Override

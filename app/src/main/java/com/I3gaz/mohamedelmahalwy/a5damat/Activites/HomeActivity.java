@@ -148,7 +148,9 @@ public class HomeActivity extends ParentClass {
             Picasso.with(this)
                     .load(sharedPrefManager.getUserDate().getImage())
                     .into(iv_profile_pic);
+            Log.e("image", sharedPrefManager.getUserDate().getImage());
         }
+
         iv_profile_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -241,7 +243,7 @@ public class HomeActivity extends ParentClass {
                 tv_requests.setTextColor(Color.parseColor("#B2BBC9"));
                 iv_requests.setImageResource(R.mipmap.requests_grey);
                 tv_search.setTextColor(Color.parseColor("#174BB0"));
-                iv_search.setImageResource(R.mipmap.search);
+                iv_search.setImageResource(R.mipmap.search_blue);
             }
         });
         iv_add.setOnClickListener(new View.OnClickListener() {

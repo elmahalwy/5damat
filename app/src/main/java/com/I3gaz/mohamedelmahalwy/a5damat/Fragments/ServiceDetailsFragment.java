@@ -31,6 +31,7 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails.ServiceDetails;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
+import com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -140,18 +141,18 @@ public class ServiceDetailsFragment extends Fragment {
 
     private void initEventDriven() {
 
-        btn_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                AddServiceFragment serviceDetailsFragment = new AddServiceFragment();
-                serviceDetailsFragment.setArguments(args);
-                fragmentTransaction.replace(R.id.frame_container, serviceDetailsFragment);
-                fragmentTransaction.commit();
-                ((HomeActivity) getActivity()).came_from = "edit";
-            }
-        });
+//        btn_edit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                AddServiceFragment serviceDetailsFragment = new AddServiceFragment();
+//                serviceDetailsFragment.setArguments(args);
+//                fragmentTransaction.replace(R.id.frame_container, serviceDetailsFragment);
+//                fragmentTransaction.commit();
+//                ((HomeActivity) getActivity()).came_from = "edit";
+//            }
+//        });
         iv_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,12 +171,27 @@ public class ServiceDetailsFragment extends Fragment {
                 shareTextUrl();
             }
         });
+        iv_owner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle args = new Bundle();
+                args.putString("user_id", String.valueOf(user_id));
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                UserFragment userFragment = new UserFragment();
+                userFragment.setArguments(args);
+
+                fragmentTransaction.replace(R.id.frame_container, userFragment);
+                fragmentTransaction.commit();
+            }
+        });
 
     }
 
     void get_service_details() {
         ((HomeActivity) getActivity()).showdialog();
-        RetroWeb.getClient().create(ServiceApi.class).get_service_details(getArguments().getString("service_id"))
+        RetroWeb.getClient().create(ServiceApi.class).get_service_details(getArguments().getString("service_id")
+                ,String.valueOf(ParentClass.sharedPrefManager.getUserDate().getId()))
                 .enqueue(new Callback<ServiceDetails>() {
                     @Override
                     public void onResponse(Call<ServiceDetails> call, Response<ServiceDetails> response) {
@@ -223,6 +239,7 @@ public class ServiceDetailsFragment extends Fragment {
                             tv_main_price.setText(response.body().getData().getPrice());
                             tv_delivery_time.setText("مدة التسليم " + response.body().getData().getDeadline() + " يوم");
                             tv_service_owner.setText(response.body().getData().getOwner());
+                            Picasso.with(getContext()).load(response.body().getData().getOwnerImage()).into(iv_owner);
 
                             user_id = String.valueOf(response.body().getData().getOwnerId());
                             Log.e("userid", "" + response.body().getData().getOwnerId());
@@ -238,7 +255,7 @@ public class ServiceDetailsFragment extends Fragment {
                         }
                         args.putParcelable("response", response.body());
                         if (user_id.equals(String.valueOf(sharedPrefManager.getUserDate().getId()))) {
-                            btn_edit.setVisibility(View.VISIBLE);
+                            btn_edit.setVisibility(View.GONE);
                             iv_share_for_service_owner.setVisibility(View.VISIBLE);
                             btn_order_service.setVisibility(View.GONE);
                             tv_title_owner.setVisibility(View.GONE);
@@ -316,7 +333,7 @@ public class ServiceDetailsFragment extends Fragment {
         // Add data to the intent, the receiving app will decide
         // what to do with it.
         share.putExtra(Intent.EXTRA_SUBJECT, tv__service_title.getText().toString());
-        share.putExtra(Intent.EXTRA_TEXT, "http://e3gaz.net/5dmat/public/?id="+getArguments().getString("service_id"));
+        share.putExtra(Intent.EXTRA_TEXT, "http://e3gaz.net/5dmat/public/?id=" + getArguments().getString("service_id"));
         share.putExtra(Intent.EXTRA_COMPONENT_NAME, getArguments().getString("service_id"));
         share.putExtra("service_id", getArguments().getString("service_id"));
         startActivity(Intent.createChooser(share, "Share link!"));

@@ -65,6 +65,10 @@ public class SharedPrefManager {
         userModel.setMobile(sharedPreferences.getString("phone", ""));
         userModel.setImage(sharedPreferences.getString("image", ""));
         userModel.setApiToken(sharedPreferences.getString("token", ""));
+        userModel.setGender(sharedPreferences.getString("gender", ""));
+        userModel.setCountry(sharedPreferences.getString("country", ""));
+        userModel.setCountryCode(sharedPreferences.getString("country_code", ""));
+        userModel.setBirthday(sharedPreferences.getString("birthday", ""));
         return userModel;
     }
 
@@ -81,8 +85,12 @@ public class SharedPrefManager {
         editor.putString("name", user.getUsername());
         editor.putString("email", user.getEmail());
         editor.putString("phone", user.getMobile());
-        editor.putString("token",user.getApiToken());
-        editor.putString("image",user.getImage());
+        editor.putString("token", user.getApiToken());
+        editor.putString("image", user.getImage());
+        editor.putString("gender",user.getGender());
+        editor.putString("country",user.getCountry());
+        editor.putString("country_code",user.getCountryCode());
+        editor.putString("birthday",user.getBirthday());
         editor.apply();
     }
 

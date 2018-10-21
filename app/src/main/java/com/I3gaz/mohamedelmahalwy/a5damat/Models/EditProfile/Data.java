@@ -1,5 +1,5 @@
 
-package com.I3gaz.mohamedelmahalwy.a5damat.Models.LoginData;
+package com.I3gaz.mohamedelmahalwy.a5damat.Models.EditProfile;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -115,5 +115,4 @@ public class Data {
     public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
-
 }

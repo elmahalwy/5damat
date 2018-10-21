@@ -5,6 +5,7 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddService;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddServiceJson.AddServiceJson;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AllServices.AllServices;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.Assistance.Assisatnce;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.EditProfile.EditProfile;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.LoginData.User;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MainCategories.MainCategories;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyFavourites.Favourites;
@@ -23,17 +24,22 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SpinnerModel.SpinnerssModelss;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SubCategories.SubCategories;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.UserNotifications.Notifications;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.UserProfile.UserProfile;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ServiceApi {
     @FormUrlEncoded
@@ -111,7 +117,8 @@ public interface ServiceApi {
 
     @FormUrlEncoded
     @POST(Urls.ServiceDetails)
-    Call<ServiceDetails> get_service_details(@Field("service_id") String service_id);
+    Call<ServiceDetails> get_service_details(@Field("service_id") String service_id,
+                                             @Field("user_id") String user_id);
 
     @Headers("Accept: application/json")
     @POST("service")
@@ -123,6 +130,7 @@ public interface ServiceApi {
     @GET(Urls.purchases)
     Call<Requests_Tab_Model> purchases(@Path("user_id") String user_id, @Path("status") String status);
 
+    @FormUrlEncoded
     @POST(Urls.OrderService)
     Call<OrderService> order_service(@Field("user_id") String user_id,
                                      @Field("service_id") String service_id,
@@ -146,6 +154,22 @@ public interface ServiceApi {
 
     @GET(Urls.about_us)
     Call<Assisatnce> assisatnce();
+
+    @Multipart
+    @POST(Urls.update_profile)
+    Call<EditProfile> update_profile(@Query("username") String username,
+                                     @Query("user_id") String user_id,
+                                     @Query("mobile") String mobile,
+                                     @Query("email") String email,
+                                     @Query("country_code") String country_code,
+                                     @Query("gender") String gender,
+                                     @Query("old_password") String old_password,
+                                     @Query("new_password") String new_password,
+                                     @Query("c_new_password") String c_new_password,
+                                     @Part MultipartBody.Part image);
+
+    @GET(Urls.user_profile)
+    Call<UserProfile> user_profile(@Path("user_id") String user_id);
 
 
 }
