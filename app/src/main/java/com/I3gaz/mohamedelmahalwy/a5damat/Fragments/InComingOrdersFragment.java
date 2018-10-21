@@ -232,9 +232,12 @@ public class InComingOrdersFragment extends Fragment {
                     Log.e("response_change_status", response.toString());
                     if (response.body().isValue()) {
                         Toast.makeText(getActivity(), "تمت العمليه بنجاح", Toast.LENGTH_SHORT).show();
+                        Bundle args = new Bundle();
+                        args.putString("type", "home");
                         FragmentManager fragmentManager = ((HomeActivity) getActivity()).getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                         HomeFragmnet serviceDetailsFragment = new HomeFragmnet();
+                        serviceDetailsFragment.setArguments(args);
                         fragmentTransaction.replace(R.id.frame_container, serviceDetailsFragment);
                         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         fragmentTransaction.remove(new InComingOrdersFragment());

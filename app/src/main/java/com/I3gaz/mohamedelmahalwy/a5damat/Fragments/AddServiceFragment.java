@@ -125,6 +125,7 @@ public class AddServiceFragment extends Fragment {
     File compressedImageFile;
     public static List<String> compressedImageFileList = new ArrayList<>();
     ServiceDetails serviceDetails;
+    public static String service_id_for_edit = "";
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.add_service_fragment_layout, container, false);
@@ -206,6 +207,7 @@ public class AddServiceFragment extends Fragment {
             et_service_details.setText(serviceDetails.getData().getNote());
             et_key_words.setText(serviceDetails.getData().getKey_words());
             et_service_instructions_to_buyer_title.setText(serviceDetails.getData().getRoles());
+            service_id_for_edit= String.valueOf(serviceDetails.getData().getId());
 
         }
         ((HomeActivity) getContext()).tv_toolbar_title.setText("اضافة الخدمة");
@@ -215,7 +217,7 @@ public class AddServiceFragment extends Fragment {
         getsp_sub_category();
         getsp_service_delivery_time();
         if ((((HomeActivity) getActivity()).came_from.equals("edit"))) {
-            DevelopmentsAdapter.size=serviceDetails.getData().getDevelopments().size();
+            DevelopmentsAdapter.size = serviceDetails.getData().getDevelopments().size();
 
             for (int i = 0; i < serviceDetails.getData().getDevelopments().size(); i++) {
                 DevelopmentModel developmentModel = new DevelopmentModel();
@@ -230,10 +232,41 @@ public class AddServiceFragment extends Fragment {
                 developmentModel.setAdded(true);
                 developmentList.add(developmentModel);
             }
+            tv_add_photo_or_video.setVisibility(View.GONE);
+            view_for_add_image_at_first_Time.setVisibility(View.GONE);
+            rv_videos_and_images.setVisibility(View.VISIBLE);
+            add_more.setVisibility(View.VISIBLE);
+            for (int i = 0; i < serviceDetails.getData().getImagesLinks().size(); i++) {
+                VideoAndImageModel videoAndImageModel = new VideoAndImageModel();
+                videoAndImageModel.setIv_service(serviceDetails.getData().getImagesLinks().get(i));
+                videoAndImageModel.setYoutube_player_view("empty");
+                videoAndImageModel.setType("image_link");
+                videoAndImageList.add(videoAndImageModel);
+                image_links_list.add(serviceDetails.getData().getImagesLinks().get(i));
+            }
+            for (int i = 0; i < serviceDetails.getData().getVideos().size(); i++) {
+                VideoAndImageModel videoAndImageModel = new VideoAndImageModel();
+                videoAndImageModel.setIv_service("empty");
+                videoAndImageModel.setYoutube_player_view(serviceDetails.getData().getVideos().get(i));
+                videoAndImageModel.setType("video_link");
+                videoAndImageList.add(videoAndImageModel);
+                video_links_list.add(serviceDetails.getData().getVideos().get(i));
+            }
+            for (int i = 0; i < serviceDetails.getData().getImages().size(); i++) {
+                VideoAndImageModel videoAndImageModel = new VideoAndImageModel();
+                videoAndImageModel.setIv_service("empty");
+                videoAndImageModel.setYoutube_player_view("empty");
+                videoAndImageModel.setImage_uri(Uri.parse(""));
+                videoAndImageModel.setImage_for_edit(serviceDetails.getData().getImages().get(i));
+                videoAndImageModel.setType("file");
+                videoAndImageList.add(videoAndImageModel);
+                compressedImageFileList.add(serviceDetails.getData().getImages().get(i));
+
+            }
         }
         if ((((HomeActivity) getActivity()).came_from.equals("add"))) {
             initialize_list();
-            DevelopmentsAdapter.size=1;
+            DevelopmentsAdapter.size = 1;
 
         }
     }
@@ -340,7 +373,6 @@ public class AddServiceFragment extends Fragment {
                         video_links_list.add(get_youtube_id(et_video_from_link.getText().toString()));
                         rv_videos_and_images.getAdapter().notifyDataSetChanged();
                         rv_videos_and_images.scrollToPosition(videoAndImageList.size() - 1);
-
                         pop_up_add_photo_video.dismiss();
 
                     }

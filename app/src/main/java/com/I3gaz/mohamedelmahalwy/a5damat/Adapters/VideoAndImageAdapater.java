@@ -42,7 +42,6 @@ public class VideoAndImageAdapater extends RecyclerView.Adapter<VideoAndImageAda
         this.imges_and_videos_list = imges_and_videos_list;
 
 
-
         this.context = context;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -57,13 +56,20 @@ public class VideoAndImageAdapater extends RecyclerView.Adapter<VideoAndImageAda
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         if (imges_and_videos_list.get(position).getType().equals("file")) {
-            holder.iv_service.setVisibility(View.VISIBLE);
-            holder.relative_for_video.setVisibility(View.GONE);
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), imges_and_videos_list.get(position).getImage_uri());
-                holder.iv_service.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
+            if ((((HomeActivity) context).came_from.equals("edit"))) {
+                holder.iv_service.setVisibility(View.VISIBLE);
+                holder.relative_for_video.setVisibility(View.GONE);
+                Picasso.with(context).load(imges_and_videos_list.get(position).getImage_for_edit()).into(holder.iv_service);
+            }
+            if ((((HomeActivity) context).came_from.equals("add"))) {
+                holder.iv_service.setVisibility(View.VISIBLE);
+                holder.relative_for_video.setVisibility(View.GONE);
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), imges_and_videos_list.get(position).getImage_uri());
+                    holder.iv_service.setImageBitmap(bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
         if (imges_and_videos_list.get(position).getType().equals("video_link")) {

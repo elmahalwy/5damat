@@ -3,7 +3,7 @@ package com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel;
 import android.net.Uri;
 
 public class VideoAndImageModel {
-    String youtube_player_view,iv_service,type;
+    String youtube_player_view,iv_service,type,image_for_edit;
     Uri image_uri;
     int file_size;
 
@@ -45,5 +45,13 @@ public class VideoAndImageModel {
 
     public void setFile_size(int file_size) {
         this.file_size = file_size;
+    }
+
+    public String getImage_for_edit() {
+        return image_for_edit;
+    }
+
+    public void setImage_for_edit(String image_for_edit) {
+        this.image_for_edit = image_for_edit;
     }
 }

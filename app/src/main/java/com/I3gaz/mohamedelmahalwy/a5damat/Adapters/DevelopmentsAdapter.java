@@ -2,6 +2,7 @@ package com.I3gaz.mohamedelmahalwy.a5damat.Adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -246,7 +247,7 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                             }
                         });
                         if ((((HomeActivity) context).came_from.equals("edit"))) {
-                            for (int i =0; i<developments_list.size();i++){
+                            for (int i = 0; i < developments_list.size(); i++) {
                                 if (!developments_list.get(i).getSp_price_for_development().isEmpty()) {
                                     int spinnerPosition = levels_list_adapter.getPosition(developments_list.get(i).getSp_price_for_development());
                                     holder.sp_price_for_development.setSelection(spinnerPosition);
@@ -339,7 +340,7 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                 }
             });
             if ((((HomeActivity) context).came_from.equals("edit"))) {
-                for (int i =0; i<developments_list.size();i++){
+                for (int i = 0; i < developments_list.size(); i++) {
                     if (!developments_list.get(i).getSp_time_for_development().isEmpty()) {
                         int spinnerPosition = levels_list_adapter.getPosition(developments_list.get(i).getSp_time_for_development());
                         holder.sp_time_for_development.setSelection(spinnerPosition);
@@ -420,7 +421,7 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                             }
                         });
                         if ((((HomeActivity) context).came_from.equals("edit"))) {
-                            for (int i =0; i<developments_list.size();i++){
+                            for (int i = 0; i < developments_list.size(); i++) {
                                 if (!developments_list.get(i).getSp_time().isEmpty()) {
                                     int spinnerPosition = levels_list_adapter.getPosition(developments_list.get(i).getSp_time());
                                     holder.sp_time.setSelection(spinnerPosition);
@@ -628,67 +629,138 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                         e.printStackTrace();
                     }
                     /////////////////////////////sending_request/////////////////////////////////////////////////////////
-                    String url = "http://e3gaz.net/5dmat/public/api/v1/" + "service";
-                    AndroidNetworking.post(url)
-                            .addHeaders("Content-Type", "application/json")
-                            .addJSONObjectBody(main)
-                            .setPriority(Priority.MEDIUM)
-                            .build()
-                            .getAsJSONObject(new JSONObjectRequestListener() {
-                                @Override
-                                public void onResponse(JSONObject response) {
-                                    ((HomeActivity) context).dismis_dialog();
-                                    try {
-                                        Log.e("response_add_service", response.toString());
-                                        if (response.getString("value").equals("true")) {
-                                            service_id = response.getString("data");
-                                            Log.e("service_id", service_id + "popopop");
-                                            FragmentManager fragmentManager = ((HomeActivity) context).getSupportFragmentManager();
-                                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                            HomeFragmnet serviceDetailsFragment = new HomeFragmnet();
-                                            fragmentTransaction.replace(R.id.frame_container, serviceDetailsFragment);
-                                            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                                            fragmentTransaction.remove(new AddServiceFragment());
-                                            fragmentTransaction.commit();
-                                            fragmentManager.popBackStack();
+                    if ((((HomeActivity) context).came_from.equals("edit"))) {
+                        Log.e("service_id_for_edit", AddServiceFragment.service_id_for_edit);
+                        String url = "http://e3gaz.net/5dmat/public/api/v1/" + "service/" + AddServiceFragment.service_id_for_edit;
+                        AndroidNetworking.post(url)
+                                .addHeaders("Content-Type", "application/json")
+                                .addJSONObjectBody(main)
+                                .setPriority(Priority.MEDIUM)
+                                .build()
+                                .getAsJSONObject(new JSONObjectRequestListener() {
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+                                        ((HomeActivity) context).dismis_dialog();
+                                        try {
+                                            Log.e("response_add_service", response.toString());
+                                            if (response.getString("value").equals("true")) {
+                                                service_id = response.getString("data");
+                                                Log.e("service_id", service_id + "popopop");
+                                                Bundle args = new Bundle();
+                                                args.putString("type", "home");
+                                                FragmentManager fragmentManager = ((HomeActivity) context).getSupportFragmentManager();
+                                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                                HomeFragmnet serviceDetailsFragment = new HomeFragmnet();
+                                                serviceDetailsFragment.setArguments(args);
+                                                fragmentTransaction.replace(R.id.frame_container, serviceDetailsFragment);
+                                                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                                                fragmentTransaction.remove(new AddServiceFragment());
+                                                fragmentTransaction.commit();
+                                                fragmentManager.popBackStack();
+                                            } else {
+                                                Toast.makeText(context, "حدث خطأ ما", Toast.LENGTH_SHORT).show();
+                                            }
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(ANError error) {
+                                        ((HomeActivity) context).dismis_dialog();
+
+                                        if (error.getErrorCode() != 0) {
+
+                                            // received error from server
+                                            // error.getErrorCode() - the error code from server
+                                            // error.getErrorBody() - the error body from server
+                                            // error.getErrorDetail() - just an error detail
+                                            Log.e("onError errorCode : ", String.valueOf(error.getErrorCode()));
+                                            Log.e("onError errorBody : ", error.getErrorBody());
+                                            if (error.getErrorCode() == 400) {
+                                                Toast.makeText(context, "حدث خطأ ما...", Toast.LENGTH_SHORT).show();
+                                            }
+                                            if (error.getErrorCode() == 500) {
+                                                Toast.makeText(context, "خطأ فى الاتصال بالسيرفر...", Toast.LENGTH_SHORT).show();
+                                            }
+                                            // get parsed error object (If ApiError is your class)
+
                                         } else {
-                                            Toast.makeText(context, "حدث خطأ ما", Toast.LENGTH_SHORT).show();
-                                        }
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-
-                                @Override
-                                public void onError(ANError error) {
-                                    ((HomeActivity) context).dismis_dialog();
-
-                                    if (error.getErrorCode() != 0) {
-
-                                        // received error from server
-                                        // error.getErrorCode() - the error code from server
-                                        // error.getErrorBody() - the error body from server
-                                        // error.getErrorDetail() - just an error detail
-                                        Log.e("onError errorCode : ", String.valueOf(error.getErrorCode()));
-                                        Log.e("onError errorBody : ", error.getErrorBody());
-                                        if (error.getErrorCode() == 400) {
-                                            Toast.makeText(context, "حدث خطأ ما...", Toast.LENGTH_SHORT).show();
-                                        }
-                                        if (error.getErrorCode() == 500) {
-                                            Toast.makeText(context, "خطأ فى الاتصال بالسيرفر...", Toast.LENGTH_SHORT).show();
-                                        }
-                                        // get parsed error object (If ApiError is your class)
-
-                                    } else {
-                                        // error.getErrorDetail() : connectionError, parseError, requestCancelledError
-                                        Log.e("onError errorDetail : ", error.getErrorDetail());
-                                        if (error.getErrorDetail().equals("connectionError")) {
-                                            Toast.makeText(context, "حطأ فى الاتصال بالانترنت...", Toast.LENGTH_SHORT).show();
+                                            // error.getErrorDetail() : connectionError, parseError, requestCancelledError
+                                            Log.e("onError errorDetail : ", error.getErrorDetail());
+                                            if (error.getErrorDetail().equals("connectionError")) {
+                                                Toast.makeText(context, "حطأ فى الاتصال بالانترنت...", Toast.LENGTH_SHORT).show();
+                                            }
                                         }
                                     }
-                                }
-                            });
+                                });
+                    }
+                    if ((((HomeActivity) context).came_from.equals("add"))) {
+                        Log.e("in_add", "in_add");
+                        String url = "http://e3gaz.net/5dmat/public/api/v1/" + "service";
+                        AndroidNetworking.post(url)
+                                .addHeaders("Content-Type", "application/json")
+                                .addJSONObjectBody(main)
+                                .setPriority(Priority.MEDIUM)
+                                .build()
+                                .getAsJSONObject(new JSONObjectRequestListener() {
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+                                        ((HomeActivity) context).dismis_dialog();
+                                        try {
+                                            Log.e("response_add_service", response.toString());
+                                            if (response.getString("value").equals("true")) {
+                                                service_id = response.getString("data");
+                                                Log.e("service_id", service_id + "popopop");
+                                                Bundle args = new Bundle();
+                                                args.putString("type", "home");
+                                                FragmentManager fragmentManager = ((HomeActivity) context).getSupportFragmentManager();
+                                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                                HomeFragmnet serviceDetailsFragment = new HomeFragmnet();
+                                                serviceDetailsFragment.setArguments(args);
+                                                fragmentTransaction.replace(R.id.frame_container, serviceDetailsFragment);
+                                                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                                                fragmentTransaction.remove(new AddServiceFragment());
+                                                fragmentTransaction.commit();
+                                                fragmentManager.popBackStack();
+                                            } else {
+                                                Toast.makeText(context, "حدث خطأ ما", Toast.LENGTH_SHORT).show();
+                                            }
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
 
+                                    @Override
+                                    public void onError(ANError error) {
+                                        ((HomeActivity) context).dismis_dialog();
+
+                                        if (error.getErrorCode() != 0) {
+
+                                            // received error from server
+                                            // error.getErrorCode() - the error code from server
+                                            // error.getErrorBody() - the error body from server
+                                            // error.getErrorDetail() - just an error detail
+                                            Log.e("onError errorCode : ", String.valueOf(error.getErrorCode()));
+                                            Log.e("onError errorBody : ", error.getErrorBody());
+                                            if (error.getErrorCode() == 400) {
+                                                Toast.makeText(context, "حدث خطأ ما...", Toast.LENGTH_SHORT).show();
+                                            }
+                                            if (error.getErrorCode() == 500) {
+                                                Toast.makeText(context, "خطأ فى الاتصال بالسيرفر...", Toast.LENGTH_SHORT).show();
+                                            }
+                                            // get parsed error object (If ApiError is your class)
+
+                                        } else {
+                                            // error.getErrorDetail() : connectionError, parseError, requestCancelledError
+                                            Log.e("onError errorDetail : ", error.getErrorDetail());
+                                            if (error.getErrorDetail().equals("connectionError")) {
+                                                Toast.makeText(context, "حطأ فى الاتصال بالانترنت...", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    }
+                                });
+                    }
                 }
             }
         });
