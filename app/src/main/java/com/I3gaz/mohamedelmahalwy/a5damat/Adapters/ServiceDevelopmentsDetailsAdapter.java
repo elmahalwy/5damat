@@ -28,7 +28,7 @@ public class ServiceDevelopmentsDetailsAdapter extends RecyclerView.Adapter<Serv
     Context context;
     LayoutInflater layoutInflater;
     int lastPosition = -1;
-    public static List<String> selected_ids_devlopments;
+    public static ArrayList<String> selected_ids_devlopments;
     public static long toal_price;
 
 

@@ -26,6 +26,7 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.SubCategories.SubCategories;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.UserNotifications.Notifications;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.UserProfile.UserProfile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.MultipartBody;
@@ -135,7 +136,7 @@ public interface ServiceApi {
     Call<OrderService> order_service(@Field("user_id") String user_id,
                                      @Field("service_id") String service_id,
                                      @Field("total_salary") String total_salary,
-                                     @Field("sub_services") List<String> developments);
+                                     @Field("sub_services[]") ArrayList<String> developments);
 
     @GET(Urls.UserNotifications)
     Call<Notifications> user_notifications(@Path("user_id") String user_id);

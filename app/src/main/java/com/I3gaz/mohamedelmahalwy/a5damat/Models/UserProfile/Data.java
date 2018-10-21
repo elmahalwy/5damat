@@ -9,6 +9,9 @@ public class Data {
     @SerializedName("id")
     @Expose
     private int id;
+    @SerializedName("last_online")
+    @Expose
+    private String last_online;
     @SerializedName("username")
     @Expose
     private String username;
@@ -139,4 +142,11 @@ public class Data {
         this.userRate = userRate;
     }
 
+    public String getLast_online() {
+        return last_online;
+    }
+
+    public void setLast_online(String last_online) {
+        this.last_online = last_online;
+    }
 }

@@ -28,8 +28,6 @@ import retrofit2.Response;
 import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.handleException;
 
 public class SubCatigoriesFragment extends Fragment {
-    @BindView(R.id.tv_number_of_subcatigories)
-    TextView tv_number_of_subcatigories;
     RecyclerView rv_subcatigories;
     SubCatigoriesAdapter subCatigoriesAdapter;
     LinearLayoutManager linearLayoutManager;
@@ -60,7 +58,11 @@ public class SubCatigoriesFragment extends Fragment {
         RetroWeb.getClient().create(ServiceApi.class).get_sub_categories(String.valueOf(CategoriesAdapter.id)).enqueue(new Callback<SubCategories>() {
             @Override
             public void onResponse(Call<SubCategories> call, Response<SubCategories> response) {
-                subCatigoriesAdapter.addAll(response.body().getData());
+                if (response.body().isValue()) {
+                    if (!response.body().getData().isEmpty()) {
+                        subCatigoriesAdapter.addAll(response.body().getData());
+                    }
+                }
             }
 
             @Override

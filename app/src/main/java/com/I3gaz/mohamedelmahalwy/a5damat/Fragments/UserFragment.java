@@ -55,7 +55,6 @@ public class UserFragment extends Fragment {
     }
 
 
-
     void initEventDriven() {
         if (has_service == true) {
             tv_user_services.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +86,11 @@ public class UserFragment extends Fragment {
                     tv_user_name.setText(response.body().getData().getUsername());
                     tv_user_rate.setText("التقييم:" + String.valueOf(response.body().getData().getUserRate()));
                     tv_number_of_clients.setText("عدد العملاء:" + response.body().getData().getCustomerCount());
+                    if (response.body().getData().getLast_online().equals("")) {
+                        tv_last_online.setText("الان");
+                    } else {
+                        tv_last_online.setText("منذ" + response.body().getData().getLast_online() + "ساعة");
+                    }
                     if (response.body().getData().isHasServices()) {
                         has_service = true;
                     } else {

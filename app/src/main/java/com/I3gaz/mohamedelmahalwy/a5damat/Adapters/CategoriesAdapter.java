@@ -3,6 +3,7 @@ package com.I3gaz.mohamedelmahalwy.a5damat.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -58,10 +59,12 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
                 selected_postion = holder.getAdapterPosition();
                 notifyDataSetChanged();
                 if (id == 0) {
+                    Bundle args = new Bundle();
+                    args.putString("type", "home");
                     FragmentManager fragmentManager = ((HomeActivity) context).getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     HomeFragmnet homeFragmnet = new HomeFragmnet();
-
+                    homeFragmnet.setArguments(args);
                     fragmentTransaction.replace(R.id.frame_container, homeFragmnet);
                     fragmentTransaction.commit();
                 } else {

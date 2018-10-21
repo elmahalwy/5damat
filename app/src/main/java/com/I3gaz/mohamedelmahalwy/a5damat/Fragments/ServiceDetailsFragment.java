@@ -1,10 +1,7 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Fragments;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -34,7 +31,6 @@ import com.I3gaz.mohamedelmahalwy.a5damat.R;
 import com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,8 +94,8 @@ public class ServiceDetailsFragment extends Fragment {
 
     public static String user_id = "";
     Bundle args;
-    String service_id = "";
     String url = "";
+    boolean favourite = false;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.service_details_fragment_layout, container, false);
@@ -156,7 +152,15 @@ public class ServiceDetailsFragment extends Fragment {
         iv_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                add_to_favourit();
+                if (favourite) {
+                    add_to_favourit();
+                    iv_like.setImageResource(R.mipmap.favourited);
+                    favourite = false;
+                } else if (!favourite) {
+                    add_to_favourit();
+                    iv_like.setImageResource(R.mipmap.add_favourite);
+                    favourite = true;
+                }
             }
         });
         btn_order_service.setOnClickListener(new View.OnClickListener() {
@@ -191,7 +195,7 @@ public class ServiceDetailsFragment extends Fragment {
     void get_service_details() {
         ((HomeActivity) getActivity()).showdialog();
         RetroWeb.getClient().create(ServiceApi.class).get_service_details(getArguments().getString("service_id")
-                ,String.valueOf(ParentClass.sharedPrefManager.getUserDate().getId()))
+                , String.valueOf(ParentClass.sharedPrefManager.getUserDate().getId()))
                 .enqueue(new Callback<ServiceDetails>() {
                     @Override
                     public void onResponse(Call<ServiceDetails> call, Response<ServiceDetails> response) {
@@ -228,8 +232,10 @@ public class ServiceDetailsFragment extends Fragment {
                             }
                             rv_videos_and_images.setAdapter(serviceDetailsVideosAndImagesAdapter);
                             if (response.body().getData().isLike()) {
+                                favourite = true;
                                 iv_like.setImageResource(R.mipmap.favourited);
                             } else {
+                                favourite = false;
                                 iv_like.setImageResource(R.mipmap.add_favourite);
                             }
                             tv_rate.setText(response.body().getData().getRate());
@@ -304,6 +310,14 @@ public class ServiceDetailsFragment extends Fragment {
 
     void order_service() {
         ((HomeActivity) getActivity()).showdialog();
+        if (ServiceDevelopmentsDetailsAdapter.selected_ids_devlopments.isEmpty()) {
+            tv_total_price = tv_main_price;
+        }
+        Log.e("user_id", String.valueOf(sharedPrefManager.getUserDate().getId()));
+        Log.e("service_id", getArguments().getString("service_id"));
+        Log.e("total_price", tv_total_price.getText().toString());
+        Log.e("selected_ids_dev", "" + ServiceDevelopmentsDetailsAdapter.selected_ids_devlopments);
+
         RetroWeb.getClient().create(ServiceApi.class).order_service(String.valueOf(sharedPrefManager.getUserDate().getId()), getArguments().getString("service_id"),
                 tv_total_price.getText().toString(), ServiceDevelopmentsDetailsAdapter.selected_ids_devlopments).enqueue(new Callback<OrderService>() {
             @Override

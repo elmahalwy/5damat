@@ -33,7 +33,7 @@ public class SubCatigoriesAdapter extends RecyclerView.Adapter<SubCatigoriesAdap
     Context context;
     LayoutInflater layoutInflater;
     int lastPosition = -1;
-    public static int id;
+    public int id;
 
     public SubCatigoriesAdapter(Context context) {
         sub_catigories_list = new ArrayList<>();
@@ -56,9 +56,13 @@ public class SubCatigoriesAdapter extends RecyclerView.Adapter<SubCatigoriesAdap
             @Override
             public void onClick(View v) {
                 id = sub_catigories_list.get(position).getId();
+                Bundle args = new Bundle();
+                args.putString("type", "home");
+                args.putInt("id", id);
                 FragmentManager fragmentManager = ((HomeActivity) context).getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 HomeFragmnet homeFragmnet = new HomeFragmnet();
+                homeFragmnet.setArguments(args);
                 fragmentTransaction.replace(R.id.frame_container, homeFragmnet);
                 fragmentTransaction.commit();
 

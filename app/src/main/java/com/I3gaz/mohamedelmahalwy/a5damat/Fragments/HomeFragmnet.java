@@ -67,6 +67,7 @@ public class HomeFragmnet extends Fragment {
     }
 
     private void initEventDrivn() {
+        ((HomeActivity) getActivity()).rv_categories.setVisibility(View.VISIBLE);
         swipe_home.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -85,9 +86,9 @@ public class HomeFragmnet extends Fragment {
     }
 
     void get_home_data() {
-        Log.e("sub_Catigories_id", SubCatigoriesAdapter.id + "");
+        Log.e("sub_Catigories_id", getArguments().getInt("id") + "");
         ((HomeActivity) getActivity()).showdialog();
-        if (SubCatigoriesAdapter.id == 0) {
+        if (getArguments().getInt("id")== 0) {
             RetroWeb.getClient().create(ServiceApi.class).get_all_service().enqueue(new Callback<AllServices>() {
                 @Override
                 public void onResponse(Call<AllServices> call, Response<AllServices> response) {
@@ -115,7 +116,7 @@ public class HomeFragmnet extends Fragment {
             });
         } else {
 
-            RetroWeb.getClient().create(ServiceApi.class).get_service_category(String.valueOf(SubCatigoriesAdapter.id)).enqueue(new Callback<AllServices>() {
+            RetroWeb.getClient().create(ServiceApi.class).get_service_category(String.valueOf(getArguments().getInt("id"))).enqueue(new Callback<AllServices>() {
                 @Override
                 public void onResponse(Call<AllServices> call, Response<AllServices> response) {
                     ((HomeActivity) getActivity()).dismis_dialog();

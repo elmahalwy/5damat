@@ -45,7 +45,7 @@ public class NotificationsFragment extends Fragment {
     }
 
     void initUI() {
-        ((HomeActivity)getContext()).tv_toolbar_title.setText("الاشعارات");
+        ((HomeActivity) getContext()).tv_toolbar_title.setText("الاشعارات");
         ((HomeActivity) getActivity()).rv_categories.setVisibility(View.GONE);
         notificationAdapter = new NotificationAdapter(getContext());
         linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false);
@@ -60,8 +60,10 @@ public class NotificationsFragment extends Fragment {
             public void onResponse(Call<Notifications> call, Response<Notifications> response) {
                 ((HomeActivity) getActivity()).dismis_dialog();
                 if (response.body().isValue()) {
-                    notificationAdapter.addAll(response.body().getData());
-                    rv_notifications.setAdapter(notificationAdapter);
+                    if (!response.body().getData().isEmpty()) {
+                        notificationAdapter.addAll(response.body().getData());
+                        rv_notifications.setAdapter(notificationAdapter);
+                    }
                 }
             }
 
