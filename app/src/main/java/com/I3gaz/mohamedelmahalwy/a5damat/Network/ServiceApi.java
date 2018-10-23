@@ -9,11 +9,11 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.EditProfile.EditProfile;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.LoginData.User;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MainCategories.MainCategories;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyBalance.Balance;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyBalance.AddOrTransferBalance;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyFavourites.Favourites;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyMessages.MyMessages;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyServices.MyServices;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.OrderService.OrderService;
-import com.I3gaz.mohamedelmahalwy.a5damat.Models.RealTimeMessage.Data;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.RealTimeMessage.RealTimeMessageModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ReportMessage.ReportMessage;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.RequestsModel.RequestDetailsModel;
@@ -30,7 +30,6 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.UserNotifications.Notifications
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.UserProfile.UserProfile;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -193,12 +192,26 @@ public interface ServiceApi {
     @GET(Urls.balance)
     Call<Balance> my_balance(@Path("user_id") String user_id);
 
+
+    @FormUrlEncoded
+    @POST(Urls.add_balance)
+    Call<AddOrTransferBalance> add_balance(@Field("user_id") String user_id,
+                                           @Field("balance") String balance);
+
+    @FormUrlEncoded
+    @POST(Urls.transfer_money)
+    Call<AddOrTransferBalance> transfer_balance(@Field("user_id") String user_id,
+                                                @Field("currency") String currency,
+                                                @Field("paypal_email") String paypal_email);
+
+
     @FormUrlEncoded
     @POST(Urls.real_time_chat_fetch_all_messages_url)
     Call<RealTimeMessageModel> send_real_time_messages(@Field("sender_id") String order_id,
                                                        @Field("receiver_id") String status,
                                                        @Field("service_id") String service_id,
                                                        @Field("msg") String msg);
+
 
 }
 

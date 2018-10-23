@@ -82,7 +82,9 @@ public class MySettingsFragment extends Fragment {
         tv_my_balance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                BalanceFragment balanceFragment = new BalanceFragment();
+                fragmentTransaction.replace(R.id.frame_container, balanceFragment);
+                fragmentTransaction.commit();
             }
 
         });

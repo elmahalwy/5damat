@@ -33,6 +33,9 @@ public class Urls {
     public final static String update_profile = "update_profile";
     public final static String user_profile = "user_profile/{user_id}";
     public final static String balance = "balance/{user_id}";
+    public final static String add_balance = "add_balance";
+    public final static String transfer_money = "transfer";
     public final static String real_time_chat_fetch_all_messages_url = "send_message";
+
 
 }

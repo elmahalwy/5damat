@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -94,6 +95,8 @@ public class EditAccountFragment extends Fragment {
     MultipartBody.Part multipartBody;
     Bitmap bitmap;
     boolean selected_imge = false;
+    String emailPattern = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.edit_account_fragment, container, false);
@@ -239,57 +242,95 @@ public class EditAccountFragment extends Fragment {
     }
 
     void edit_profile() {
+        boolean cancel = false;
+        View focusView = null;
+        if (TextUtils.isEmpty(et_email.getText().toString()) || !et_email.getText().toString().matches(emailPattern)) {
+            et_email.setError("برجاء ادخال البريد الالكتروني بطريقة صحيحة");
+            focusView = et_email;
+            cancel = true;
+        }
+        if (TextUtils.isEmpty(et_current_password.getText().toString())) {
+            et_current_password.setError("برجاء ادخال كلمة المرور");
+            focusView = et_current_password;
+            cancel = true;
+        }
+        if (et_current_password.getText().toString().length() < 6) {
+            et_current_password.setError("يجب الا تقل كلمة المرور عن 6 حروف او ارقام");
+            focusView = et_current_password;
+            cancel = true;
+        }
+        if (gender_name.isEmpty()) {
+            makeToast(getContext(), "برجاء تحديد النوع");
+            focusView = et_current_password;
+            cancel = true;
+        }
+        if (TextUtils.isEmpty(tv_birthday.getText().toString())) {
+            tv_birthday.setError("برجاء ادخال كلمة تاريخ الميلاد");
+            focusView = tv_birthday;
+            cancel = true;
+        }
 
-        if (selected_imge) {
-            ((HomeActivity) getActivity()).showdialog();
-            RetroWeb.getClient().create(ServiceApi.class).update_profile_with_image(et_user_name.getText().toString(),
-                    String.valueOf(sharedPrefManager.getUserDate().getId()),
-                    et_mobile.getText().toString(), et_email.getText().toString(), ccp.getSelectedCountryCode(),
-                    gender_name, et_current_password.getText().toString(), et_new_password.getText().toString(),
-                    et_confirm_new_password.getText().toString(), tv_birthday.getText().toString(), multipartBody).enqueue(new Callback<EditProfile>() {
-                @Override
-                public void onResponse(Call<EditProfile> call, Response<EditProfile> response) {
-                    Log.e("response_edit_profile", response + "");
-                    ((HomeActivity) getActivity()).dismis_dialog();
-                    if (response.body().isValue()) {
-                        sharedPrefManager.setLoginStatus(true);
-                        sharedPrefManager.setUserDate(response.body().getData());
+        if (TextUtils.isEmpty(et_mobile.getText().toString())) {
+            et_mobile.setError("برجاء ادخال رقم الهاتف");
+            focusView = et_mobile;
+            cancel = true;
+        }
 
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<EditProfile> call, Throwable t) {
-                    ((HomeActivity) getActivity()).dismis_dialog();
-                    handleException(getContext(), t);
-                    t.printStackTrace();
-                }
-            });
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            focusView.requestFocus();
         } else {
-            ((HomeActivity) getActivity()).showdialog();
-            RetroWeb.getClient().create(ServiceApi.class).update_profile_without_image(et_user_name.getText().toString(),
-                    String.valueOf(sharedPrefManager.getUserDate().getId()),
-                    et_mobile.getText().toString(), et_email.getText().toString(), ccp.getSelectedCountryCode(),
-                    gender_name, et_current_password.getText().toString(), et_new_password.getText().toString(),
-                    et_confirm_new_password.getText().toString(), tv_birthday.getText().toString()).enqueue(new Callback<EditProfile>() {
-                @Override
-                public void onResponse(Call<EditProfile> call, Response<EditProfile> response) {
-                    Log.e("response_edit_profile", response + "");
-                    ((HomeActivity) getActivity()).dismis_dialog();
-                    if (response.body().isValue()) {
-                        sharedPrefManager.setLoginStatus(true);
-                        sharedPrefManager.setUserDate(response.body().getData());
+            if (selected_imge) {
+                ((HomeActivity) getActivity()).showdialog();
+                RetroWeb.getClient().create(ServiceApi.class).update_profile_with_image(et_user_name.getText().toString(),
+                        String.valueOf(sharedPrefManager.getUserDate().getId()),
+                        et_mobile.getText().toString(), et_email.getText().toString(), ccp.getSelectedCountryCode(),
+                        gender_name, et_current_password.getText().toString(), et_new_password.getText().toString(),
+                        et_confirm_new_password.getText().toString(), tv_birthday.getText().toString(), multipartBody).enqueue(new Callback<EditProfile>() {
+                    @Override
+                    public void onResponse(Call<EditProfile> call, Response<EditProfile> response) {
+                        Log.e("response_edit_profile", response + "");
+                        ((HomeActivity) getActivity()).dismis_dialog();
+                        if (response.body().isValue()) {
+                            sharedPrefManager.setLoginStatus(true);
+                            sharedPrefManager.setUserDate(response.body().getData());
 
+                        }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<EditProfile> call, Throwable t) {
-                    ((HomeActivity) getActivity()).dismis_dialog();
-                    handleException(getContext(), t);
-                    t.printStackTrace();
-                }
-            });
+                    @Override
+                    public void onFailure(Call<EditProfile> call, Throwable t) {
+                        ((HomeActivity) getActivity()).dismis_dialog();
+                        handleException(getContext(), t);
+                        t.printStackTrace();
+                    }
+                });
+            } else {
+                ((HomeActivity) getActivity()).showdialog();
+                RetroWeb.getClient().create(ServiceApi.class).update_profile_without_image(et_user_name.getText().toString(),
+                        String.valueOf(sharedPrefManager.getUserDate().getId()),
+                        et_mobile.getText().toString(), et_email.getText().toString(), ccp.getSelectedCountryCode(),
+                        gender_name, et_current_password.getText().toString(), et_new_password.getText().toString(),
+                        et_confirm_new_password.getText().toString(), tv_birthday.getText().toString()).enqueue(new Callback<EditProfile>() {
+                    @Override
+                    public void onResponse(Call<EditProfile> call, Response<EditProfile> response) {
+                        Log.e("response_edit_profile", response + "");
+                        ((HomeActivity) getActivity()).dismis_dialog();
+                        if (response.body().isValue()) {
+                            sharedPrefManager.setLoginStatus(true);
+                            sharedPrefManager.setUserDate(response.body().getData());
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<EditProfile> call, Throwable t) {
+                        ((HomeActivity) getActivity()).dismis_dialog();
+                        handleException(getContext(), t);
+                        t.printStackTrace();
+                    }
+                });
+            }
         }
 
     }
