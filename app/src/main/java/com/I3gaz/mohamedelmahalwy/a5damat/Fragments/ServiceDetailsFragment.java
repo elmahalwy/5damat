@@ -149,6 +149,19 @@ public class ServiceDetailsFragment extends Fragment {
 //                ((HomeActivity) getActivity()).came_from = "edit";
 //            }
 //        });
+        iv_open_chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                RealTimeMessageFragment realTimeMessageFragment = new RealTimeMessageFragment();
+                realTimeMessageFragment.setArguments(args);
+                fragmentTransaction.replace(R.id.frame_container, realTimeMessageFragment);
+                fragmentTransaction.commit();
+
+            }
+        });
+
         iv_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -168,6 +168,7 @@ public interface ServiceApi {
                                                 @Query("old_password") String old_password,
                                                 @Query("new_password") String new_password,
                                                 @Query("c_new_password") String c_new_password,
+                                                @Query("birthday") String birthday,
                                                 @Part MultipartBody.Part image);
 
     @FormUrlEncoded
@@ -180,7 +181,8 @@ public interface ServiceApi {
                                                    @Field("gender") String gender,
                                                    @Field("old_password") String old_password,
                                                    @Field("new_password") String new_password,
-                                                   @Field("c_new_password") String c_new_password
+                                                   @Field("c_new_password") String c_new_password,
+                                                   @Field("birthday") String birthday
     );
 
     @GET(Urls.user_profile)

@@ -246,7 +246,7 @@ public class EditAccountFragment extends Fragment {
                     String.valueOf(sharedPrefManager.getUserDate().getId()),
                     et_mobile.getText().toString(), et_email.getText().toString(), ccp.getSelectedCountryCode(),
                     gender_name, et_current_password.getText().toString(), et_new_password.getText().toString(),
-                    et_confirm_new_password.getText().toString(), multipartBody).enqueue(new Callback<EditProfile>() {
+                    et_confirm_new_password.getText().toString(), tv_birthday.getText().toString(), multipartBody).enqueue(new Callback<EditProfile>() {
                 @Override
                 public void onResponse(Call<EditProfile> call, Response<EditProfile> response) {
                     Log.e("response_edit_profile", response + "");
@@ -271,7 +271,7 @@ public class EditAccountFragment extends Fragment {
                     String.valueOf(sharedPrefManager.getUserDate().getId()),
                     et_mobile.getText().toString(), et_email.getText().toString(), ccp.getSelectedCountryCode(),
                     gender_name, et_current_password.getText().toString(), et_new_password.getText().toString(),
-                    et_confirm_new_password.getText().toString()).enqueue(new Callback<EditProfile>() {
+                    et_confirm_new_password.getText().toString(), tv_birthday.getText().toString()).enqueue(new Callback<EditProfile>() {
                 @Override
                 public void onResponse(Call<EditProfile> call, Response<EditProfile> response) {
                     Log.e("response_edit_profile", response + "");
