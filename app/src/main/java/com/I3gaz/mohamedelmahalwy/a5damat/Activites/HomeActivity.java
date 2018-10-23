@@ -100,7 +100,6 @@ public class HomeActivity extends ParentClass {
 
     public String came_from = "";
     Bundle args;
-    public String service_details_came_from = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

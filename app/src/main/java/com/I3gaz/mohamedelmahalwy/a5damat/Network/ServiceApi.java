@@ -159,21 +159,35 @@ public interface ServiceApi {
 
     @Multipart
     @POST(Urls.update_profile)
-    Call<EditProfile> update_profile(@Query("username") String username,
-                                     @Query("user_id") String user_id,
-                                     @Query("mobile") String mobile,
-                                     @Query("email") String email,
-                                     @Query("country_code") String country_code,
-                                     @Query("gender") String gender,
-                                     @Query("old_password") String old_password,
-                                     @Query("new_password") String new_password,
-                                     @Query("c_new_password") String c_new_password,
-                                     @Part MultipartBody.Part image);
+    Call<EditProfile> update_profile_with_image(@Query("username") String username,
+                                                @Query("user_id") String user_id,
+                                                @Query("mobile") String mobile,
+                                                @Query("email") String email,
+                                                @Query("country_code") String country_code,
+                                                @Query("gender") String gender,
+                                                @Query("old_password") String old_password,
+                                                @Query("new_password") String new_password,
+                                                @Query("c_new_password") String c_new_password,
+                                                @Part MultipartBody.Part image);
+
+    @FormUrlEncoded
+    @POST(Urls.update_profile)
+    Call<EditProfile> update_profile_without_image(@Field("username") String username,
+                                                   @Field("user_id") String user_id,
+                                                   @Field("mobile") String mobile,
+                                                   @Field("email") String email,
+                                                   @Field("country_code") String country_code,
+                                                   @Field("gender") String gender,
+                                                   @Field("old_password") String old_password,
+                                                   @Field("new_password") String new_password,
+                                                   @Field("c_new_password") String c_new_password
+    );
 
     @GET(Urls.user_profile)
     Call<UserProfile> user_profile(@Path("user_id") String user_id);
-@GET(Urls.balance)
-    Call<Balance> my_balance(@Path("user_id")String user_id);
+
+    @GET(Urls.balance)
+    Call<Balance> my_balance(@Path("user_id") String user_id);
 
 }
 

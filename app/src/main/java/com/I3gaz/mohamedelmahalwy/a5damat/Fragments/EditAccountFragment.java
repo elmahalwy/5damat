@@ -57,6 +57,7 @@ import retrofit2.http.Query;
 import static android.app.Activity.RESULT_OK;
 import static com.I3gaz.mohamedelmahalwy.a5damat.Fragments.AddServiceFragment.PICK_IMAGE_REQUEST;
 import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.handleException;
+import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.makeToast;
 import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.sharedPrefManager;
 
 public class EditAccountFragment extends Fragment {
@@ -92,7 +93,7 @@ public class EditAccountFragment extends Fragment {
     String gender_name = "";
     MultipartBody.Part multipartBody;
     Bitmap bitmap;
-
+    boolean selected_imge = false;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.edit_account_fragment, container, false);
@@ -238,30 +239,58 @@ public class EditAccountFragment extends Fragment {
     }
 
     void edit_profile() {
-        ((HomeActivity) getActivity()).showdialog();
-        RetroWeb.getClient().create(ServiceApi.class).update_profile(et_user_name.getText().toString(),
-                String.valueOf(sharedPrefManager.getUserDate().getId()),
-                et_mobile.getText().toString(), et_email.getText().toString(), ccp.getSelectedCountryCode(),
-                gender_name, et_current_password.getText().toString(), et_new_password.getText().toString(),
-                et_confirm_new_password.getText().toString(), multipartBody).enqueue(new Callback<EditProfile>() {
-            @Override
-            public void onResponse(Call<EditProfile> call, Response<EditProfile> response) {
-                Log.e("response_edit_profile", response + "");
-                ((HomeActivity) getActivity()).dismis_dialog();
-                if (response.body().isValue()) {
-                    sharedPrefManager.setLoginStatus(true);
-                    sharedPrefManager.setUserDate(response.body().getData());
 
+        if (selected_imge) {
+            ((HomeActivity) getActivity()).showdialog();
+            RetroWeb.getClient().create(ServiceApi.class).update_profile_with_image(et_user_name.getText().toString(),
+                    String.valueOf(sharedPrefManager.getUserDate().getId()),
+                    et_mobile.getText().toString(), et_email.getText().toString(), ccp.getSelectedCountryCode(),
+                    gender_name, et_current_password.getText().toString(), et_new_password.getText().toString(),
+                    et_confirm_new_password.getText().toString(), multipartBody).enqueue(new Callback<EditProfile>() {
+                @Override
+                public void onResponse(Call<EditProfile> call, Response<EditProfile> response) {
+                    Log.e("response_edit_profile", response + "");
+                    ((HomeActivity) getActivity()).dismis_dialog();
+                    if (response.body().isValue()) {
+                        sharedPrefManager.setLoginStatus(true);
+                        sharedPrefManager.setUserDate(response.body().getData());
+
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<EditProfile> call, Throwable t) {
-                ((HomeActivity) getActivity()).dismis_dialog();
-                handleException(getContext(), t);
-                t.printStackTrace();
-            }
-        });
+                @Override
+                public void onFailure(Call<EditProfile> call, Throwable t) {
+                    ((HomeActivity) getActivity()).dismis_dialog();
+                    handleException(getContext(), t);
+                    t.printStackTrace();
+                }
+            });
+        } else {
+            ((HomeActivity) getActivity()).showdialog();
+            RetroWeb.getClient().create(ServiceApi.class).update_profile_without_image(et_user_name.getText().toString(),
+                    String.valueOf(sharedPrefManager.getUserDate().getId()),
+                    et_mobile.getText().toString(), et_email.getText().toString(), ccp.getSelectedCountryCode(),
+                    gender_name, et_current_password.getText().toString(), et_new_password.getText().toString(),
+                    et_confirm_new_password.getText().toString()).enqueue(new Callback<EditProfile>() {
+                @Override
+                public void onResponse(Call<EditProfile> call, Response<EditProfile> response) {
+                    Log.e("response_edit_profile", response + "");
+                    ((HomeActivity) getActivity()).dismis_dialog();
+                    if (response.body().isValue()) {
+                        sharedPrefManager.setLoginStatus(true);
+                        sharedPrefManager.setUserDate(response.body().getData());
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<EditProfile> call, Throwable t) {
+                    ((HomeActivity) getActivity()).dismis_dialog();
+                    handleException(getContext(), t);
+                    t.printStackTrace();
+                }
+            });
+        }
 
     }
 
@@ -269,7 +298,7 @@ public class EditAccountFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && null != data) {
-
+            selected_imge = true;
             File file = new File(getRealPathFromURI(getContext(), data.getData()));
             final Uri imageUri = data.getData();
             RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
