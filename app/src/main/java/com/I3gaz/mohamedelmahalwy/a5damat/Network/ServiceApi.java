@@ -210,7 +210,7 @@ public interface ServiceApi {
     Call<RealTimeMessageModel> send_real_time_messages(@Field("sender_id") String order_id,
                                                        @Field("receiver_id") String status,
                                                        @Field("service_id") String service_id,
-                                                       @Field("msg") String msg);
+                                                       @Field("msg") String msg,@Field("room_id")String room_id);
 
 
 }

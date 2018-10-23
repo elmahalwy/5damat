@@ -68,17 +68,17 @@ public class RealTimeMessageFragment extends Fragment {
     void initUi() {
         serviceDetails = (ServiceDetails) getArguments().getParcelable("response");
 //        get_messages();
-        Timer timer = new Timer ();
-        TimerTask hourlyTask = new TimerTask () {
+        Timer timer = new Timer();
+        TimerTask hourlyTask = new TimerTask() {
             @Override
-            public void run () {
+            public void run() {
                 // your code here...
                 get_messages();
             }
         };
 
 // schedule the task to run starting now and then every hour...
-        timer.schedule (hourlyTask, 0l, 1000*60);   // 1000*10*60 every 1 minut
+        timer.schedule(hourlyTask, 0l, 1000 * 60);   // 1000*10*60 every 1 minut
     }
 
     void initEventDriven() {
@@ -91,8 +91,12 @@ public class RealTimeMessageFragment extends Fragment {
     }
 
     void get_messages() {
+        Log.e("_sender_id",sharedPrefManager.getUserDate().getId()+"");
+        Log.e("reciver_id",serviceDetails.getData().getOwnerId()+"");
+        Log.e("service_id",serviceDetails.getData().getId()+"");
+        Log.e("room_id",serviceDetails.getData().getRoom_id()+"");
 //        ((HomeActivity) getActivity()).showdialog();
-        RetroWeb.getClient().create(ServiceApi.class).send_real_time_messages(String.valueOf(sharedPrefManager.getUserDate().getId()), String.valueOf(serviceDetails.getData().getOwnerId()), String.valueOf(serviceDetails.getData().getId()), "").enqueue(new Callback<RealTimeMessageModel>() {
+        RetroWeb.getClient().create(ServiceApi.class).send_real_time_messages(String.valueOf(sharedPrefManager.getUserDate().getId()), String.valueOf(serviceDetails.getData().getOwnerId()), String.valueOf(serviceDetails.getData().getId()), "", String.valueOf(serviceDetails.getData().getRoom_id())).enqueue(new Callback<RealTimeMessageModel>() {
             @Override
             public void onResponse(Call<RealTimeMessageModel> call, Response<RealTimeMessageModel> response) {
                 try {
@@ -132,7 +136,7 @@ public class RealTimeMessageFragment extends Fragment {
             RetroWeb.getClient().create(ServiceApi.class).send_real_time_messages(String.valueOf(sharedPrefManager.getUserDate().getId()),
                     String.valueOf(serviceDetails.getData().getOwnerId()),
                     String.valueOf(serviceDetails.getData().getId()),
-                    et_chat.getText().toString()).enqueue(new Callback<RealTimeMessageModel>() {
+                    et_chat.getText().toString(), String.valueOf(serviceDetails.getData().getRoom_id())).enqueue(new Callback<RealTimeMessageModel>() {
                 @Override
                 public void onResponse(Call<RealTimeMessageModel> call, Response<RealTimeMessageModel> response) {
                     try {

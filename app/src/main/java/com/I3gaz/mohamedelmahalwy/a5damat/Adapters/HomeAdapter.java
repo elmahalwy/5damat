@@ -63,7 +63,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 ServiceDetailsFragment serviceDetailsFragment = new ServiceDetailsFragment();
                 serviceDetailsFragment.setArguments(args);
-
                 fragmentTransaction.replace(R.id.frame_container, serviceDetailsFragment);
                 fragmentTransaction.commit();
             }
