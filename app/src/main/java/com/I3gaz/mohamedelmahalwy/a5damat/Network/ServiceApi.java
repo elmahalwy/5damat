@@ -13,6 +13,8 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyFavourites.Favourites;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyMessages.MyMessages;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyServices.MyServices;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.OrderService.OrderService;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.RealTimeMessage.Data;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.RealTimeMessage.RealTimeMessageModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ReportMessage.ReportMessage;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.RequestsModel.RequestDetailsModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.RequestsModel.RequestsChangeStatusModel;
@@ -190,6 +192,13 @@ public interface ServiceApi {
 
     @GET(Urls.balance)
     Call<Balance> my_balance(@Path("user_id") String user_id);
+
+    @FormUrlEncoded
+    @POST(Urls.real_time_chat_fetch_all_messages_url)
+    Call<RealTimeMessageModel> send_real_time_messages(@Field("sender_id") String order_id,
+                                                       @Field("receiver_id") String status,
+                                                       @Field("service_id") String service_id,
+                                                       @Field("msg") String msg);
 
 }
 
