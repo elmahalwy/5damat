@@ -7,6 +7,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Data {
+    @SerializedName("room_id")
+    @Expose
+    private int room_id;
     @SerializedName("sub_category")
     @Expose
     private String sub_category;
@@ -226,5 +229,13 @@ public class Data {
 
     public void setImagesLinks(List<String> imagesLinks) {
         this.imagesLinks = imagesLinks;
+    }
+
+    public int getRoom_id() {
+        return room_id;
+    }
+
+    public void setRoom_id(int room_id) {
+        this.room_id = room_id;
     }
 }
