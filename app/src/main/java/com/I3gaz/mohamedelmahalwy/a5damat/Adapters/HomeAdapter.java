@@ -31,6 +31,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     Context context;
     LayoutInflater layoutInflater;
     int lastPosition = -1;
+    private static final String BACK_STACK_ROOT_TAG = "root_fragment";
 
     public HomeAdapter(Context context) {
         home_list = new ArrayList<>();
@@ -63,6 +64,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 ServiceDetailsFragment serviceDetailsFragment = new ServiceDetailsFragment();
                 serviceDetailsFragment.setArguments(args);
+                fragmentManager.popBackStack(BACK_STACK_ROOT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                fragmentTransaction.addToBackStack(BACK_STACK_ROOT_TAG);
                 fragmentTransaction.replace(R.id.frame_container, serviceDetailsFragment);
                 fragmentTransaction.commit();
             }

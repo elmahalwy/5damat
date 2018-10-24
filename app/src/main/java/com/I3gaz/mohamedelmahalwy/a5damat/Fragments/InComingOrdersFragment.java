@@ -194,12 +194,16 @@ public class InComingOrdersFragment extends Fragment {
                         Toast.makeText(getActivity(), "تمت العمليه بنجاح", Toast.LENGTH_SHORT).show();
                         FragmentManager fragmentManager = ((HomeActivity) getActivity()).getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        HomeFragmnet serviceDetailsFragment = new HomeFragmnet();
-                        fragmentTransaction.replace(R.id.frame_container, serviceDetailsFragment);
+                        HomeFragmnet homeFragmnet = new HomeFragmnet();
+                        Bundle args = new Bundle();
+                        args.putString("type", "home");
+                        args.putString("search_key", "");
+                        homeFragmnet.setArguments(args);
+                        fragmentTransaction.replace(R.id.frame_container, homeFragmnet);
                         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         fragmentTransaction.remove(new InComingOrdersFragment());
                         fragmentTransaction.commit();
-                        fragmentManager.popBackStack();
+
                     } else {
                         Toast.makeText(getActivity(), "حدث خطأ ما", Toast.LENGTH_SHORT).show();
 

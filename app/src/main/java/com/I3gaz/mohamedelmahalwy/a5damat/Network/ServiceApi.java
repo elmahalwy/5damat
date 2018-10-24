@@ -196,7 +196,8 @@ public interface ServiceApi {
     @FormUrlEncoded
     @POST(Urls.add_balance)
     Call<AddOrTransferBalance> add_balance(@Field("user_id") String user_id,
-                                           @Field("balance") String balance);
+                                           @Field("balance") String balance,
+                                           @Field("paypal_email") String paypal_email);
 
     @FormUrlEncoded
     @POST(Urls.transfer_money)
@@ -206,11 +207,14 @@ public interface ServiceApi {
 
 
     @FormUrlEncoded
+    @Headers("Content-Type: application/x-www-form-urlencoded")
     @POST(Urls.real_time_chat_fetch_all_messages_url)
     Call<RealTimeMessageModel> send_real_time_messages(@Field("sender_id") String order_id,
                                                        @Field("receiver_id") String status,
                                                        @Field("service_id") String service_id,
-                                                       @Field("msg") String msg,@Field("room_id")String room_id);
+                                                       @Field("msg") String msg,
+                                                       @Field("room_id") String room_id
+    );
 
 
 }

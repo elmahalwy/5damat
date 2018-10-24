@@ -45,6 +45,7 @@ public class UserFragment extends Fragment {
     TextView tv_last_online;
     boolean has_service = false;
     String user_id;
+    private static final String BACK_STACK_ROOT_TAG = "root_fragment";
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_profile_fragment, container, false);
@@ -66,7 +67,8 @@ public class UserFragment extends Fragment {
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     MyServiceFragment myServiceFragment = new MyServiceFragment();
                     myServiceFragment.setArguments(args);
-
+                    fragmentManager.popBackStack(BACK_STACK_ROOT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    fragmentTransaction.addToBackStack(BACK_STACK_ROOT_TAG);
                     fragmentTransaction.replace(R.id.frame_container, myServiceFragment);
                     fragmentTransaction.commit();
                 }

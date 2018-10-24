@@ -32,6 +32,8 @@ public class BalanceFragment extends Fragment {
     TextView tv_total_balance;
     @BindView(R.id.tv_pending_balance)
     TextView tv_pending_balance;
+    @BindView(R.id.et_my_acccount_in_pay_pal_to_add)
+    EditText et_my_acccount_in_pay_pal_to_add;
     @BindView(R.id.tv_Profitsـcanـbeـwithdrawn_)
     TextView tv_Profitsـcanـbeـwithdrawn_;
     @BindView(R.id.et_add_balance)
@@ -101,6 +103,11 @@ public class BalanceFragment extends Fragment {
     void add_balance() {
         boolean cancel = false;
         View focusView = null;
+        if (TextUtils.isEmpty(et_my_acccount_in_pay_pal_to_add.getText().toString()) || !et_my_acccount_in_pay_pal_to_add.getText().toString().matches(emailPattern)) {
+            et_my_acccount_in_pay_pal_to_add.setError("برجاء ادخال البريد الالكتروني بطريقة صحيحة");
+            focusView = et_my_acccount_in_pay_pal_to_add;
+            cancel = true;
+        }
         if (TextUtils.isEmpty(et_add_balance.getText().toString())) {
             et_add_balance.setError("برجاء ادخال المبلغ المراد شحنه");
             focusView = et_add_balance;
@@ -112,7 +119,7 @@ public class BalanceFragment extends Fragment {
         } else {
             ((HomeActivity) getActivity()).showdialog();
             RetroWeb.getClient().create(ServiceApi.class).add_balance(String.valueOf(ParentClass.sharedPrefManager.getUserDate().getId()),
-                    et_add_balance.getText().toString()).enqueue(new Callback<AddOrTransferBalance>() {
+                    et_add_balance.getText().toString(), et_my_acccount_in_pay_pal_to_add.getText().toString()).enqueue(new Callback<AddOrTransferBalance>() {
                 @Override
                 public void onResponse(Call<AddOrTransferBalance> call, Response<AddOrTransferBalance> response) {
                     ((HomeActivity) getActivity()).dismis_dialog();

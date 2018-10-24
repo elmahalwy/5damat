@@ -100,6 +100,7 @@ public class HomeActivity extends ParentClass {
 
     public String came_from = "";
     Bundle args;
+    private static final String BACK_STACK_ROOT_TAG = "root_fragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -258,7 +259,9 @@ public class HomeActivity extends ParentClass {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.frame_container, fragment);
+        fm.popBackStack(BACK_STACK_ROOT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.addToBackStack(BACK_STACK_ROOT_TAG);
         ft.addToBackStack(null);
         ft.commit();
     }

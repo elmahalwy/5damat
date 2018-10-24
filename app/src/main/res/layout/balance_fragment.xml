@@ -113,12 +113,40 @@
             android:background="#F3F3F3" />
 
         <TextView
-            android:id="@+id/tv_add_balance"
+            android:id="@+id/tv_my_acccount_in_pay_pal_to_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/v_3"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:text="حسابك فى PayPal"
+            android:textColor="#000" />
+
+        <EditText
+            android:id="@+id/et_my_acccount_in_pay_pal_to_add"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@+id/tv_my_acccount_in_pay_pal_to_add"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/edit_text_update_profile"
+            android:gravity="right|center"
+            android:padding="5dp"
+            android:textColor="#A7A7A7" />
+
+        <TextView
+            android:id="@+id/tv_add_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_my_acccount_in_pay_pal_to_add"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
             android:text="شحن الحساب"
