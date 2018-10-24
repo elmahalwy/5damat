@@ -709,6 +709,7 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                                         ((HomeActivity) context).dismis_dialog();
                                         try {
                                             Log.e("response_add_service", response.toString());
+                                            ((HomeActivity)context).handle_tab="home";
                                             if (response.getString("value").equals("true")) {
                                                 service_id = response.getString("data");
                                                 Log.e("service_id", service_id + "popopop");

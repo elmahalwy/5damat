@@ -100,6 +100,7 @@ public class HomeActivity extends ParentClass {
 
     public String came_from = "";
     Bundle args;
+    public String handle_tab = "";
     private static final String BACK_STACK_ROOT_TAG = "root_fragment";
 
     @Override

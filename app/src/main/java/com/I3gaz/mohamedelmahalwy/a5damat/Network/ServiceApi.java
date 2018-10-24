@@ -210,7 +210,7 @@ public interface ServiceApi {
     @Headers("Content-Type: application/x-www-form-urlencoded")
     @POST(Urls.real_time_chat_fetch_all_messages_url)
     Call<RealTimeMessageModel> send_real_time_messages(@Field("sender_id") String order_id,
-                                                       @Field("receiver_id") String status,
+                                                       @Field("reciever_id ") String status,
                                                        @Field("service_id") String service_id,
                                                        @Field("msg") String msg,
                                                        @Field("room_id") String room_id

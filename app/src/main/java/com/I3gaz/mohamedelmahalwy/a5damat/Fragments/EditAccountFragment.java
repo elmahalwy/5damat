@@ -12,6 +12,8 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -294,6 +296,18 @@ public class EditAccountFragment extends Fragment {
                         if (response.body().isValue()) {
                             sharedPrefManager.setLoginStatus(true);
                             sharedPrefManager.setUserDate(response.body().getData());
+                            FragmentManager fragmentManager = ((HomeActivity) getActivity()).getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            HomeFragmnet homeFragmnet = new HomeFragmnet();
+                            Bundle args = new Bundle();
+                            args.putString("type", "home");
+                            args.putString("search_key", "");
+                            ((HomeActivity)getActivity()).handle_tab="home";
+                            homeFragmnet.setArguments(args);
+                            fragmentTransaction.replace(R.id.frame_container, homeFragmnet);
+                            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                            fragmentTransaction.remove(new EditAccountFragment());
+                            fragmentTransaction.commit();
 
                         }
                     }
@@ -319,6 +333,18 @@ public class EditAccountFragment extends Fragment {
                         if (response.body().isValue()) {
                             sharedPrefManager.setLoginStatus(true);
                             sharedPrefManager.setUserDate(response.body().getData());
+                            FragmentManager fragmentManager = ((HomeActivity) getActivity()).getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            HomeFragmnet homeFragmnet = new HomeFragmnet();
+                            Bundle args = new Bundle();
+                            args.putString("type", "home");
+                            args.putString("search_key", "");
+                            ((HomeActivity)getActivity()).handle_tab="home";
+                            homeFragmnet.setArguments(args);
+                            fragmentTransaction.replace(R.id.frame_container, homeFragmnet);
+                            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                            fragmentTransaction.remove(new EditAccountFragment());
+                            fragmentTransaction.commit();
 
                         }
                     }
