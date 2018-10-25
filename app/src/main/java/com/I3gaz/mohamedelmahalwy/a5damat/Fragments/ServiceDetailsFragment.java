@@ -96,6 +96,7 @@ public class ServiceDetailsFragment extends Fragment {
     Bundle args;
     String url = "";
     boolean favourite = false;
+    String order_status;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.service_details_fragment_layout, container, false);
@@ -152,12 +153,21 @@ public class ServiceDetailsFragment extends Fragment {
         iv_open_chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                RealTimeMessageFragment realTimeMessageFragment = new RealTimeMessageFragment();
-                realTimeMessageFragment.setArguments(args);
-                fragmentTransaction.replace(R.id.frame_container, realTimeMessageFragment);
-                fragmentTransaction.commit();
+                if (order_status == "in_progress"){
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    RealTimeMessageFragment realTimeMessageFragment = new RealTimeMessageFragment();
+                    realTimeMessageFragment.setArguments(args);
+                    fragmentTransaction.replace(R.id.frame_container, realTimeMessageFragment);
+                    fragmentTransaction.commit();
+                }else {
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    RealTimeMessageFragment realTimeMessageFragment = new RealTimeMessageFragment();
+                    realTimeMessageFragment.setArguments(args);
+                    fragmentTransaction.replace(R.id.frame_container, realTimeMessageFragment);
+                    fragmentTransaction.commit();
+                }
 
             }
         });
@@ -216,6 +226,7 @@ public class ServiceDetailsFragment extends Fragment {
                         if (response.body().isValue()) {
                             Log.e("servicw_details", response.body().getData().toString());
                             Log.e("my_id", String.valueOf(sharedPrefManager.getUserDate().getId()));
+                            order_status = response.body().getData().getOrder_status();
                             if (!response.body().getData().getImages().isEmpty()) {
                                 for (int i = 0; i < response.body().getData().getImages().size(); i++) {
                                     ImagesVIdeosModel imagesVIdeosModel = new ImagesVIdeosModel();

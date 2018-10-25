@@ -5,6 +5,7 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddService;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddServiceJson.AddServiceJson;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AllServices.AllServices;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.Assistance.Assisatnce;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.ChatUsersModel.ChatUsersModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.EditProfile.EditProfile;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.LoginData.User;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MainCategories.MainCategories;
@@ -215,6 +216,9 @@ public interface ServiceApi {
                                                        @Field("msg") String msg,
                                                        @Field("room_id") String room_id
     );
+
+    @GET(Urls.chat_users)
+    Call<ChatUsersModel> get_chat_users(@Path("user_id") String user_id);
 
 
 }

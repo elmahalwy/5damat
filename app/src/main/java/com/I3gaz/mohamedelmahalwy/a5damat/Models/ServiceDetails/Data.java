@@ -7,6 +7,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Data {
+    @SerializedName("order_status")
+    @Expose
+    private String order_status;
     @SerializedName("room_id")
     @Expose
     private int room_id;
@@ -237,5 +240,13 @@ public class Data {
 
     public void setRoom_id(int room_id) {
         this.room_id = room_id;
+    }
+
+    public String getOrder_status() {
+        return order_status;
+    }
+
+    public void setOrder_status(String order_status) {
+        this.order_status = order_status;
     }
 }

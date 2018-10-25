@@ -36,6 +36,6 @@ public class Urls {
     public final static String add_balance = "add_balance";
     public final static String transfer_money = "transfer";
     public final static String real_time_chat_fetch_all_messages_url = "send_message";
-
+    public final static String chat_users = "contacts/{user_id}";
 
 }
