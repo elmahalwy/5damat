@@ -83,12 +83,26 @@
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="خدماتي" />
+            <TextView
+                android:id="@+id/tv_my_chats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_my_services"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="15dp"
+                android:drawableEnd="@mipmap/message"
+                android:drawableRight="@mipmap/message"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="محادثاتي" />
 
             <TextView
                 android:id="@+id/tv_edit_my_account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_my_services"
+                android:layout_below="@+id/tv_my_chats"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="15dp"

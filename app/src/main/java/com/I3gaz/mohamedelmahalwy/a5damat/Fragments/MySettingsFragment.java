@@ -32,6 +32,8 @@ public class MySettingsFragment extends Fragment {
     TextView tv_my_balance;
     @BindView(R.id.tv_my_services)
     TextView tv_my_services;
+    @BindView(R.id.tv_my_chats)
+    TextView tv_my_chats;
     @BindView(R.id.tv_edit_my_account)
     TextView tv_edit_my_account;
     @BindView(R.id.tv_support)
@@ -67,6 +69,7 @@ public class MySettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MyFavouritesFragment myFavouritesFragment = new MyFavouritesFragment();
+                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
                 fragmentTransaction.replace(R.id.frame_container, myFavouritesFragment);
                 fragmentTransaction.commit();
             }
@@ -75,6 +78,7 @@ public class MySettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 EditAccountFragment editAccountFragment = new EditAccountFragment();
+                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
                 fragmentTransaction.replace(R.id.frame_container, editAccountFragment);
                 fragmentTransaction.commit();
             }
@@ -95,6 +99,7 @@ public class MySettingsFragment extends Fragment {
                 args.putString("user_id", String.valueOf(ParentClass.sharedPrefManager.getUserDate().getId()));
                 MyServiceFragment myServiceFragment = new MyServiceFragment();
                 myServiceFragment.setArguments(args);
+                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
                 fragmentTransaction.replace(R.id.frame_container, myServiceFragment);
                 fragmentTransaction.commit();
             }
@@ -103,6 +108,7 @@ public class MySettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AssistanceFragment assistanceFragment = new AssistanceFragment();
+                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
                 fragmentTransaction.replace(R.id.frame_container, assistanceFragment);
                 fragmentTransaction.commit();
             }
@@ -111,6 +117,15 @@ public class MySettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((HomeActivity) getActivity()).sharedPrefManager.Logout();
+            }
+        });
+        tv_my_chats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChatUsersFragment chatUsersFragment = new ChatUsersFragment();
+                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
+                fragmentTransaction.replace(R.id.frame_container, chatUsersFragment);
+                fragmentTransaction.commit();
             }
         });
 
