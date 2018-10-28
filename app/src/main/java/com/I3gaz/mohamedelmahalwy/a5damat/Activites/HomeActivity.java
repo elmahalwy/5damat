@@ -259,6 +259,7 @@ public class HomeActivity extends ParentClass {
     public void replaceFragment(Fragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
+        ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
         ft.replace(R.id.frame_container, fragment);
         fm.popBackStack(BACK_STACK_ROOT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
