@@ -47,7 +47,7 @@ public class SearchFragment extends Fragment {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 HomeFragmnet homeFragmnet = new HomeFragmnet();
                 homeFragmnet.setArguments(args);
-
+                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
                 fragmentTransaction.replace(R.id.frame_container, homeFragmnet);
                 fragmentTransaction.commit();
             }

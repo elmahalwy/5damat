@@ -62,7 +62,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 MessagesDetailsFragment messagesDetailsFragment = new MessagesDetailsFragment();
                 messagesDetailsFragment.setArguments(args);
-
+                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
                 fragmentTransaction.replace(R.id.frame_container, messagesDetailsFragment);
                 fragmentTransaction.commit();
             }

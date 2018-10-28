@@ -304,6 +304,7 @@ public class EditAccountFragment extends Fragment {
                             args.putString("search_key", "");
                             ((HomeActivity)getActivity()).handle_tab="home";
                             homeFragmnet.setArguments(args);
+                            fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
                             fragmentTransaction.replace(R.id.frame_container, homeFragmnet);
                             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                             fragmentTransaction.remove(new EditAccountFragment());

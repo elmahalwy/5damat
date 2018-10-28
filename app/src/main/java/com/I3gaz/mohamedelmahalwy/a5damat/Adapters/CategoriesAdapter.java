@@ -65,12 +65,14 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     HomeFragmnet homeFragmnet = new HomeFragmnet();
                     homeFragmnet.setArguments(args);
+                    fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
                     fragmentTransaction.replace(R.id.frame_container, homeFragmnet);
                     fragmentTransaction.commit();
                 } else {
                     FragmentManager fragmentManager = ((HomeActivity) context).getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     SubCatigoriesFragment subCatigoriesFragment = new SubCatigoriesFragment();
+                    fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
 
                     fragmentTransaction.replace(R.id.frame_container, subCatigoriesFragment);
                     fragmentTransaction.commit();

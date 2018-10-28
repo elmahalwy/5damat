@@ -69,6 +69,7 @@ public class UserFragment extends Fragment {
                     myServiceFragment.setArguments(args);
                     fragmentManager.popBackStack(BACK_STACK_ROOT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     fragmentTransaction.addToBackStack(BACK_STACK_ROOT_TAG);
+                    fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
                     fragmentTransaction.replace(R.id.frame_container, myServiceFragment);
                     fragmentTransaction.commit();
                 }

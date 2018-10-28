@@ -242,6 +242,7 @@ public class InComingOrdersFragment extends Fragment {
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                         HomeFragmnet serviceDetailsFragment = new HomeFragmnet();
                         serviceDetailsFragment.setArguments(args);
+                        fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
                         fragmentTransaction.replace(R.id.frame_container, serviceDetailsFragment);
                         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         fragmentTransaction.remove(new InComingOrdersFragment());
