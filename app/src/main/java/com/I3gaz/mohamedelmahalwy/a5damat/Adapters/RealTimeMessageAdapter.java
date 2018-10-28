@@ -68,7 +68,7 @@ public class RealTimeMessageAdapter extends RecyclerView.Adapter<RealTimeMessage
             }
         } else {
             holder.relative_for_chat.setGravity(Gravity.LEFT);
-            holder.relative_for_chat.setBackgroundResource(R.drawable.tv_background_chat2);
+            holder.tv_for_chat.setBackgroundResource(R.drawable.tv_background_chat2);
 //            if (sharedPrefManager.getUserDate().getImage().equals(chat_list.get(position).getFrom_user_avatar())) {
 //                if (!chat_list.get(position).getTo_user_avatar().isEmpty()) {
 //                    Picasso.with(context)

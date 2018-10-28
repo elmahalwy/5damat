@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="370dp"
+    android:layout_gravity="center"
+    android:layout_marginEnd="15dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginStart="15dp"
+    android:background="@drawable/drawable_linear_main">
+
+    <ImageView
+        android:id="@+id/iv_vector"
+        android:layout_width="match_parent"
+        android:layout_height="135dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/success" />
+
+    <EditText
+        android:id="@+id/et_message"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_below="@+id/iv_vector"
+        android:layout_marginEnd="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginStart="20dp"
+        android:textSize="14sp"
+        android:gravity="right|top"
+        android:padding="5dp"
+        android:background="@drawable/drawable_linear_main"
+        android:textColor="#3558B9"
+        android:textColorHint="#000"
+        android:text="ارسل رسالة..."/>
+
+    <View
+        android:id="@+id/v1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/et_message"
+
+        android:layout_marginTop="10dp"
+        android:background="#E9E9E9" />
+
+
+    <Button
+        android:id="@+id/btn_no"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/v1"
+        android:layout_marginEnd="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/btn_sign_in"
+        android:gravity="center"
+        android:text="ارسال"
+        android:textColor="#FFF"
+        android:textSize="16sp" />
+    />
+
+
+</RelativeLayout>
