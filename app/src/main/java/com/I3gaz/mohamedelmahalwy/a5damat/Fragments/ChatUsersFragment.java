@@ -57,9 +57,14 @@ public class ChatUsersFragment extends Fragment {
         RetroWeb.getClient().create(ServiceApi.class).get_chat_users(String.valueOf(ParentClass.sharedPrefManager.getUserDate().getId())).enqueue(new Callback<ChatUsersModel>() {
             @Override
             public void onResponse(Call<ChatUsersModel> call, Response<ChatUsersModel> response) {
-                ((HomeActivity) getActivity()).dismis_dialog();
-                allMessagesAdapter.addAll(response.body().getData());
-                rv_chat_users.setAdapter(allMessagesAdapter);
+                try {
+                    ((HomeActivity) getActivity()).dismis_dialog();
+                    allMessagesAdapter.addAll(response.body().getData());
+                    rv_chat_users.setAdapter(allMessagesAdapter);
+                }catch (Exception e){
+
+                }
+
             }
 
             @Override
