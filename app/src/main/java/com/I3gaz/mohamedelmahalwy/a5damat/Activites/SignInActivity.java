@@ -1,6 +1,7 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Activites;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -8,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -62,7 +64,7 @@ public class SignInActivity extends ParentClass {
     @BindView(R.id.tv_register)
     TextView tv_register;
     String emailPattern = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-
+    String uid;
     String mobile_token;
     GoogleSignInClient mGoogleSignInClient;
     int RC_SIGN_IN = 9001;
@@ -161,6 +163,7 @@ public class SignInActivity extends ParentClass {
         }
         if (cancel) {
             // There was an error; don't attempt login and focus the first
+            Log.e("ffff","ffff");
             focusView.requestFocus();
         } else {
             Log.e("email", et_email.getText().toString());
@@ -178,6 +181,9 @@ public class SignInActivity extends ParentClass {
                         sharedPrefManager.setLoginStatus(true);
                         sharedPrefManager.setUserDate(response.body().getData());
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         intent.putExtra("type", "home");
                         intent.putExtra("service_id", "");
                         startActivity(intent);

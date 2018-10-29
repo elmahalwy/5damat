@@ -1,5 +1,6 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
 
+import com.I3gaz.mohamedelmahalwy.a5damat.Activites.SignInActivity;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
 import com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass;
 import com.squareup.picasso.Picasso;
@@ -54,7 +56,7 @@ public class MySettingsFragment extends Fragment {
     }
 
     void initUI() {
-        ((HomeActivity)getContext()).tv_toolbar_title.setText("صفحتى الشخصية");
+        ((HomeActivity) getContext()).tv_toolbar_title.setText("صفحتى الشخصية");
         ((HomeActivity) getActivity()).rv_categories.setVisibility(View.GONE);
         if (!ParentClass.sharedPrefManager.getUserDate().getImage().isEmpty()) {
             Picasso.with(getActivity())
@@ -117,6 +119,11 @@ public class MySettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((HomeActivity) getActivity()).sharedPrefManager.Logout();
+                Intent intent = new Intent(getActivity(), SignInActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
             }
         });
         tv_my_chats.setOnClickListener(new View.OnClickListener() {
