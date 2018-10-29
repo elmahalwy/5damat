@@ -153,14 +153,14 @@ public class ServiceDetailsFragment extends Fragment {
         iv_open_chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (order_status == "in_progress"){
+                if (order_status == "in_progress") {
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     RealTimeMessageFragment realTimeMessageFragment = new RealTimeMessageFragment();
                     realTimeMessageFragment.setArguments(args);
                     fragmentTransaction.replace(R.id.frame_container, realTimeMessageFragment);
                     fragmentTransaction.commit();
-                }else {
+                } else {
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     RealTimeMessageFragment realTimeMessageFragment = new RealTimeMessageFragment();
@@ -179,10 +179,12 @@ public class ServiceDetailsFragment extends Fragment {
                     add_to_favourit();
                     iv_like.setImageResource(R.mipmap.favourited);
                     favourite = false;
+                    Log.e("favourit", favourite + "ss");
                 } else if (!favourite) {
                     add_to_favourit();
                     iv_like.setImageResource(R.mipmap.add_favourite);
                     favourite = true;
+                    Log.e("favourit", favourite + "ss");
                 }
             }
         });

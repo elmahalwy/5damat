@@ -67,6 +67,7 @@ public class MyFavouritesAdapter extends RecyclerView.Adapter<MyFavouritesAdapte
                             public void onResponse(Call<AddOrDeleteItemToFavourit> call, Response<AddOrDeleteItemToFavourit> response) {
                                 ParentClass.makeToast(context, response.body().getMsg());
                                 my_favourites_list.remove(position);
+                                notifyDataSetChanged();
                             }
 
                             @Override
