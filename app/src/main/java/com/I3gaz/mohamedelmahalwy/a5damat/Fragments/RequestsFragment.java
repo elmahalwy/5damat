@@ -54,6 +54,7 @@ public class RequestsFragment extends Fragment {
     public String status_color_unselected = "#7c7c7c";
     public String tab_selected = "#3558B9";
     public String tab_unselected = "#000000";
+    List<Datum> requests_purchases_list;
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -73,9 +74,9 @@ public class RequestsFragment extends Fragment {
         tv_cancle = (TextView) view.findViewById(R.id.tv_cancle);
         tv_in_waiting = (TextView) view.findViewById(R.id.tv_in_waiting);
 
-
+        requests_purchases_list = new ArrayList<>();
         rv_requests = (RecyclerView) view.findViewById(R.id.rv_requests);
-        requestsPurchaseAdapter = new RequestsPurchaseAdapter(getContext());
+        requestsPurchaseAdapter = new RequestsPurchaseAdapter(getContext(), requests_purchases_list);
         linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rv_requests.setLayoutManager(linearLayoutManager);
         rv_requests.setAdapter(requestsPurchaseAdapter);
@@ -86,7 +87,7 @@ public class RequestsFragment extends Fragment {
     }
 
     void initUI() {
-        ((HomeActivity)getContext()).tv_toolbar_title.setText("الطلبات والمشتريات");
+        ((HomeActivity) getContext()).tv_toolbar_title.setText("الطلبات والمشتريات");
     }
 
     void initEventDrivn() {
@@ -104,6 +105,8 @@ public class RequestsFragment extends Fragment {
 
                 in_tab = "purchase";
                 in_status = "waiting";
+                Log.e("status", in_status);
+                Log.e("tab", in_tab);
                 get_purchaes();
             }
         });
@@ -121,6 +124,9 @@ public class RequestsFragment extends Fragment {
                 in_tab = "requests";
                 in_status = "waiting";
                 get_incoming_orders();
+                Log.e("status", in_status);
+                Log.e("tab", in_tab);
+
 
             }
         });
@@ -138,6 +144,8 @@ public class RequestsFragment extends Fragment {
                 if (in_tab.equals("requests")) {
                     get_incoming_orders();
                 }
+                Log.e("status", in_status);
+                Log.e("tab", in_tab);
             }
         });
         tv_done.setOnClickListener(new View.OnClickListener() {
@@ -154,6 +162,8 @@ public class RequestsFragment extends Fragment {
                 if (in_tab.equals("requests")) {
                     get_incoming_orders();
                 }
+                Log.e("status", in_status);
+                Log.e("tab", in_tab);
             }
         });
         tv_cancle.setOnClickListener(new View.OnClickListener() {
@@ -170,6 +180,8 @@ public class RequestsFragment extends Fragment {
                 if (in_tab.equals("requests")) {
                     get_incoming_orders();
                 }
+                Log.e("status", in_status);
+                Log.e("tab", in_tab);
             }
         });
         tv_in_waiting.setOnClickListener(new View.OnClickListener() {
@@ -186,12 +198,15 @@ public class RequestsFragment extends Fragment {
                 if (in_tab.equals("requests")) {
                     get_incoming_orders();
                 }
+                Log.e("status", in_status);
+                Log.e("tab", in_tab);
             }
         });
     }
 
     public void get_purchaes() {
         ((HomeActivity) getActivity()).showdialog();
+        requests_purchases_list.clear();
         RetroWeb.getClient().create(ServiceApi.class).purchases(String.valueOf(sharedPrefManager.getUserDate().getId()), in_status).enqueue(new Callback<Requests_Tab_Model>() {
             @Override
             public void onResponse(Call<Requests_Tab_Model> call, Response<Requests_Tab_Model> response) {
@@ -199,8 +214,20 @@ public class RequestsFragment extends Fragment {
                 try {
                     Log.e("purchases_orders", response.toString());
                     if (response.body().isValue()) {
-                        requestsPurchaseAdapter.addAll(response.body().getData());
+                        for (int i = 0; i < response.body().getData().size(); i++) {
+                            Datum datum = new Datum();
+                            datum.setBuyer(response.body().getData().get(i).getBuyer());
+                            datum.setCategory(response.body().getData().get(i).getCategory());
+                            datum.setId(response.body().getData().get(i).getId());
+                            datum.setOrderId(response.body().getData().get(i).getOrderId());
+                            datum.setPrice(response.body().getData().get(i).getPrice());
+                            datum.setTitle(response.body().getData().get(i).getTitle());
+                            datum.setType(in_status);
+                            requests_purchases_list.add(datum);
+                        }
+                        InComingOrdersFragment.type_of_request = in_status;
                         rv_requests.setAdapter(requestsPurchaseAdapter);
+
                     }
                 } catch (Exception e) {
                     Log.e("e", e.toString());
@@ -219,6 +246,7 @@ public class RequestsFragment extends Fragment {
 
     public void get_incoming_orders() {
         ((HomeActivity) getActivity()).showdialog();
+        requests_purchases_list.clear();
         RetroWeb.getClient().create(ServiceApi.class).incoming_orders(String.valueOf(sharedPrefManager.getUserDate().getId()), in_status).enqueue(new Callback<Requests_Tab_Model>() {
             @Override
             public void onResponse(Call<Requests_Tab_Model> call, Response<Requests_Tab_Model> response) {
@@ -226,10 +254,20 @@ public class RequestsFragment extends Fragment {
                 try {
                     Log.e("incoming_orders", response.body().toString());
                     if (response.body().isValue()) {
-                        requestsPurchaseAdapter.type = in_status;
+                        for (int i = 0; i < response.body().getData().size(); i++) {
+                            Datum datum = new Datum();
+                            datum.setBuyer(response.body().getData().get(i).getBuyer());
+                            datum.setCategory(response.body().getData().get(i).getCategory());
+                            datum.setId(response.body().getData().get(i).getId());
+                            datum.setOrderId(response.body().getData().get(i).getOrderId());
+                            datum.setPrice(response.body().getData().get(i).getPrice());
+                            datum.setTitle(response.body().getData().get(i).getTitle());
+                            datum.setType(in_status);
+                            requests_purchases_list.add(datum);
+                        }
                         InComingOrdersFragment.type_of_request = in_status;
-                        requestsPurchaseAdapter.addAll(response.body().getData());
                         rv_requests.setAdapter(requestsPurchaseAdapter);
+
                     }
                 } catch (Exception e) {
                     Log.e("e", e.toString());

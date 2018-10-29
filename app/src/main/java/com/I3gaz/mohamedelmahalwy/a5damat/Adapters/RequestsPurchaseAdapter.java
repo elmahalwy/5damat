@@ -50,14 +50,13 @@ public class RequestsPurchaseAdapter extends RecyclerView.Adapter<RequestsPurcha
     List<Datum> requests_purchases_list = new ArrayList<>();
     Context context;
     LayoutInflater layoutInflater;
-    public static String type;
     Dialog pop_up_cancel_request;
     EditText et_reason_of_cancle_process;
     Button btn_choose;
     int id;
 
-    public RequestsPurchaseAdapter(Context context) {
-        this.requests_purchases_list = new ArrayList<>();
+    public RequestsPurchaseAdapter(Context context, List<Datum> requests_purchases_list) {
+        this.requests_purchases_list = requests_purchases_list;
         this.context = context;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -88,30 +87,36 @@ public class RequestsPurchaseAdapter extends RecyclerView.Adapter<RequestsPurcha
         holder.tv_category.setText(requests_purchases_list.get(position).getCategory());
         holder.tv_price.setText(requests_purchases_list.get(position).getPrice());
         holder.tv_user_name.setText(requests_purchases_list.get(position).getBuyer());
-        if (type.equals("waiting")) {
+        try {
+            Log.e("type", requests_purchases_list.get(position).getType());
+
+        } catch (Exception e) {
+
+        }
+        if (requests_purchases_list.get(position).getType().equals("waiting")) {
             holder.tv_accept.setVisibility(View.VISIBLE);
             holder.tv_refuse.setVisibility(View.VISIBLE);
             holder.tv_accept.setText("قبول");
             holder.tv_refuse.setText("رفض");
         }
-        if (type.equals("in_progress")) {
+        if (requests_purchases_list.get(position).getType().equals("in_progress")) {
             holder.tv_accept.setVisibility(View.VISIBLE);
             holder.tv_refuse.setVisibility(View.VISIBLE);
             holder.tv_accept.setText("تمت العملية");
             holder.tv_refuse.setText("الغاء");
         }
-        if (type.equals("delivered")) {
+        if (requests_purchases_list.get(position).getType().equals("delivered")) {
             holder.tv_accept.setVisibility(View.GONE);
             holder.tv_refuse.setVisibility(View.GONE);
         }
-        if (type.equals("rejected")) {
+        if (requests_purchases_list.get(position).getType().equals("rejected")) {
             holder.tv_accept.setVisibility(View.GONE);
             holder.tv_refuse.setVisibility(View.GONE);
         }
         holder.tv_refuse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (type.equals("in_progress")) {
+                if (requests_purchases_list.get(position).getType().equals("in_progress")) {
                     pop_up_cancel_request.show();
                     id = requests_purchases_list.get(position).getOrderId();
                 } else {
@@ -151,10 +156,10 @@ public class RequestsPurchaseAdapter extends RecyclerView.Adapter<RequestsPurcha
             @Override
             public void onClick(View v) {
                 String status_to_send = "";
-                if (type.equals("waiting")) {
+                if (requests_purchases_list.get(position).getType().equals("waiting")) {
                     status_to_send = "in_progress";
                 }
-                if (type.equals("in_progress")) {
+                if (requests_purchases_list.get(position).getType().equals("in_progress")) {
                     status_to_send = "delivered";
 
                 }

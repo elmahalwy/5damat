@@ -24,6 +24,9 @@ public class Datum {
     @SerializedName("buyer")
     @Expose
     private String buyer;
+    @SerializedName("type")
+    @Expose
+    private String type;
 
     public int getId() {
         return id;
@@ -73,4 +76,11 @@ public class Datum {
         this.buyer = buyer;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }
