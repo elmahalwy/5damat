@@ -1,5 +1,6 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Activites;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import spencerstudios.com.bungeelib.Bungee;
 
 public class SignUpActivity extends ParentClass {
     @BindView(R.id.et_full_name)
@@ -130,12 +132,12 @@ public class SignUpActivity extends ParentClass {
                     if (response.body().isValue()) {
                         sharedPrefManager.setLoginStatus(true);
                         sharedPrefManager.setUserDate(response.body().getData());
-//                    Intent intent = new Intent(getApplicationContext(), ActivateYourAccountActivity.class);
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-//                    startActivity(intent);
-//                    Bungee.zoom(SignUpActivity.this);
+                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        startActivity(intent);
+                        Bungee.zoom(SignUpActivity.this);
 
                     }
                 }

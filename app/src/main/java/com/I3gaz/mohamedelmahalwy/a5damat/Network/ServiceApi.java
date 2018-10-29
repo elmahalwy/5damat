@@ -81,8 +81,9 @@ public interface ServiceApi {
     @GET(Urls.AllServices)
     Call<AllServices> get_all_service();
 
-    @GET(Urls.ServiceCategory)
-    Call<AllServices> get_service_category(@Path("category_id") String category_id);
+    @FormUrlEncoded
+    @POST(Urls.ServiceCategory)
+    Call<AllServices> get_service_category(@Field("category_id") String category_id);
 
     @FormUrlEncoded
     @POST(Urls.MyFavourites)

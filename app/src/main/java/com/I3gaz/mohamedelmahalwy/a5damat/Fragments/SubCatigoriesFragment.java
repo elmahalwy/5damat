@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +55,7 @@ public class SubCatigoriesFragment extends Fragment {
     }
 
     void get_sub_categroies() {
-
+        Log.e("iiiid", String.valueOf(CategoriesAdapter.id));
         RetroWeb.getClient().create(ServiceApi.class).get_sub_categories(String.valueOf(CategoriesAdapter.id)).enqueue(new Callback<SubCategories>() {
             @Override
             public void onResponse(Call<SubCategories> call, Response<SubCategories> response) {
