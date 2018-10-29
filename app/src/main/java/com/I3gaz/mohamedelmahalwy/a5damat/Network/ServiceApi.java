@@ -14,6 +14,7 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyBalance.AddOrTransferBalance;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyFavourites.Favourites;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyMessages.MyMessages;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MyServices.MyServices;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.NotRealMessage.NotRealMessage;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.OrderService.OrderService;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.RealTimeMessage.RealTimeMessageModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ReportMessage.ReportMessage;
@@ -220,6 +221,13 @@ public interface ServiceApi {
 
     @GET(Urls.chat_users)
     Call<ChatUsersModel> get_chat_users(@Path("user_id") String user_id);
+
+    @POST(Urls.send_not_real_message)
+    Call<NotRealMessage> send_not_real_message(@Field("sender_id") String sender_id,
+                                               @Field("reciever_id") String reciever_id,
+                                               @Field("service_id") String service_id,
+                                               @Field("msg") String msg,
+                                               @Field("room_id") String room_id);
 
 
 }

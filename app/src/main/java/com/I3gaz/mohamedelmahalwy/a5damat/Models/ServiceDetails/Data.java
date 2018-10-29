@@ -13,6 +13,9 @@ public class Data {
     @SerializedName("room_id")
     @Expose
     private int room_id;
+    @SerializedName("not_real_room")
+    @Expose
+    private int not_real_room;
     @SerializedName("sub_category")
     @Expose
     private String sub_category;
@@ -248,5 +251,13 @@ public class Data {
 
     public void setOrder_status(String order_status) {
         this.order_status = order_status;
+    }
+
+    public int getNot_real_room() {
+        return not_real_room;
+    }
+
+    public void setNot_real_room(int not_real_room) {
+        this.not_real_room = not_real_room;
     }
 }

@@ -1,5 +1,6 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Fragments;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,11 +9,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -22,6 +27,7 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.ServiceDetailsVideosAndImagesAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.ServiceDevelopmentsDetailsAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddOrDeleteItemsToFavourites.AddOrDeleteItemToFavourit;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.NotRealMessage.NotRealMessage;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.OrderService.OrderService;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails.ImagesVIdeosModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ServiceDetails.ServiceDetails;
@@ -93,10 +99,16 @@ public class ServiceDetailsFragment extends Fragment {
     ImageView iv_open_chat;
 
     public static String user_id = "";
+    String room_id = "";
     Bundle args;
     String url = "";
     boolean favourite = false;
     String order_status;
+
+    Dialog dialog_send_not_real_message;
+    EditText et_message;
+    TextView tv_send;
+
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.service_details_fragment_layout, container, false);
@@ -150,25 +162,39 @@ public class ServiceDetailsFragment extends Fragment {
 //                ((HomeActivity) getActivity()).came_from = "edit";
 //            }
 //        });
+
+        dialog_send_not_real_message = new Dialog(getActivity());
+        dialog_send_not_real_message.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog_send_not_real_message.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog_send_not_real_message.setContentView(R.layout.dialog_send_message_layout);
+
+        // to set width and height
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog_send_not_real_message.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+        et_message = (EditText) dialog_send_not_real_message.findViewById(R.id.et_message);
+        tv_send = (TextView) dialog_send_not_real_message.findViewById(R.id.tv_send);
         iv_open_chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (order_status == "in_progress") {
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    RealTimeMessageFragment realTimeMessageFragment = new RealTimeMessageFragment();
-                    realTimeMessageFragment.setArguments(args);
-                    fragmentTransaction.replace(R.id.frame_container, realTimeMessageFragment);
-                    fragmentTransaction.commit();
-                } else {
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    RealTimeMessageFragment realTimeMessageFragment = new RealTimeMessageFragment();
-                    realTimeMessageFragment.setArguments(args);
-                    fragmentTransaction.replace(R.id.frame_container, realTimeMessageFragment);
-                    fragmentTransaction.commit();
-                }
 
+//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                RealTimeMessageFragment realTimeMessageFragment = new RealTimeMessageFragment();
+//                realTimeMessageFragment.setArguments(args);
+//                fragmentTransaction.replace(R.id.frame_container, realTimeMessageFragment);
+//                fragmentTransaction.commit();
+                dialog_send_not_real_message.show();
+
+
+            }
+        });
+        tv_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                send_not_real_message();
             }
         });
 
@@ -274,6 +300,7 @@ public class ServiceDetailsFragment extends Fragment {
                             Picasso.with(getContext()).load(response.body().getData().getOwnerImage()).into(iv_owner);
 
                             user_id = String.valueOf(response.body().getData().getOwnerId());
+                            room_id = String.valueOf(response.body().getData().getNot_real_room());
                             Log.e("userid", "" + response.body().getData().getOwnerId());
 
                             if (response.body().getData().getDevelopments().isEmpty()) {
@@ -363,6 +390,41 @@ public class ServiceDetailsFragment extends Fragment {
                 t.printStackTrace();
             }
         });
+    }
+
+    void send_not_real_message() {
+        boolean cancel = false;
+        View focusView = null;
+        if (TextUtils.isEmpty(et_message.getText().toString())) {
+            et_message.setError("برجاء ادخال رسالتك");
+            focusView = et_message;
+            cancel = true;
+        } if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            focusView.requestFocus();
+        } else {
+            ((HomeActivity) getActivity()).showdialog();
+            RetroWeb.getClient().create(ServiceApi.class).send_not_real_message(String.valueOf(sharedPrefManager.getUserDate().getId()),
+                    user_id, getArguments().getString("service_id"), et_message.getText().toString(), room_id).enqueue(new Callback<NotRealMessage>() {
+                @Override
+                public void onResponse(Call<NotRealMessage> call, Response<NotRealMessage> response) {
+                    ((HomeActivity) getActivity()).dismis_dialog();
+                    if (response.body().isValue()) {
+                        makeToast(getContext(), "تم ارسال رسالتك بنجاح");
+                        dialog_send_not_real_message.dismiss();
+                    } else {
+                        makeToast(getContext(), "حدث خطأ ما");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<NotRealMessage> call, Throwable t) {
+                    ((HomeActivity) getActivity()).dismis_dialog();
+                    handleException(getActivity(), t);
+                    t.printStackTrace();
+                }
+            });
+        }
     }
 
     private void shareTextUrl() {
