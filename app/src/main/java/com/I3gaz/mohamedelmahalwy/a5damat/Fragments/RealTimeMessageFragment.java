@@ -78,7 +78,7 @@ public class RealTimeMessageFragment extends Fragment {
         };
 
 // schedule the task to run starting now and then every hour...
-        timer.schedule(hourlyTask, 0l, 1000 * 60);   // 1000*10*60 every 1 minut
+        timer.schedule(hourlyTask, 0l, 100 * 60);   // 1000*10*60 every 1 minut
     }
 
     void initEventDriven() {
@@ -93,10 +93,10 @@ public class RealTimeMessageFragment extends Fragment {
     void get_messages() {
         Log.e("_sender_id", sharedPrefManager.getUserDate().getId() + "");
         Log.e("reciver_id", getArguments().getString("reciver_id")+"");
-        Log.e("service_id", getArguments().getString("service_id")+"");
+        Log.e("order_id", getArguments().getString("order_id")+"");
         Log.e("room_id", getArguments().getString("room_id")+"");
 //        ((HomeActivity) getActivity()).showdialog();
-        RetroWeb.getClient().create(ServiceApi.class).send_real_time_messages(String.valueOf(sharedPrefManager.getUserDate().getId()), String.valueOf(getArguments().getString("reciver_id")), String.valueOf(getArguments().getString("service_id")), "", String.valueOf(getArguments().getString("room_id"))).enqueue(new Callback<RealTimeMessageModel>() {
+        RetroWeb.getClient().create(ServiceApi.class).send_real_time_messages(String.valueOf(sharedPrefManager.getUserDate().getId()), String.valueOf(getArguments().getString("reciver_id")), String.valueOf(getArguments().getString("order_id")), "", String.valueOf(getArguments().getString("room_id"))).enqueue(new Callback<RealTimeMessageModel>() {
             @Override
             public void onResponse(Call<RealTimeMessageModel> call, Response<RealTimeMessageModel> response) {
                 try {
@@ -105,9 +105,10 @@ public class RealTimeMessageFragment extends Fragment {
                     if (response.body().isValue()) {
                         realTimeMessageAdapter.addAll(response.body().getData().getMessages());
                         chat_recycler.setAdapter(realTimeMessageAdapter);
+                        chat_recycler.scrollToPosition(response.body().getData().getMessages().size()-1);
                     }
                 } catch (Exception e) {
-                    Log.e("e", String.valueOf(e));
+                    Log.e("e_get_message", String.valueOf(e));
                 }
             }
 
@@ -116,7 +117,7 @@ public class RealTimeMessageFragment extends Fragment {
 //                ((HomeActivity) getActivity()).dismis_dialog();
                 handleException(getActivity(), t);
                 t.printStackTrace();
-                Log.e("t", String.valueOf(t));
+                Log.e("t_get_message", String.valueOf(t));
 
             }
 
@@ -133,9 +134,15 @@ public class RealTimeMessageFragment extends Fragment {
         if (cancel) {
 
         } else {
+            Log.e("order_id", String.valueOf(getArguments().getString("order_id")));
+            Log.e("reciver_id", String.valueOf(getArguments().getString("reciver_id")));
+            Log.e("room_id", String.valueOf(getArguments().getString("room_id")));
+            Log.e("sender_id", String.valueOf(String.valueOf(sharedPrefManager.getUserDate().getId())));
+            Log.e("msg", et_chat.getText().toString());
+
             RetroWeb.getClient().create(ServiceApi.class).send_real_time_messages(String.valueOf(sharedPrefManager.getUserDate().getId()),
                     String.valueOf(getArguments().getString("reciver_id")),
-                    String.valueOf(getArguments().getString("service_id")),
+                    String.valueOf(getArguments().getString("order_id")),
                     et_chat.getText().toString(), String.valueOf(getArguments().getString("room_id"))).enqueue(new Callback<RealTimeMessageModel>() {
                 @Override
                 public void onResponse(Call<RealTimeMessageModel> call, Response<RealTimeMessageModel> response) {
@@ -146,8 +153,11 @@ public class RealTimeMessageFragment extends Fragment {
                             get_messages();
 
                         }
+                        else {
+                            Toast.makeText(getActivity(), "gggg", Toast.LENGTH_SHORT).show();
+                        }
                     } catch (Exception e) {
-                        Log.e("e", String.valueOf(e));
+                        Log.e("e_send_msg", String.valueOf(e));
                     }
                 }
 
@@ -155,7 +165,7 @@ public class RealTimeMessageFragment extends Fragment {
                 public void onFailure(Call<RealTimeMessageModel> call, Throwable t) {
                     handleException(getActivity(), t);
                     t.printStackTrace();
-                    Log.e("t", String.valueOf(t));
+                    Log.e("t_send_msg", String.valueOf(t));
 
                 }
 

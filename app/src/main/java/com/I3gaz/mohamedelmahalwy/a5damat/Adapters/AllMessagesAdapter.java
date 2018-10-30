@@ -61,6 +61,7 @@ public class AllMessagesAdapter extends RecyclerView.Adapter<AllMessagesAdapter.
                 args.putString("reciver_id", String.valueOf(messagesList.get(position).getUserId()));
                 args.putString("room_id", String.valueOf(messagesList.get(position).getRoomId()));
                 args.putString("service_id", String.valueOf(messagesList.get(position).getService_id()));
+                args.putString("order_id", String.valueOf(messagesList.get(position).getOrder_id()));
                 ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
                 RealTimeMessageFragment realTimeMessageFragment = new RealTimeMessageFragment();
                 realTimeMessageFragment.setArguments(args);

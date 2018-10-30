@@ -34,6 +34,8 @@ public class SubCatigoriesAdapter extends RecyclerView.Adapter<SubCatigoriesAdap
     LayoutInflater layoutInflater;
     int lastPosition = -1;
     public int id;
+    private static final String BACK_STACK_ROOT_TAG = "root_fragment";
+
 
     public SubCatigoriesAdapter(Context context) {
         sub_catigories_list = new ArrayList<>();
@@ -63,8 +65,10 @@ public class SubCatigoriesAdapter extends RecyclerView.Adapter<SubCatigoriesAdap
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 HomeFragmnet homeFragmnet = new HomeFragmnet();
                 homeFragmnet.setArguments(args);
-                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
-                fragmentTransaction.replace(R.id.frame_container, homeFragmnet);
+                fragmentManager.popBackStack(BACK_STACK_ROOT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                fragmentTransaction.addToBackStack(BACK_STACK_ROOT_TAG);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);                fragmentTransaction.replace(R.id.frame_container, homeFragmnet);
                 fragmentTransaction.commit();
 
             }

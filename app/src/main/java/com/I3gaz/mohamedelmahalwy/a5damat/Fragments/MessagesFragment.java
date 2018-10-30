@@ -45,10 +45,13 @@ public class MessagesFragment extends Fragment {
     }
 
     void get_my_messages() {
+        ((HomeActivity) getActivity()).showdialog();
         RetroWeb.getClient().create(ServiceApi.class).get_my_messages(
                 String.valueOf(ParentClass.sharedPrefManager.getUserDate().getId())).enqueue(new Callback<MyMessages>() {
             @Override
             public void onResponse(Call<MyMessages> call, Response<MyMessages> response) {
+                ((HomeActivity) getActivity()).dismis_dialog();
+
                 try {
                     if (response.body().isValue()) {
                         if (!response.body().getData().isEmpty()) {
@@ -64,6 +67,7 @@ public class MessagesFragment extends Fragment {
 
             @Override
             public void onFailure(Call<MyMessages> call, Throwable t) {
+                ((HomeActivity) getActivity()).dismis_dialog();
                 handleException(getActivity(), t);
                 t.printStackTrace();
             }

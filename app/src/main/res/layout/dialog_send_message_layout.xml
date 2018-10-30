@@ -31,7 +31,7 @@
         android:background="@drawable/drawable_linear_main"
         android:textColor="#3558B9"
         android:textColorHint="#000"
-        android:text="ارسل رسالة..."/>
+        android:hint="ارسل رسالة..."/>
 
     <View
         android:id="@+id/v1"

@@ -59,12 +59,17 @@ public class NotificationsFragment extends Fragment {
             @Override
             public void onResponse(Call<Notifications> call, Response<Notifications> response) {
                 ((HomeActivity) getActivity()).dismis_dialog();
-                if (response.body().isValue()) {
-                    if (!response.body().getData().isEmpty()) {
-                        notificationAdapter.addAll(response.body().getData());
-                        rv_notifications.setAdapter(notificationAdapter);
+                try {
+                    if (response.body().isValue()) {
+                        if (!response.body().getData().isEmpty()) {
+                            notificationAdapter.addAll(response.body().getData());
+                            rv_notifications.setAdapter(notificationAdapter);
+                        }
                     }
+                }catch (Exception e){
+
                 }
+
             }
 
             @Override

@@ -2,6 +2,7 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Models.NotRealMessage;
 
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -12,7 +13,7 @@ public class NotRealMessage {
     private boolean value;
     @SerializedName("data")
     @Expose
-    private List<Datum> data = null;
+    private Datum data;
 
     public boolean isValue() {
         return value;
@@ -22,11 +23,11 @@ public class NotRealMessage {
         this.value = value;
     }
 
-    public List<Datum> getData() {
+    public Datum getData() {
         return data;
     }
 
-    public void setData(List<Datum> data) {
+    public void setData(Datum data) {
         this.data = data;
     }
 

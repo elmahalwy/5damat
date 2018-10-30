@@ -30,6 +30,12 @@ public class Datum {
     @SerializedName("sender_id")
     @Expose
     private int sender_id;
+    @SerializedName("room_id")
+    @Expose
+    private int room_id;
+    @SerializedName("reciever_id")
+    @Expose
+    private int reciever_id;
 
 
     public int getId() {
@@ -94,5 +100,21 @@ public class Datum {
 
     public void setSender_id(int sender_id) {
         this.sender_id = sender_id;
+    }
+
+    public int getRoom_id() {
+        return room_id;
+    }
+
+    public void setRoom_id(int room_id) {
+        this.room_id = room_id;
+    }
+
+    public int getReciever_id() {
+        return reciever_id;
+    }
+
+    public void setReciever_id(int reciever_id) {
+        this.reciever_id = reciever_id;
     }
 }

@@ -51,7 +51,9 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".Activites.HomeActivity" />
+        <activity
+            android:name=".Activites.HomeActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".Activites.SignInActivity" />
 
         <meta-data

@@ -15,9 +15,13 @@ public class Message {
     @SerializedName("reciever")
     @Expose
     private String reciever;
-    @SerializedName("msg")
+    @SerializedName("message")
     @Expose
-    private String msg;
+    private String message;
+    @SerializedName("sender_image")
+    @Expose
+    private String sender_image;
+
 
     public int getId() {
         return id;
@@ -44,11 +48,18 @@ public class Message {
     }
 
     public String getMsg() {
-        return msg;
+        return message;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setMsg(String message) {
+        this.message = message;
     }
 
+    public String getSender_image() {
+        return sender_image;
+    }
+
+    public void setSender_image(String sender_image) {
+        this.sender_image = sender_image;
+    }
 }

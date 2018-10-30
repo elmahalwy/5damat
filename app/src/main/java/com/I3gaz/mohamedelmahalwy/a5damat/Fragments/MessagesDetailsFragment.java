@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.NotRealMessage.NotRealMessage;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ReportMessage.ReportMessage;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SendMessage.SendMessage;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.SingleMessage.SingleMessage;
@@ -154,7 +156,7 @@ public class MessagesDetailsFragment extends Fragment {
 
     void get_single_message() {
         ((HomeActivity) getActivity()).showdialog();
-
+        Log.e("message_id", getArguments().getString("message_id"));
         RetroWeb.getClient().create(ServiceApi.class).get_single_message(getArguments().getString("message_id")).enqueue(new Callback<SingleMessage>() {
             @Override
             public void onResponse(Call<SingleMessage> call, Response<SingleMessage> response) {
@@ -223,31 +225,49 @@ public class MessagesDetailsFragment extends Fragment {
         }
         if (cancel) {
         } else {
+            Log.e("sender_id",String.valueOf(sharedPrefManager.getUserDate().getId()));
+            Log.e("reciver_id", getArguments().getString("reciever_id"));
+            Log.e("service_id",getArguments().getString("service_id"));
+            Log.e("msg", et_add_comment.getText().toString());
+            Log.e("room_id",getArguments().getString("room_id"));
             ((HomeActivity) getActivity()).showdialog();
-            RetroWeb.getClient().create(ServiceApi.class).send_message(String.valueOf(sharedPrefManager.getUserDate().getId()),
-                    getArguments().getString("service_id"), et_add_comment.getText().toString()).enqueue(new Callback<SendMessage>() {
+            RetroWeb.getClient().create(ServiceApi.class).send_not_real_message(String.valueOf(sharedPrefManager.getUserDate().getId()),
+                    getArguments().getString("reciever_id"), getArguments().getString("service_id"), et_add_comment.getText().toString(), getArguments().getString("room_id")).enqueue(new Callback<NotRealMessage>() {
                 @Override
-                public void onResponse(Call<SendMessage> call, Response<SendMessage> response) {
+                public void onResponse(Call<NotRealMessage> call, Response<NotRealMessage> response) {
                     ((HomeActivity) getActivity()).dismis_dialog();
-                    if (response.body().isValue()) {
-                        makeToast(getContext(), "تم ارسال رسالتك بنجاح...");
-                        FragmentManager fragmentManager = ((HomeActivity) getActivity()).getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        MessagesFragment messagesFragment = new MessagesFragment();
-                        fragmentTransaction.replace(R.id.frame_container, messagesFragment);
-                        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                        fragmentTransaction.remove(new MessagesDetailsFragment());
-                        fragmentTransaction.commit();
-                        fragmentManager.popBackStack();
+                    try {
+                        Log.e("response_send",response+"");
+                        if (response.body().isValue()) {
+                            makeToast(getContext(), "تم ارسال رسالتك بنجاح");
+                            Bundle args = new Bundle();
+                            args.putString("type", "home");
+                            FragmentManager fragmentManager = ((HomeActivity) getActivity()).getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            HomeFragmnet serviceDetailsFragment = new HomeFragmnet();
+                            serviceDetailsFragment.setArguments(args);
+                            fragmentTransaction.replace(R.id.frame_container, serviceDetailsFragment);
+                            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                            fragmentTransaction.remove(new AddServiceFragment());
+                            fragmentTransaction.commit();
+                            fragmentManager.popBackStack();
+                        } else {
+                            makeToast(getContext(), "لا يمكنك اضافه استفسار اخر قبل الرد");
+                        }
+
+                    }catch (Exception e){
+                        Log.e("alolo",e.toString());
+
                     }
 
                 }
 
                 @Override
-                public void onFailure(Call<SendMessage> call, Throwable t) {
+                public void onFailure(Call<NotRealMessage> call, Throwable t) {
                     ((HomeActivity) getActivity()).dismis_dialog();
                     handleException(getActivity(), t);
                     t.printStackTrace();
+                    Log.e("alalalal",t.toString());
                 }
             });
         }

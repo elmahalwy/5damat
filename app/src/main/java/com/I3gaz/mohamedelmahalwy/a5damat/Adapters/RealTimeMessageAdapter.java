@@ -1,6 +1,7 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -67,8 +68,14 @@ public class RealTimeMessageAdapter extends RecyclerView.Adapter<RealTimeMessage
                         .into(holder.chat_image);
             }
         } else {
+
+            Picasso.with(context)
+                    .load(chat_list.get(position).getSender_image())
+                    .into(holder.chat_image);
             holder.relative_for_chat.setGravity(Gravity.LEFT);
             holder.tv_for_chat.setBackgroundResource(R.drawable.tv_background_chat2);
+            holder.tv_for_chat.setTextColor(Color.parseColor("#FFFFFF"));
+
 //            if (sharedPrefManager.getUserDate().getImage().equals(chat_list.get(position).getFrom_user_avatar())) {
 //                if (!chat_list.get(position).getTo_user_avatar().isEmpty()) {
 //                    Picasso.with(context)

@@ -27,6 +27,9 @@ public class Datum {
     @SerializedName("service_id")
     @Expose
     private int service_id;
+    @SerializedName("order_id")
+    @Expose
+    private int order_id;
 
     public int getUserId() {
         return userId;
@@ -82,5 +85,13 @@ public class Datum {
 
     public void setService_id(int service_id) {
         this.service_id = service_id;
+    }
+
+    public int getOrder_id() {
+        return order_id;
+    }
+
+    public void setOrder_id(int order_id) {
+        this.order_id = order_id;
     }
 }

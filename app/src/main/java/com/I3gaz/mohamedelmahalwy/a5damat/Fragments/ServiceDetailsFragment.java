@@ -108,6 +108,7 @@ public class ServiceDetailsFragment extends Fragment {
     Dialog dialog_send_not_real_message;
     EditText et_message;
     TextView tv_send;
+    String rooom_id = "";
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -186,6 +187,8 @@ public class ServiceDetailsFragment extends Fragment {
 //                realTimeMessageFragment.setArguments(args);
 //                fragmentTransaction.replace(R.id.frame_container, realTimeMessageFragment);
 //                fragmentTransaction.commit();
+                rooom_id = room_id;
+                Log.e("roooom_id",rooom_id+"l;");
                 dialog_send_not_real_message.show();
 
 
@@ -399,13 +402,15 @@ public class ServiceDetailsFragment extends Fragment {
             et_message.setError("برجاء ادخال رسالتك");
             focusView = et_message;
             cancel = true;
-        } if (cancel) {
+        }
+        if (cancel) {
             // There was an error; don't attempt login and focus the first
             focusView.requestFocus();
         } else {
+            Log.e("room_id", rooom_id);
             ((HomeActivity) getActivity()).showdialog();
             RetroWeb.getClient().create(ServiceApi.class).send_not_real_message(String.valueOf(sharedPrefManager.getUserDate().getId()),
-                    user_id, getArguments().getString("service_id"), et_message.getText().toString(), room_id).enqueue(new Callback<NotRealMessage>() {
+                    user_id, getArguments().getString("service_id"), et_message.getText().toString(), rooom_id).enqueue(new Callback<NotRealMessage>() {
                 @Override
                 public void onResponse(Call<NotRealMessage> call, Response<NotRealMessage> response) {
                     ((HomeActivity) getActivity()).dismis_dialog();
@@ -413,7 +418,7 @@ public class ServiceDetailsFragment extends Fragment {
                         makeToast(getContext(), "تم ارسال رسالتك بنجاح");
                         dialog_send_not_real_message.dismiss();
                     } else {
-                        makeToast(getContext(), "حدث خطأ ما");
+                        makeToast(getContext(), "لا يمكنك اضافه استفسار اخر قبل الرد");
                     }
                 }
 
@@ -422,6 +427,7 @@ public class ServiceDetailsFragment extends Fragment {
                     ((HomeActivity) getActivity()).dismis_dialog();
                     handleException(getActivity(), t);
                     t.printStackTrace();
+                    Log.e("ttt",t.toString());
                 }
             });
         }

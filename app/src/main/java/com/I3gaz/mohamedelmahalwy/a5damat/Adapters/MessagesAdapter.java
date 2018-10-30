@@ -58,6 +58,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                 args.putString("message_id", String.valueOf(messagesModelList.get(position).getId()));
                 args.putString("user_id", String.valueOf(messagesModelList.get(position).getSender_id()));
                 args.putString("service_id", String.valueOf(messagesModelList.get(position).getService_id()));
+                args.putString("reciever_id", String.valueOf(messagesModelList.get(position).getSender_id()));
+                args.putString("room_id", String.valueOf(messagesModelList.get(position).getRoom_id()));
                 FragmentManager fragmentManager = ((HomeActivity) context).getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 MessagesDetailsFragment messagesDetailsFragment = new MessagesDetailsFragment();
