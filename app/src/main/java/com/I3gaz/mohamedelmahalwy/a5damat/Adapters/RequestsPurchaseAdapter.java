@@ -94,10 +94,15 @@ public class RequestsPurchaseAdapter extends RecyclerView.Adapter<RequestsPurcha
 
         }
         if (requests_purchases_list.get(position).getType().equals("waiting")) {
-            holder.tv_accept.setVisibility(View.VISIBLE);
-            holder.tv_refuse.setVisibility(View.VISIBLE);
-            holder.tv_accept.setText("قبول");
-            holder.tv_refuse.setText("رفض");
+            if (requests_purchases_list.get(position).getTab_type().equals("purchase")) {
+                holder.tv_accept.setVisibility(View.GONE);
+                holder.tv_refuse.setVisibility(View.GONE);
+            } else {
+                holder.tv_accept.setVisibility(View.VISIBLE);
+                holder.tv_refuse.setVisibility(View.VISIBLE);
+                holder.tv_accept.setText("قبول");
+                holder.tv_refuse.setText("رفض");
+            }
         }
         if (requests_purchases_list.get(position).getType().equals("in_progress")) {
             holder.tv_accept.setVisibility(View.VISIBLE);
@@ -164,6 +169,8 @@ public class RequestsPurchaseAdapter extends RecyclerView.Adapter<RequestsPurcha
 
                 }
                 ((HomeActivity) context).showdialog();
+                Log.e("order_idd", String.valueOf(requests_purchases_list.get(position).getOrderId()));
+                Log.e("status_to_send", status_to_send);
                 RetroWeb.getClient().create(ServiceApi.class).change_request_status(
                         String.valueOf(requests_purchases_list.get(position).getOrderId()), status_to_send, "").enqueue(new Callback<RequestsChangeStatusModel>() {
                     @Override

@@ -39,7 +39,7 @@ public class MessagesFragment extends Fragment {
         messagesAdapter = new MessagesAdapter(getContext());
         linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false);
         rv_messages.setLayoutManager(linearLayoutManager);
-        ((HomeActivity)getContext()).tv_toolbar_title.setText("الرسائل");
+        ((HomeActivity) getContext()).tv_toolbar_title.setText("الرسائل");
         get_my_messages();
         return view;
     }
@@ -49,12 +49,17 @@ public class MessagesFragment extends Fragment {
                 String.valueOf(ParentClass.sharedPrefManager.getUserDate().getId())).enqueue(new Callback<MyMessages>() {
             @Override
             public void onResponse(Call<MyMessages> call, Response<MyMessages> response) {
-                if (response.body().isValue()) {
-                    if (!response.body().getData().isEmpty()) {
-                        messagesAdapter.addAll(response.body().getData());
-                        rv_messages.setAdapter(messagesAdapter);
+                try {
+                    if (response.body().isValue()) {
+                        if (!response.body().getData().isEmpty()) {
+                            messagesAdapter.addAll(response.body().getData());
+                            rv_messages.setAdapter(messagesAdapter);
+                        }
                     }
+                } catch (Exception e) {
+
                 }
+
             }
 
             @Override

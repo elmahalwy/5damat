@@ -1,7 +1,10 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +14,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
+import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.RealTimeMessageFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.AllMessagesModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ChatUsersModel.Datum;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
@@ -42,11 +47,29 @@ public class AllMessagesAdapter extends RecyclerView.Adapter<AllMessagesAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.tv_date.setText(messagesList.get(position).getMessageDate());
         holder.tv_details.setText(messagesList.get(position).getMessage());
         holder.tv_msg_owner.setText(messagesList.get(position).getUserName());
         Picasso.with(context).load(messagesList.get(position).getUserImage()).into(holder.iv_msg);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = ((HomeActivity) context).getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                Bundle args = new Bundle();
+                args.putString("reciver_id", String.valueOf(messagesList.get(position).getUserId()));
+                args.putString("room_id", String.valueOf(messagesList.get(position).getRoomId()));
+                args.putString("service_id", String.valueOf(messagesList.get(position).getService_id()));
+                ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
+                RealTimeMessageFragment realTimeMessageFragment = new RealTimeMessageFragment();
+                realTimeMessageFragment.setArguments(args);
+                ft.replace(R.id.frame_container, realTimeMessageFragment);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.addToBackStack(null);
+                ft.commit();
+            }
+        });
 
         if (position > lastPosition) {
 

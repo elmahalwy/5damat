@@ -133,6 +133,7 @@ public class SignUpActivity extends ParentClass {
                         sharedPrefManager.setLoginStatus(true);
                         sharedPrefManager.setUserDate(response.body().getData());
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        intent.putExtra("type","sign_up");
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

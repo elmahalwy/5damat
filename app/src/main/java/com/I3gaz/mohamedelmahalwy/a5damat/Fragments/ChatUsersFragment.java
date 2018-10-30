@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,13 +55,18 @@ public class ChatUsersFragment extends Fragment {
 
     void get_chat_users() {
         ((HomeActivity) getActivity()).showdialog();
+
         RetroWeb.getClient().create(ServiceApi.class).get_chat_users(String.valueOf(ParentClass.sharedPrefManager.getUserDate().getId())).enqueue(new Callback<ChatUsersModel>() {
             @Override
             public void onResponse(Call<ChatUsersModel> call, Response<ChatUsersModel> response) {
+                ((HomeActivity) getActivity()).dismis_dialog();
+
                 try {
-                    ((HomeActivity) getActivity()).dismis_dialog();
-                    allMessagesAdapter.addAll(response.body().getData());
-                    rv_chat_users.setAdapter(allMessagesAdapter);
+                    Log.e("response_chat_user",response.body().getData()+"");
+                    if (response.body().isValue()){
+                        allMessagesAdapter.addAll(response.body().getData());
+                        rv_chat_users.setAdapter(allMessagesAdapter);
+                    }
                 }catch (Exception e){
 
                 }

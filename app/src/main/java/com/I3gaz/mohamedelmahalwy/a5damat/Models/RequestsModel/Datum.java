@@ -6,9 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Datum {
 
-    @SerializedName("id")
-    @Expose
-    private int id;
+
     @SerializedName("order_id")
     @Expose
     private int orderId;
@@ -27,14 +25,11 @@ public class Datum {
     @SerializedName("type")
     @Expose
     private String type;
+    @SerializedName("tab_type")
+    @Expose
+    private String tab_type;
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public int getOrderId() {
         return orderId;
@@ -82,5 +77,13 @@ public class Datum {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getTab_type() {
+        return tab_type;
+    }
+
+    public void setTab_type(String tab_type) {
+        this.tab_type = tab_type;
     }
 }

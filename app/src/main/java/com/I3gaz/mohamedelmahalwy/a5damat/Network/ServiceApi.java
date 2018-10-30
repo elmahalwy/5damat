@@ -222,6 +222,7 @@ public interface ServiceApi {
     @GET(Urls.chat_users)
     Call<ChatUsersModel> get_chat_users(@Path("user_id") String user_id);
 
+    @FormUrlEncoded
     @POST(Urls.send_not_real_message)
     Call<NotRealMessage> send_not_real_message(@Field("sender_id") String sender_id,
                                                @Field("reciever_id") String reciever_id,

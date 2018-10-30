@@ -218,11 +218,12 @@ public class RequestsFragment extends Fragment {
                             Datum datum = new Datum();
                             datum.setBuyer(response.body().getData().get(i).getBuyer());
                             datum.setCategory(response.body().getData().get(i).getCategory());
-                            datum.setId(response.body().getData().get(i).getId());
+
                             datum.setOrderId(response.body().getData().get(i).getOrderId());
                             datum.setPrice(response.body().getData().get(i).getPrice());
                             datum.setTitle(response.body().getData().get(i).getTitle());
                             datum.setType(in_status);
+                            datum.setTab_type(in_tab);
                             requests_purchases_list.add(datum);
                         }
                         InComingOrdersFragment.type_of_request = in_status;
@@ -258,11 +259,12 @@ public class RequestsFragment extends Fragment {
                             Datum datum = new Datum();
                             datum.setBuyer(response.body().getData().get(i).getBuyer());
                             datum.setCategory(response.body().getData().get(i).getCategory());
-                            datum.setId(response.body().getData().get(i).getId());
+
                             datum.setOrderId(response.body().getData().get(i).getOrderId());
                             datum.setPrice(response.body().getData().get(i).getPrice());
                             datum.setTitle(response.body().getData().get(i).getTitle());
                             datum.setType(in_status);
+                            datum.setTab_type(in_tab);
                             requests_purchases_list.add(datum);
                         }
                         InComingOrdersFragment.type_of_request = in_status;
