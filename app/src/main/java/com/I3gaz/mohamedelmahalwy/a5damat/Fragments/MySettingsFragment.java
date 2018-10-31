@@ -71,26 +71,29 @@ public class MySettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MyFavouritesFragment myFavouritesFragment = new MyFavouritesFragment();
-                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
-                fragmentTransaction.replace(R.id.frame_container, myFavouritesFragment);
-                fragmentTransaction.commit();
+                HomeActivity.replaceFragment(myFavouritesFragment);
+//                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
+//                fragmentTransaction.replace(R.id.frame_container, myFavouritesFragment);
+//                fragmentTransaction.commit();
             }
         });
         tv_edit_my_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EditAccountFragment editAccountFragment = new EditAccountFragment();
-                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
-                fragmentTransaction.replace(R.id.frame_container, editAccountFragment);
-                fragmentTransaction.commit();
+                HomeActivity.replaceFragment(editAccountFragment);
+//                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
+//                fragmentTransaction.replace(R.id.frame_container, editAccountFragment);
+//                fragmentTransaction.commit();
             }
         });
         tv_my_balance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 BalanceFragment balanceFragment = new BalanceFragment();
-                fragmentTransaction.replace(R.id.frame_container, balanceFragment);
-                fragmentTransaction.commit();
+                HomeActivity.replaceFragment(balanceFragment);
+//                fragmentTransaction.replace(R.id.frame_container, balanceFragment);
+//                fragmentTransaction.commit();
             }
 
         });
@@ -101,18 +104,20 @@ public class MySettingsFragment extends Fragment {
                 args.putString("user_id", String.valueOf(ParentClass.sharedPrefManager.getUserDate().getId()));
                 MyServiceFragment myServiceFragment = new MyServiceFragment();
                 myServiceFragment.setArguments(args);
-                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
-                fragmentTransaction.replace(R.id.frame_container, myServiceFragment);
-                fragmentTransaction.commit();
+                HomeActivity.replaceFragment(myServiceFragment);
+//                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
+//                fragmentTransaction.replace(R.id.frame_container, myServiceFragment);
+//                fragmentTransaction.commit();
             }
         });
         tv_support.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AssistanceFragment assistanceFragment = new AssistanceFragment();
-                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
-                fragmentTransaction.replace(R.id.frame_container, assistanceFragment);
-                fragmentTransaction.commit();
+                HomeActivity.replaceFragment(assistanceFragment);
+//                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
+//                fragmentTransaction.replace(R.id.frame_container, assistanceFragment);
+//                fragmentTransaction.commit();
             }
         });
         tv_log_out.setOnClickListener(new View.OnClickListener() {
@@ -130,9 +135,10 @@ public class MySettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ChatUsersFragment chatUsersFragment = new ChatUsersFragment();
-                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
-                fragmentTransaction.replace(R.id.frame_container, chatUsersFragment);
-                fragmentTransaction.commit();
+                HomeActivity.replaceFragment(chatUsersFragment);
+//                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
+//                fragmentTransaction.replace(R.id.frame_container, chatUsersFragment);
+//                fragmentTransaction.commit();
             }
         });
 

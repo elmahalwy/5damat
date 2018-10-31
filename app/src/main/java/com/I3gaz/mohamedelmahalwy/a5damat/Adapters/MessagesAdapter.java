@@ -60,13 +60,17 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                 args.putString("service_id", String.valueOf(messagesModelList.get(position).getService_id()));
                 args.putString("reciever_id", String.valueOf(messagesModelList.get(position).getSender_id()));
                 args.putString("room_id", String.valueOf(messagesModelList.get(position).getRoom_id()));
-                FragmentManager fragmentManager = ((HomeActivity) context).getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 MessagesDetailsFragment messagesDetailsFragment = new MessagesDetailsFragment();
                 messagesDetailsFragment.setArguments(args);
-                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
-                fragmentTransaction.replace(R.id.frame_container, messagesDetailsFragment);
-                fragmentTransaction.commit();
+                HomeActivity.replaceFragment(messagesDetailsFragment);
+
+//                FragmentManager fragmentManager = ((HomeActivity) context).getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//
+//
+//                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
+//                fragmentTransaction.replace(R.id.frame_container, messagesDetailsFragment);
+//                fragmentTransaction.commit();
             }
         });
 

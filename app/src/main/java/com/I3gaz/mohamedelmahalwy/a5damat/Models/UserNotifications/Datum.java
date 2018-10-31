@@ -5,7 +5,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Datum {
-
+    @SerializedName("id")
+    @Expose
+    private int id;
     @SerializedName("service_id")
     @Expose
     private int serviceId;
@@ -40,4 +42,11 @@ public class Datum {
         this.createdDate = createdDate;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

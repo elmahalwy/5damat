@@ -102,12 +102,15 @@ public class HomeActivity extends ParentClass {
     Bundle args;
     public String handle_tab = "";
     private static final String BACK_STACK_ROOT_TAG = "root_fragment";
+    static List<String> fragments = new ArrayList<String>();
+    static FragmentManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
+        manager = getSupportFragmentManager();
         init_fragments();
 
         replaceFragment(homeFragmnet);
@@ -122,10 +125,33 @@ public class HomeActivity extends ParentClass {
         Log.e("mobile", "" + sharedPrefManager.getUserDate().getMobile());
         Log.e("image", "" + sharedPrefManager.getUserDate().getImage());
 
+        final android.app.FragmentManager fm = getFragmentManager();
 
+        fm.addOnBackStackChangedListener(new android.app.FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+
+                if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+                    // dLayout.closeDrawers();
+                    finish();
+                    for (int i = 0; i < fragments.size(); i++) {
+                        Log.e("names_of_fragments" + i, fragments.get(i));
+                    }
+                } else {
+                    // dLayout.closeDrawers();
+                    for (int i = 0; i < fragments.size(); i++) {
+                        Log.e("names_of_fragmentss" + i, fragments.get(i));
+                    }
+                    return;
+
+                }
+            }
+        });
     }
 
     void initUi() {
+
+
         if (getIntent().getStringExtra("type").equals("deep_link")) {
             Bundle args = new Bundle();
             args.putString("service_id", getIntent().getStringExtra("service_id"));
@@ -256,16 +282,39 @@ public class HomeActivity extends ParentClass {
         });
     }
 
-    public void replaceFragment(Fragment fragment) {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
-        ft.replace(R.id.frame_container, fragment);
-        fm.popBackStack(BACK_STACK_ROOT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        ft.addToBackStack(BACK_STACK_ROOT_TAG);
-        ft.addToBackStack(null);
-        ft.commit();
+    public static void replaceFragment(Fragment fragment) {
+//        FragmentManager fm = getSupportFragmentManager();
+//        FragmentTransaction ft = fm.beginTransaction();
+//        ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
+//        ft.replace(R.id.frame_container, fragment);
+//        fm.popBackStack(BACK_STACK_ROOT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//        ft.addToBackStack(BACK_STACK_ROOT_TAG);
+//        ft.addToBackStack(null);
+//        ft.commit();
+
+        String backStateName = fragment.getClass().getName();
+        Log.e("backStateName", backStateName);
+        //fragment not in back stack, create it.
+        FragmentTransaction ft = manager.beginTransaction();
+        if (!fragments.contains(backStateName)) {
+            Log.e("check", "added");
+            // ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            // ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+            ft.replace(R.id.frame_container, fragment);
+            ft.addToBackStack(backStateName);
+            ft.commit();
+
+            fragments.add(backStateName);
+            System.out.println("backStateName" + fragments);
+        } else {
+
+            Log.e("check", "not_added");
+            ft.replace(R.id.frame_container, fragment);
+            ft.commit();
+
+        }
+
     }
 
 
@@ -284,6 +333,28 @@ public class HomeActivity extends ParentClass {
                 t.printStackTrace();
             }
         });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        try {
+            Log.e("list_size", fragments.size() + "sss");
+            if (fragments.size() > 1) {
+                fragments.remove(fragments.size() - 1);
+                for (int i = 0; i < fragments.size(); i++) {
+                    Log.e("names_of_fragmentssssss" + i, fragments.get(i));
+                }
+            } else {
+                finish();
+                System.exit(0);
+            }
+            super.onBackPressed();
+
+        } catch (Exception e) {
+            Log.e("kosom_eror", e.toString());
+
+        }
 
     }
 }

@@ -51,12 +51,7 @@ public class MyFavouritesAdapter extends RecyclerView.Adapter<MyFavouritesAdapte
         holder.tv_category.setText(my_favourites_list.get(position).getCategory());
         holder.tv_service_title.setText(my_favourites_list.get(position).getTitle());
         holder.tv_user_name.setText(my_favourites_list.get(position).getOwner());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
         holder.tv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
