@@ -163,6 +163,9 @@ public class HomeActivity extends ParentClass {
             serviceDetailsFragment.setArguments(args);
             replaceFragment(serviceDetailsFragment);
         }
+        if (getIntent().getStringExtra("type").equals("requests")) {
+            replaceFragment(requestsFragment);
+        }
 
         tv_home.setTextColor(Color.parseColor("#174BB0"));
         iv_home.setImageResource(R.mipmap.home);

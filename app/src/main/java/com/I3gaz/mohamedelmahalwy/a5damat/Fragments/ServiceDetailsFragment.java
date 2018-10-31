@@ -198,14 +198,14 @@ public class ServiceDetailsFragment extends Fragment {
         iv_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (favourite) {
+                if ( favourite) {
                     add_to_favourit();
-                    iv_like.setImageResource(R.mipmap.favourited);
+                    iv_like.setImageResource(R.mipmap.add_favourite);
                     favourite = false;
                     Log.e("favourit", favourite + "ss");
                 } else if (!favourite) {
                     add_to_favourit();
-                    iv_like.setImageResource(R.mipmap.add_favourite);
+                    iv_like.setImageResource(R.mipmap.favourited);
                     favourite = true;
                     Log.e("favourit", favourite + "ss");
                 }
