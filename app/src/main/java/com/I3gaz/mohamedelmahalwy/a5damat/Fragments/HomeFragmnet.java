@@ -86,6 +86,7 @@ public class HomeFragmnet extends Fragment {
     }
 
     void get_home_data() {
+        ///
         Log.e("sub_Catigories_id", getArguments().getInt("id") + "");
         ((HomeActivity) getActivity()).showdialog();
         if (getArguments().getInt("id")== 0) {

@@ -63,14 +63,6 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                 MessagesDetailsFragment messagesDetailsFragment = new MessagesDetailsFragment();
                 messagesDetailsFragment.setArguments(args);
                 HomeActivity.replaceFragment(messagesDetailsFragment);
-
-//                FragmentManager fragmentManager = ((HomeActivity) context).getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//
-//
-//                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
-//                fragmentTransaction.replace(R.id.frame_container, messagesDetailsFragment);
-//                fragmentTransaction.commit();
             }
         });
 

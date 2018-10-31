@@ -64,16 +64,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                 serviceDetailsFragment.setArguments(args);
                 HomeActivity.replaceFragment(serviceDetailsFragment);
 
-//                FragmentManager fragmentManager = ((HomeActivity) context).getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//
-//
-////                fragmentManager.popBackStack(BACK_STACK_ROOT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-////                fragmentTransaction.addToBackStack(BACK_STACK_ROOT_TAG);
-//                fragmentTransaction.addToBackStack(null);
-//                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
-//                fragmentTransaction.replace(R.id.frame_container, serviceDetailsFragment);
-//                fragmentTransaction.commit();
             }
         });
         if (position > lastPosition) {

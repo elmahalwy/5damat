@@ -242,14 +242,9 @@ public class RequestsPurchaseAdapter extends RecyclerView.Adapter<RequestsPurcha
             public void onClick(View v) {
                 Bundle args = new Bundle();
                 args.putString("order_id", String.valueOf(requests_purchases_list.get(position).getOrderId()));
-                FragmentManager fragmentManager = ((HomeActivity) context).getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 InComingOrdersFragment inComingOrdersFragment = new InComingOrdersFragment();
                 inComingOrdersFragment.setArguments(args);
-                fragmentTransaction.replace(R.id.frame_container, inComingOrdersFragment);
-                fragmentTransaction.remove(new RequestsFragment());
-                fragmentManager.popBackStack();
-                fragmentTransaction.commit();
+                HomeActivity.replaceFragment(inComingOrdersFragment);
 
             }
         });

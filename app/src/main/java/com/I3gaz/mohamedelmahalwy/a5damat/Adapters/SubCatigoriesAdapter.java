@@ -64,15 +64,7 @@ public class SubCatigoriesAdapter extends RecyclerView.Adapter<SubCatigoriesAdap
                 HomeFragmnet homeFragmnet = new HomeFragmnet();
                 homeFragmnet.setArguments(args);
                 HomeActivity.replaceFragment(homeFragmnet);
-//                FragmentManager fragmentManager = ((HomeActivity) context).getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//
-//
-//                fragmentManager.popBackStack(BACK_STACK_ROOT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//                fragmentTransaction.addToBackStack(BACK_STACK_ROOT_TAG);
-//                fragmentTransaction.addToBackStack(null);
-//                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);                fragmentTransaction.replace(R.id.frame_container, homeFragmnet);
-//                fragmentTransaction.commit();
+
 
             }
         });

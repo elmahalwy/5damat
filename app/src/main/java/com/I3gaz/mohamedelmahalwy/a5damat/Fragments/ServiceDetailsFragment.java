@@ -347,6 +347,8 @@ public class ServiceDetailsFragment extends Fragment {
     }
 
     void add_to_favourit() {
+
+        ////
         RetroWeb.getClient().create(ServiceApi.class).add_or_item_to_favourites(String.valueOf(sharedPrefManager.getUserDate().getId()),
                 getArguments().getString("service_id")).enqueue(new Callback<AddOrDeleteItemToFavourit>() {
             @Override

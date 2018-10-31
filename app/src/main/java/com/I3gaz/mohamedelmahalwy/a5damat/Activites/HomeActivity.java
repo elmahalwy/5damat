@@ -1,6 +1,10 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Activites;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -101,7 +105,6 @@ public class HomeActivity extends ParentClass {
     public String came_from = "";
     Bundle args;
     public String handle_tab = "";
-    private static final String BACK_STACK_ROOT_TAG = "root_fragment";
     static List<String> fragments = new ArrayList<String>();
     static FragmentManager manager;
 
@@ -110,6 +113,7 @@ public class HomeActivity extends ParentClass {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
+        isStoragePermissionGranted();
         manager = getSupportFragmentManager();
         init_fragments();
 
@@ -147,6 +151,7 @@ public class HomeActivity extends ParentClass {
                 }
             }
         });
+
     }
 
     void initUi() {
@@ -217,7 +222,6 @@ public class HomeActivity extends ParentClass {
         relative_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 replaceFragment(homeFragmnet);
                 tv_home.setTextColor(Color.parseColor("#174BB0"));
                 iv_home.setImageResource(R.mipmap.home);
@@ -280,27 +284,25 @@ public class HomeActivity extends ParentClass {
                 came_from = "add";
             }
         });
+        if (getSupportFragmentManager().getClass().getName().equals("HomeFragment") ||
+                getSupportFragmentManager().getClass().getName().equals("ServiceDetailsFragment") ||
+                getSupportFragmentManager().getClass().getName().equals("SubCatigoriesFragment")) {
+            tv_home.setTextColor(Color.parseColor("#174BB0"));
+            iv_home.setImageResource(R.mipmap.home);
+        }
+
     }
 
     public static void replaceFragment(Fragment fragment) {
-//        FragmentManager fm = getSupportFragmentManager();
-//        FragmentTransaction ft = fm.beginTransaction();
-//        ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
-//        ft.replace(R.id.frame_container, fragment);
-//        fm.popBackStack(BACK_STACK_ROOT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//        ft.addToBackStack(BACK_STACK_ROOT_TAG);
-//        ft.addToBackStack(null);
-//        ft.commit();
-
         String backStateName = fragment.getClass().getName();
         Log.e("backStateName", backStateName);
+
         //fragment not in back stack, create it.
         FragmentTransaction ft = manager.beginTransaction();
         if (!fragments.contains(backStateName)) {
             Log.e("check", "added");
             // ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            // ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+            ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_out_right, R.anim.enter_from_right, R.anim.exit_out_left);
             ft.replace(R.id.frame_container, fragment);
             ft.addToBackStack(backStateName);
             ft.commit();
@@ -354,6 +356,34 @@ public class HomeActivity extends ParentClass {
         } catch (Exception e) {
             Log.e("kosom_eror", e.toString());
 
+        }
+
+    }
+
+    public boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v("permisson", "Permission is granted");
+                return true;
+            } else {
+
+                Log.v("permisson", "Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                return false;
+            }
+        } else { //permission is automatically granted on sdk<23 upon installation
+            Log.v("permisson", "Permission is granted");
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Log.v("permisson_taken", "Permission: " + permissions[0] + "was " + grantResults[0]);
+            //resume tasks needing this permission
         }
 
     }

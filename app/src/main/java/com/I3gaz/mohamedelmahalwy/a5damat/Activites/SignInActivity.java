@@ -82,7 +82,7 @@ public class SignInActivity extends ParentClass {
         mobile_token = prefs.getString("m_token", "");
         initUi();
         initEventDriven();
-        isStoragePermissionGranted();
+
     }
 
     void initUi() {
@@ -272,31 +272,5 @@ public class SignInActivity extends ParentClass {
 
     }
 
-    public boolean isStoragePermissionGranted() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {
-                Log.v("permisson", "Permission is granted");
-                return true;
-            } else {
 
-                Log.v("permisson", "Permission is revoked");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-                return false;
-            }
-        } else { //permission is automatically granted on sdk<23 upon installation
-            Log.v("permisson", "Permission is granted");
-            return true;
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            Log.v("permisson_taken", "Permission: " + permissions[0] + "was " + grantResults[0]);
-            //resume tasks needing this permission
-        }
-
-    }
 }

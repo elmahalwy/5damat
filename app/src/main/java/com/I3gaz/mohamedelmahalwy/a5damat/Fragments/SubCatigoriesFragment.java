@@ -31,6 +31,7 @@ import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.handleExcepti
 public class SubCatigoriesFragment extends Fragment {
     RecyclerView rv_subcatigories;
     SubCatigoriesAdapter subCatigoriesAdapter;
+//
     LinearLayoutManager linearLayoutManager;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
