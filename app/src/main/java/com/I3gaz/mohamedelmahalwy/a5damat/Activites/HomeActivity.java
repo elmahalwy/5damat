@@ -290,6 +290,12 @@ public class HomeActivity extends ParentClass {
             tv_home.setTextColor(Color.parseColor("#174BB0"));
             iv_home.setImageResource(R.mipmap.home);
         }
+        if (getSupportFragmentManager().getClass().getName().equals("HomeFragment") ||
+                getSupportFragmentManager().getClass().getName().equals("ServiceDetailsFragment") ||
+                getSupportFragmentManager().getClass().getName().equals("SubCatigoriesFragment")) {
+            tv_home.setTextColor(Color.parseColor("#174BB0"));
+            iv_home.setImageResource(R.mipmap.home);
+        }
 
     }
 

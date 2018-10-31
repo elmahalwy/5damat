@@ -61,12 +61,7 @@ public class HomeFragmnet extends Fragment {
             ((HomeActivity) getContext()).tv_toolbar_title.setText("الرئيسية");
             get_home_data();
         }
-        FragmentManager fm = getActivity().getSupportFragmentManager();
 
-        for(int entry = 0; entry < fm.getBackStackEntryCount(); entry++){
-            Log.e("aaa", "Found fragment: " + fm.getBackStackEntryAt(entry).getId());
-            Log.e("back_count",fm.getBackStackEntryCount()+"");
-        }
         return view;
     }
 

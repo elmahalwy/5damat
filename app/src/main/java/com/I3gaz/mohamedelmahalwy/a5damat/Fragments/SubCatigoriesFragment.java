@@ -47,13 +47,7 @@ public class SubCatigoriesFragment extends Fragment {
         initUI();
         initEventDrivn();
         get_sub_categroies();
-        FragmentManager fm = getActivity().getSupportFragmentManager();
 
-        for(int entry = 0; entry < fm.getBackStackEntryCount(); entry++){
-            Log.e("aaa", "Found fragment: " + fm.getBackStackEntryAt(entry).getId());
-            Log.e("back_count",fm.getBackStackEntryCount()+"");
-
-        }
         return view;
     }
 

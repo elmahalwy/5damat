@@ -121,13 +121,7 @@ public class ServiceDetailsFragment extends Fragment {
         get_service_details();
         initUI();
         initEventDriven();
-        FragmentManager fm = getActivity().getSupportFragmentManager();
 
-        for(int entry = 0; entry < fm.getBackStackEntryCount(); entry++){
-            Log.e("aaa", "Found fragment: " + fm.getBackStackEntryAt(entry).getId());
-            Log.e("back_count",fm.getBackStackEntryCount()+"");
-
-        }
         return view;
     }
 
@@ -187,13 +181,6 @@ public class ServiceDetailsFragment extends Fragment {
         iv_open_chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                RealTimeMessageFragment realTimeMessageFragment = new RealTimeMessageFragment();
-//                realTimeMessageFragment.setArguments(args);
-//                fragmentTransaction.replace(R.id.frame_container, realTimeMessageFragment);
-//                fragmentTransaction.commit();
                 rooom_id = room_id;
                 Log.e("roooom_id",rooom_id+"l;");
                 dialog_send_not_real_message.show();
