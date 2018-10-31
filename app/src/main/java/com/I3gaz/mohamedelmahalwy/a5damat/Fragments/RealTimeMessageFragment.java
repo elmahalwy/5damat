@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -53,6 +54,7 @@ public class RealTimeMessageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.real_time_message_fragment, container, false);
         ButterKnife.bind(this, view);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         sharedPrefManager = new SharedPrefManager(getContext());
         ((HomeActivity) getActivity()).rv_categories.setVisibility(View.GONE);
         ((HomeActivity) getContext()).tv_toolbar_title.setText("الرسائل");

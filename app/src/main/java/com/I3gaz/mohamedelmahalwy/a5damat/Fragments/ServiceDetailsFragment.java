@@ -121,6 +121,13 @@ public class ServiceDetailsFragment extends Fragment {
         get_service_details();
         initUI();
         initEventDriven();
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+
+        for(int entry = 0; entry < fm.getBackStackEntryCount(); entry++){
+            Log.e("aaa", "Found fragment: " + fm.getBackStackEntryAt(entry).getId());
+            Log.e("back_count",fm.getBackStackEntryCount()+"");
+
+        }
         return view;
     }
 

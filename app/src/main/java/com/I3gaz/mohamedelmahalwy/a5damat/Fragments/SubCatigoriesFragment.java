@@ -3,6 +3,7 @@ package com.I3gaz.mohamedelmahalwy.a5damat.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -46,6 +47,13 @@ public class SubCatigoriesFragment extends Fragment {
         initUI();
         initEventDrivn();
         get_sub_categroies();
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+
+        for(int entry = 0; entry < fm.getBackStackEntryCount(); entry++){
+            Log.e("aaa", "Found fragment: " + fm.getBackStackEntryAt(entry).getId());
+            Log.e("back_count",fm.getBackStackEntryCount()+"");
+
+        }
         return view;
     }
 
