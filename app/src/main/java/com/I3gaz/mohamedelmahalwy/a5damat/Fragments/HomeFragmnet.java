@@ -15,10 +15,12 @@ import android.widget.LinearLayout;
 
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
+import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.CategoriesAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.HomeAdapter;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.SubCatigoriesAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AllServices.AllServices;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.MainCategories.MainCategories;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
@@ -39,6 +41,7 @@ public class HomeFragmnet extends Fragment {
     HomeAdapter homeAdapter;
 
     LinearLayoutManager linearLayoutManager;
+    public static String in_home = "";
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -49,8 +52,7 @@ public class HomeFragmnet extends Fragment {
         homeAdapter = new HomeAdapter(getContext());
         linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false);
         rv_home.setLayoutManager(linearLayoutManager);
-
-
+        CategoriesAdapter.selected_postion = 0;
         initUI();
         initEventDrivn();
         if (getArguments().getString("type").equals("search")) {
@@ -61,6 +63,10 @@ public class HomeFragmnet extends Fragment {
             ((HomeActivity) getContext()).tv_toolbar_title.setText("الرئيسية");
             get_home_data();
         }
+        if (!SubCatigoriesAdapter.Sub.equals("sub")) {
+            get_main_categories();
+        }
+
 
         return view;
     }
@@ -91,7 +97,7 @@ public class HomeFragmnet extends Fragment {
         ///
         Log.e("sub_Catigories_id", getArguments().getInt("id") + "");
         ((HomeActivity) getActivity()).showdialog();
-        if (getArguments().getInt("id")== 0) {
+        if (getArguments().getInt("id") == 0) {
             RetroWeb.getClient().create(ServiceApi.class).get_all_service().enqueue(new Callback<AllServices>() {
                 @Override
                 public void onResponse(Call<AllServices> call, Response<AllServices> response) {
@@ -118,7 +124,7 @@ public class HomeFragmnet extends Fragment {
 
             });
         } else {
-            Log.e("sss","sssss");
+            Log.e("sss", "sssss");
 
             RetroWeb.getClient().create(ServiceApi.class).get_service_category(String.valueOf(getArguments().getInt("id"))).enqueue(new Callback<AllServices>() {
                 @Override
@@ -169,6 +175,30 @@ public class HomeFragmnet extends Fragment {
         // ...
         // Stop refresh animation
         swipe_home.setRefreshing(false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        CategoriesAdapter.selected_postion = 0;
+    }
+
+    void get_main_categories() {
+        RetroWeb.getClient().create(ServiceApi.class).Get_main_categories().enqueue(new Callback<MainCategories>() {
+            @Override
+            public void onResponse(Call<MainCategories> call, Response<MainCategories> response) {
+                if (response.body().isValue()) {
+                    ((HomeActivity) getActivity()).categoriesAdapter.addAll(response.body().getData());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MainCategories> call, Throwable t) {
+                handleException(getActivity(), t);
+                t.printStackTrace();
+            }
+        });
+
     }
 
 }

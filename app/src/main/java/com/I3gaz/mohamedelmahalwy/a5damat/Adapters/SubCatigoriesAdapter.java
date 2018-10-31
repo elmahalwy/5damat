@@ -35,6 +35,7 @@ public class SubCatigoriesAdapter extends RecyclerView.Adapter<SubCatigoriesAdap
     int lastPosition = -1;
     public int id;
     private static final String BACK_STACK_ROOT_TAG = "root_fragment";
+    public static String Sub = "";
 
 
     public SubCatigoriesAdapter(Context context) {
@@ -61,6 +62,7 @@ public class SubCatigoriesAdapter extends RecyclerView.Adapter<SubCatigoriesAdap
                 Bundle args = new Bundle();
                 args.putString("type", "home");
                 args.putInt("id", id);
+                Sub = "sub";
                 HomeFragmnet homeFragmnet = new HomeFragmnet();
                 homeFragmnet.setArguments(args);
                 HomeActivity.replaceFragment(homeFragmnet);

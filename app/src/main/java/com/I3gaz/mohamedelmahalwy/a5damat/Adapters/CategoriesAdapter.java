@@ -32,7 +32,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
     Context context;
     LayoutInflater layoutInflater;
     public static int id;
-    int selected_postion = -1;
+    public static int selected_postion = 0;
 
     public CategoriesAdapter(Context context) {
         categories_list = new ArrayList<>();
@@ -50,8 +50,14 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull final CategoriesAdapter.ViewHolder holder, final int position) {
         holder.tv_category.setText(categories_list.get(position).getName());
-
-
+        if (position == 0) {
+            holder.tv_category.setTextColor(Color.parseColor("#3558B9"));
+        }
+        if (HomeFragmnet.in_home.equals("home")) {
+            if (position == 0) {
+                holder.tv_category.setTextColor(Color.parseColor("#3558B9"));
+            }
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

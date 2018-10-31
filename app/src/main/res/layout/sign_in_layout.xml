@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fb="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/splash2">
@@ -50,12 +51,12 @@
                         android:layout_marginRight="20dp"
                         android:background="@null"
                         android:gravity="right|center"
+                        android:hint="البريد الالكتروني"
+                        android:inputType="textEmailAddress"
                         android:paddingStart="5dp"
                         android:paddingLeft="5dp"
                         android:paddingEnd="5dp"
                         android:paddingRight="5dp"
-                        android:hint="البريد الالكتروني"
-                        android:inputType="textEmailAddress"
                         android:textColor="#000"
                         android:textColorHint="#A4A4A4"
                         android:textSize="14sp" />
@@ -114,9 +115,9 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="10dp"
+                        android:padding="5dp"
                         android:text="هل نسيت كلمة المرور؟"
                         android:textColor="#000"
-                        android:padding="5dp"
                         android:textSize="12sp" />
 
                     <Button
@@ -193,20 +194,33 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_toStartOf="@+id/iv_face"
-                        android:layout_toLeftOf="@+id/iv_face"
+                        android:layout_toStartOf="@+id/iv_face1"
+                        android:layout_toLeftOf="@+id/iv_face1"
                         android:layout_toEndOf="@+id/iv_google"
                         android:layout_toRightOf="@+id/iv_google" />
 
 
                     <ImageView
-                        android:id="@+id/iv_face"
+                        android:id="@+id/iv_face1"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:background="@drawable/icon_facebook"
                         android:scaleType="centerCrop" />
+
+                    <com.facebook.login.widget.LoginButton
+                        android:id="@+id/iv_face"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:background="@mipmap/icon_facebook"
+                        android:scaleType="centerInside"
+                        android:visibility="invisible"
+                        fb:login_text=""
+                        fb:logout_text="" />
+
                 </RelativeLayout>
             </FrameLayout>
 
