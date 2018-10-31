@@ -53,27 +53,28 @@ public class HomeActivity extends ParentClass {
     FrameLayout frame_container;
     @BindView(R.id.relative_requests)
     RelativeLayout relative_requests;
-    //    @BindView(R.id.iv_requests)
-    static ImageView iv_requests;
-    //    @BindView(R.id.tv_requests)
-    static TextView tv_requests;
+    @BindView(R.id.iv_requests)
+    ImageView iv_requests;
+    @BindView(R.id.tv_requests)
+    TextView tv_requests;
     @BindView(R.id.relative_messages)
     RelativeLayout relative_messages;
-    //    @BindView(R.id.iv_messages)
-    static ImageView iv_messages;
-    static TextView tv_messages;
+    @BindView(R.id.iv_messages)
+    ImageView iv_messages;
+    @BindView(R.id.tv_messages)
+    TextView tv_messages;
     @BindView(R.id.relative_search)
     RelativeLayout relative_search;
-
-    static ImageView iv_search;
-
-    static TextView tv_search;
+    @BindView(R.id.iv_search)
+    ImageView iv_search;
+    @BindView(R.id.tv_search)
+    TextView tv_search;
     @BindView(R.id.relative_home)
     RelativeLayout relative_home;
-
-    static ImageView iv_home;
-
-    static TextView tv_home;
+    @BindView(R.id.iv_home)
+    ImageView iv_home;
+    @BindView(R.id.tv_home)
+    TextView tv_home;
     @BindView(R.id.iv_add)
     ImageView iv_add;
 
@@ -114,11 +115,10 @@ public class HomeActivity extends ParentClass {
         ButterKnife.bind(this);
         isStoragePermissionGranted();
         manager = getSupportFragmentManager();
-        initUi();
         init_fragments();
 
         replaceFragment(homeFragmnet);
-
+        initUi();
         initEventDriven();
         handle_clicks_bottom_tab();
         get_main_categories();
@@ -155,14 +155,7 @@ public class HomeActivity extends ParentClass {
     }
 
     void initUi() {
-        iv_requests = findViewById(R.id.iv_requests);
-        tv_requests = findViewById(R.id.tv_requests);
-        iv_home = findViewById(R.id.iv_home);
-        tv_home = findViewById(R.id.tv_home);
-        iv_messages = findViewById(R.id.iv_messages);
-        tv_messages = findViewById(R.id.tv_messages);
-        iv_search = findViewById(R.id.iv_search);
-        tv_search = findViewById(R.id.tv_search);
+
 
         if (getIntent().getStringExtra("type").equals("deep_link")) {
             Bundle args = new Bundle();
@@ -317,56 +310,56 @@ public class HomeActivity extends ParentClass {
             ft.commit();
 
         }
-        if (fragment.getClass().getName().equals("HomeFragment") ||
-                fragment.getClass().getName().equals("ServiceDetailsFragment") ||
-                fragment.getClass().getName().equals("SubCatigoriesFragment")) {
-            tv_home.setTextColor(Color.parseColor("#174BB0"));
-            iv_home.setImageResource(R.mipmap.home);
-            tv_messages.setTextColor(Color.parseColor("#B2BBC9"));
-            iv_messages.setImageResource(R.mipmap.message_grey);
-            tv_requests.setTextColor(Color.parseColor("#B2BBC9"));
-            iv_requests.setImageResource(R.mipmap.requests_grey);
-            tv_search.setTextColor(Color.parseColor("#B2BBC9"));
-            iv_search.setImageResource(R.mipmap.search_grey);
-        } else if (fragment.getClass().getName().equals("SearchFragment")) {
-            tv_home.setTextColor(Color.parseColor("#B2BBC9"));
-            iv_home.setImageResource(R.mipmap.home_grey);
-            tv_messages.setTextColor(Color.parseColor("#B2BBC9"));
-            iv_messages.setImageResource(R.mipmap.message_grey);
-            tv_requests.setTextColor(Color.parseColor("#B2BBC9"));
-            iv_requests.setImageResource(R.mipmap.requests_grey);
-            tv_search.setTextColor(Color.parseColor("#174BB0"));
-            iv_search.setImageResource(R.mipmap.search_blue);
-        } else if (fragment.getClass().getName().equals("InComingOrdersFragment") ||
-                fragment.getClass().getName().equals("RequestsFragment")) {
-            tv_home.setTextColor(Color.parseColor("#B2BBC9"));
-            iv_home.setImageResource(R.mipmap.home_grey);
-            tv_messages.setTextColor(Color.parseColor("#B2BBC9"));
-            iv_messages.setImageResource(R.mipmap.message_grey);
-            tv_requests.setTextColor(Color.parseColor("#174BB0"));
-            iv_requests.setImageResource(R.mipmap.requests);
-            tv_search.setTextColor(Color.parseColor("#B2BBC9"));
-            iv_search.setImageResource(R.mipmap.search_grey);
-        } else if (fragment.getClass().getName().equals("MessagesFragment") ||
-                fragment.getClass().getName().equals("MessagesDetailsFragment")) {
-            tv_home.setTextColor(Color.parseColor("#B2BBC9"));
-            iv_home.setImageResource(R.mipmap.home_grey);
-            tv_messages.setTextColor(Color.parseColor("#174BB0"));
-            iv_messages.setImageResource(R.mipmap.message);
-            tv_requests.setTextColor(Color.parseColor("#B2BBC9"));
-            iv_requests.setImageResource(R.mipmap.requests_grey);
-            tv_search.setTextColor(Color.parseColor("#B2BBC9"));
-            iv_search.setImageResource(R.mipmap.search_grey);
-        } else {
-            tv_home.setTextColor(Color.parseColor("#B2BBC9"));
-            iv_home.setImageResource(R.mipmap.home_grey);
-            tv_messages.setTextColor(Color.parseColor("#B2BBC9"));
-            iv_messages.setImageResource(R.mipmap.message_grey);
-            tv_requests.setTextColor(Color.parseColor("#B2BBC9"));
-            iv_requests.setImageResource(R.mipmap.requests_grey);
-            tv_search.setTextColor(Color.parseColor("#B2BBC9"));
-            iv_search.setImageResource(R.mipmap.search_grey);
-        }
+//        if (getSupportFragmentManager().getClass().getName().equals("HomeFragment") ||
+//                getSupportFragmentManager().getClass().getName().equals("ServiceDetailsFragment") ||
+//                getSupportFragmentManager().getClass().getName().equals("SubCatigoriesFragment")) {
+//            tv_home.setTextColor(Color.parseColor("#174BB0"));
+//            iv_home.setImageResource(R.mipmap.home);
+//            tv_messages.setTextColor(Color.parseColor("#B2BBC9"));
+//            iv_messages.setImageResource(R.mipmap.message_grey);
+//            tv_requests.setTextColor(Color.parseColor("#B2BBC9"));
+//            iv_requests.setImageResource(R.mipmap.requests_grey);
+//            tv_search.setTextColor(Color.parseColor("#B2BBC9"));
+//            iv_search.setImageResource(R.mipmap.search_grey);
+//        } else if (getSupportFragmentManager().getClass().getName().equals("SearchFragment")) {
+//            tv_home.setTextColor(Color.parseColor("#B2BBC9"));
+//            iv_home.setImageResource(R.mipmap.home_grey);
+//            tv_messages.setTextColor(Color.parseColor("#B2BBC9"));
+//            iv_messages.setImageResource(R.mipmap.message_grey);
+//            tv_requests.setTextColor(Color.parseColor("#B2BBC9"));
+//            iv_requests.setImageResource(R.mipmap.requests_grey);
+//            tv_search.setTextColor(Color.parseColor("#174BB0"));
+//            iv_search.setImageResource(R.mipmap.search_blue);
+//        } else if (getSupportFragmentManager().getClass().getName().equals("InComingOrdersFragment") ||
+//                getSupportFragmentManager().getClass().getName().equals("RequestsFragment")) {
+//            tv_home.setTextColor(Color.parseColor("#B2BBC9"));
+//            iv_home.setImageResource(R.mipmap.home_grey);
+//            tv_messages.setTextColor(Color.parseColor("#B2BBC9"));
+//            iv_messages.setImageResource(R.mipmap.message_grey);
+//            tv_requests.setTextColor(Color.parseColor("#174BB0"));
+//            iv_requests.setImageResource(R.mipmap.requests);
+//            tv_search.setTextColor(Color.parseColor("#B2BBC9"));
+//            iv_search.setImageResource(R.mipmap.search_grey);
+//        } else if (getSupportFragmentManager().getClass().getName().equals("MessagesFragment") ||
+//                getSupportFragmentManager().getClass().getName().equals("MessagesDetailsFragment")) {
+//            tv_home.setTextColor(Color.parseColor("#B2BBC9"));
+//            iv_home.setImageResource(R.mipmap.home_grey);
+//            tv_messages.setTextColor(Color.parseColor("#174BB0"));
+//            iv_messages.setImageResource(R.mipmap.message);
+//            tv_requests.setTextColor(Color.parseColor("#B2BBC9"));
+//            iv_requests.setImageResource(R.mipmap.requests_grey);
+//            tv_search.setTextColor(Color.parseColor("#B2BBC9"));
+//            iv_search.setImageResource(R.mipmap.search_grey);
+//        } else {
+//            tv_home.setTextColor(Color.parseColor("#B2BBC9"));
+//            iv_home.setImageResource(R.mipmap.home_grey);
+//            tv_messages.setTextColor(Color.parseColor("#B2BBC9"));
+//            iv_messages.setImageResource(R.mipmap.message_grey);
+//            tv_requests.setTextColor(Color.parseColor("#B2BBC9"));
+//            iv_requests.setImageResource(R.mipmap.requests_grey);
+//            tv_search.setTextColor(Color.parseColor("#B2BBC9"));
+//            iv_search.setImageResource(R.mipmap.search_grey);
+//        }
 
     }
 
