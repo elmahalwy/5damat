@@ -183,7 +183,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_toStartOf="@+id/tv_accept_credtinals"
                             android:layout_toLeftOf="@+id/tv_accept_credtinals"
-                            android:src="@mipmap/icon_facebook" />
+                            android:src="@mipmap/box" />
                     </RelativeLayout>
 
                     <TextView
@@ -205,6 +205,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_sign_up"
+                        android:visibility="gone"
                         android:layout_marginTop="20dp">
 
 
@@ -244,6 +245,7 @@
                 <RelativeLayout
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:layout_gravity="bottom|center">
 
                     <ImageView

@@ -64,12 +64,13 @@ public interface ServiceApi {
                                      @Field("serial_num") String serial_num);
 
     @FormUrlEncoded
-    @POST(Urls.SignUp)
+    @POST(Urls.SignIn)
     Call<User> Sign_in_response_call_social(@Field("username") String username,
                                             @Field("email") String email,
                                             @Field("device_token") String device_token,
                                             @Field("serial_num") String serial_num,
                                             @Field("social_token") String social_token);
+
 
     @FormUrlEncoded
     @POST(Urls.ResetPassword)

@@ -40,10 +40,10 @@ public class SignUpActivity extends ParentClass {
     ImageView iv_accept_credatinals;
     @BindView(R.id.tv_sign_up)
     TextView tv_sign_up;
-    @BindView(R.id.iv_google)
-    ImageView iv_google;
-    @BindView(R.id.iv_face)
-    ImageView iv_face;
+//    @BindView(R.id.iv_google)
+//    ImageView iv_google;
+//    @BindView(R.id.iv_face)
+//    ImageView iv_face;
     @BindView(R.id.tv_register)
     TextView tv_register;
     String mobile_token;
@@ -73,10 +73,10 @@ public class SignUpActivity extends ParentClass {
             @Override
             public void onClick(View v) {
                 if (checked_accept_terms) {
-//                    iv_accept_credatinals.setBackgroundResource(R.mipmap.checkmark);
+                    iv_accept_credatinals.setBackgroundResource(R.mipmap.box);
                     checked_accept_terms = false;
                 } else if (!checked_accept_terms) {
-//                    iv_accept_credatinals.setBackgroundResource(R.mipmap.checkmark);
+                    iv_accept_credatinals.setBackgroundResource(R.mipmap.check_mark);
                     checked_accept_terms = true;
                 }
             }
