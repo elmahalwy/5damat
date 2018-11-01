@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -73,11 +74,14 @@ public class SignUpActivity extends ParentClass {
             @Override
             public void onClick(View v) {
                 if (checked_accept_terms) {
-                    iv_accept_credatinals.setBackgroundResource(R.mipmap.box);
+                    iv_accept_credatinals.setImageResource(R.mipmap.box);
                     checked_accept_terms = false;
+                    Log.e("checked_accept_terms",checked_accept_terms+"1");
                 } else if (!checked_accept_terms) {
-                    iv_accept_credatinals.setBackgroundResource(R.mipmap.check_mark);
+                    iv_accept_credatinals.setImageResource(R.mipmap.check_mark);
                     checked_accept_terms = true;
+                    Log.e("checked_accept_terms",checked_accept_terms+"2");
+
                 }
             }
         });

@@ -262,7 +262,6 @@ public class SignInActivity extends ParentClass {
     }
 
     private void google_sign_in() {
-        showdialog();
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
 
