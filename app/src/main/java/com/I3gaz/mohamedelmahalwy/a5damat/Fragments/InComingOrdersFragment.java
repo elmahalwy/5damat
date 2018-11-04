@@ -65,6 +65,8 @@ public class InComingOrdersFragment extends Fragment {
     Button btn_choose;
     int id;
     String status_to_be_sent = "";
+    public static String tabb;
+
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.in_coming_orders_fragment, container, false);
@@ -89,10 +91,16 @@ public class InComingOrdersFragment extends Fragment {
     private void initUI() {
         Log.e("type_of_request", type_of_request + "OOO");
         get_request_details();
+
         if (type_of_request.equals("waiting")) {
-            relative_btns.setVisibility(View.VISIBLE);
-            btn_accept.setText("قبول");
-            btn_refuse.setText("رفض");
+            if (tabb.equals("purchase")) {
+                relative_btns.setVisibility(View.GONE);
+
+            } else {
+                relative_btns.setVisibility(View.VISIBLE);
+                btn_accept.setText("قبول");
+                btn_refuse.setText("رفض");
+            }
         }
         if (type_of_request.equals("in_progress")) {
             relative_btns.setVisibility(View.VISIBLE);

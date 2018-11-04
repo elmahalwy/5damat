@@ -501,7 +501,7 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                                 developments_list.get(0).getSp_time_for_development().equals("هل سيزيد من مدة التنفيذ") &&
                                 TextUtils.isEmpty(developments_list.get(0).getEt_developments())) {
                             development_list_is_empty = "yes";
-                            cancel = true;
+                            cancel = false;
                             Log.e("development_list_empty", development_list_is_empty);
 
                         } else if (developments_list.get(0).getSp_time_for_development().equals("لا")) {
@@ -709,7 +709,7 @@ public class DevelopmentsAdapter extends RecyclerView.Adapter<DevelopmentsAdapte
                                         ((HomeActivity) context).dismis_dialog();
                                         try {
                                             Log.e("response_add_service", response.toString());
-                                            ((HomeActivity)context).handle_tab="home";
+                                            ((HomeActivity) context).handle_tab = "home";
                                             if (response.getString("value").equals("true")) {
                                                 service_id = response.getString("data");
                                                 Log.e("service_id", service_id + "popopop");

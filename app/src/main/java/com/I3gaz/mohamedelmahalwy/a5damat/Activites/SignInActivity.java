@@ -341,7 +341,7 @@ public class SignInActivity extends ParentClass {
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.e("signInResult:failed", e.getStatusCode() + "ppp");
+            Log.e("signInResult:failed", e.getStatusCode() + "ppp" );
 //            updateUI(null);
         }
     }

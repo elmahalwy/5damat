@@ -227,6 +227,7 @@ public class RequestsFragment extends Fragment {
                             requests_purchases_list.add(datum);
                         }
                         InComingOrdersFragment.type_of_request = in_status;
+                        InComingOrdersFragment.tabb = in_tab;
                         rv_requests.setAdapter(requestsPurchaseAdapter);
 
                     }
@@ -268,6 +269,8 @@ public class RequestsFragment extends Fragment {
                             requests_purchases_list.add(datum);
                         }
                         InComingOrdersFragment.type_of_request = in_status;
+                        InComingOrdersFragment.tabb = in_tab;
+
                         rv_requests.setAdapter(requestsPurchaseAdapter);
 
                     }
