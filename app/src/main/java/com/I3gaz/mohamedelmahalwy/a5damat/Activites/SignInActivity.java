@@ -93,6 +93,7 @@ public class SignInActivity extends ParentClass {
     LoginButton iv_face;
     PrefUtil prefUtil;
     GoogleSignInAccount account;
+    String email, display_name, google_id;
 
 
     @Override
@@ -177,7 +178,8 @@ public class SignInActivity extends ParentClass {
             @Override
             public void onClick(View v) {
                 google_sign_in();
-                updateUI(account);
+//                updateUI(account);
+
             }
         });
         iv_face1.setOnClickListener(new View.OnClickListener() {
@@ -254,9 +256,45 @@ public class SignInActivity extends ParentClass {
         }
     }
 
-    void updateUI(GoogleSignInAccount account) {
-        showdialog();
+    void updateUI(GoogleSignInAccount account, String display_name, String email, String id) {
         Log.e("accccount", account + "aaa");
+        showdialog();
+        Log.e("name", display_name);
+        Log.e("email", email);
+        Log.e("gooele_id", id);
+        RetroWeb.getClient().create(ServiceApi.class).Sign_in_response_call_social(display_name,
+                email, mobile_token, Build.SERIAL, id).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                dismis_dialog();
+                Log.e("response_login", response + "");
+                try {
+                    if (response.body().isValue()) {
+                        sharedPrefManager.setLoginStatus(true);
+                        sharedPrefManager.setUserDate(response.body().getData());
+                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        intent.putExtra("type", "home");
+                        intent.putExtra("service_id", "");
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(SignInActivity.this, "حدث خطأ ما", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("t_google", t + "");
+                dismis_dialog();
+                handleException(SignInActivity.this, t);
+                t.printStackTrace();
+            }
+        });
 
 
     }
@@ -287,49 +325,24 @@ public class SignInActivity extends ParentClass {
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            account = completedTask.getResult(ApiException.class);
             Log.e("email", account.getEmail());
             Log.e("display_name", account.getDisplayName());
             Log.e("id", account.getId());
 //            Log.e("id_token",account.getIdToken());
             // Signed in successfully, show authenticated UI.
-            updateUI(account);
-            showdialog();
-            RetroWeb.getClient().create(ServiceApi.class).Sign_in_response_call_social(account.getDisplayName(),
-                    account.getEmail(), mobile_token, Build.SERIAL, account.getId()).enqueue(new Callback<User>() {
-                @Override
-                public void onResponse(Call<User> call, Response<User> response) {
-                    dismis_dialog();
-                    Log.e("response_login", response + "");
-                    dismis_dialog();
-                    if (response.body().isValue()) {
-                        sharedPrefManager.setLoginStatus(true);
-                        sharedPrefManager.setUserDate(response.body().getData());
-                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                        intent.putExtra("type", "home");
-                        intent.putExtra("service_id", "");
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(SignInActivity.this, "حدث خطأ ما", Toast.LENGTH_SHORT).show();
-                    }
-                }
+            email = account.getEmail();
+            display_name = account.getDisplayName();
+            google_id = account.getId();
+            updateUI(account, account.getDisplayName(), account.getEmail(), account.getId());
 
-                @Override
-                public void onFailure(Call<User> call, Throwable t) {
-                    dismis_dialog();
-                    handleException(SignInActivity.this, t);
-                    t.printStackTrace();
-                }
-            });
+
 
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.e("signInResult:failed", e.getStatusCode() + "ppp");
-            updateUI(null);
+//            updateUI(null);
         }
     }
 
