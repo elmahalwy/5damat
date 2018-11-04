@@ -8,7 +8,7 @@ public class Urls {
     public final static String MainCategroies = "category";
     public final static String SubCategroies = "category/{category_id}";
     public final static String SpinnerUrl = "{category_id}";
-    public final static String AllServices = "all-services";
+    public final static String AllServices = "all-services/{user_id}";
     public final static String ServiceCategory = "cat_services";
     public final static String MyFavourites = "user_favs";
     public final static String Spinner_add_service__Url = "settings/{category_id}";
@@ -38,5 +38,7 @@ public class Urls {
     public final static String real_time_chat_fetch_all_messages_url = "send_message";
     public final static String chat_users = "contacts/{user_id}";
     public final static String send_not_real_message = "sendNotRealMessage";
+    public final static String currency_type = "currency_type";
+
 
 }

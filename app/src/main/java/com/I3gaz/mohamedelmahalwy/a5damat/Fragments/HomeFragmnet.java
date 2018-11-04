@@ -34,6 +34,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.handleException;
+import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.sharedPrefManager;
 
 public class HomeFragmnet extends Fragment {
     RecyclerView rv_home;
@@ -98,7 +99,7 @@ public class HomeFragmnet extends Fragment {
         Log.e("sub_Catigories_id", getArguments().getInt("id") + "");
         ((HomeActivity) getActivity()).showdialog();
         if (getArguments().getInt("id") == 0) {
-            RetroWeb.getClient().create(ServiceApi.class).get_all_service().enqueue(new Callback<AllServices>() {
+            RetroWeb.getClient().create(ServiceApi.class).get_all_service(String.valueOf(sharedPrefManager.getUserDate().getId())).enqueue(new Callback<AllServices>() {
                 @Override
                 public void onResponse(Call<AllServices> call, Response<AllServices> response) {
                     try {

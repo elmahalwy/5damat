@@ -6,6 +6,7 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.AddServiceJson.AddServiceJson;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AllServices.AllServices;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.Assistance.Assisatnce;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.ChatUsersModel.ChatUsersModel;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.CurrencyTypeModel.CurrencyTypeModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.EditProfile.EditProfile;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.LoginData.User;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.MainCategories.MainCategories;
@@ -89,7 +90,7 @@ public interface ServiceApi {
     Call<SpinnerModel> fill_spinner_sub_category(@Path("category_id") String category_id);
 
     @GET(Urls.AllServices)
-    Call<AllServices> get_all_service();
+    Call<AllServices> get_all_service(@Path("user_id") String user_id);
 
     @FormUrlEncoded
     @POST(Urls.ServiceCategory)
@@ -237,6 +238,11 @@ public interface ServiceApi {
                                                @Field("service_id") String service_id,
                                                @Field("msg") String msg,
                                                @Field("room_id") String room_id);
+
+    @FormUrlEncoded
+    @POST(Urls.currency_type)
+    Call<CurrencyTypeModel> currency_type(@Field("user_id") String user_id,
+                                          @Field("type") String type);
 
 
 }

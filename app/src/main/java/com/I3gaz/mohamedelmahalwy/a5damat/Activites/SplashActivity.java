@@ -1,6 +1,7 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Activites;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import butterknife.ButterKnife;
 
 public class SplashActivity extends ParentClass {
     String prefix;
+    SharedPreferences sharedPreferences_currency;
+    String currency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +27,18 @@ public class SplashActivity extends ParentClass {
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
         ToMainActivity();
+        sharedPreferences_currency = getSharedPreferences("currency", MODE_PRIVATE);
+        currency = sharedPreferences_currency.getString("currency", null);
+        if (currency != null) {
+            Log.e("currency", currency);
+        } else {
+            currency = "SAR";
+            SharedPreferences.Editor editor = sharedPreferences_currency.edit();
+            editor.putString("currency", "SAR");
+            editor.apply();
+        }
     }
+
 
     private void ToMainActivity() {
         new Handler().postDelayed(new Runnable() {

@@ -1,20 +1,27 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Fragments;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Activites.SignInActivity;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.CurrencyTypeModel.CurrencyTypeModel;
+import com.I3gaz.mohamedelmahalwy.a5damat.Models.RequestsModel.RequestsChangeStatusModel;
+import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
+import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
 import com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass;
 import com.squareup.picasso.Picasso;
@@ -22,6 +29,13 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
+import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.handleException;
+import static com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass.sharedPrefManager;
 
 public class MySettingsFragment extends Fragment {
     @BindView(R.id.iv_profile_pic)
@@ -44,10 +58,15 @@ public class MySettingsFragment extends Fragment {
     TextView tv_log_out;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
+    @BindView(R.id.tv_convert_currency)
+    TextView tv_convert_currency;
+    String current_currency = "SAR";
+    SharedPreferences sharedPreferences_currency;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.my_settings_fragment, container, false);
         ButterKnife.bind(this, view);
+        sharedPreferences_currency = getActivity().getSharedPreferences("currency", MODE_PRIVATE);
         fragmentManager = getActivity().getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         initUI();
@@ -64,6 +83,12 @@ public class MySettingsFragment extends Fragment {
                     .into(iv_profile_pic);
         }
         tv_user_name.setText(((HomeActivity) getContext()).sharedPrefManager.getUserDate().getUsername());
+        if (sharedPreferences_currency.getString("currency", "").equals("SAR")) {
+            tv_convert_currency.setText("ريال سعودي");
+
+        } else if (sharedPreferences_currency.getString("currency", "").equals("USD")) {
+            tv_convert_currency.setText("دولار امريكي");
+        }
     }
 
     void initEventDriven() {
@@ -141,6 +166,60 @@ public class MySettingsFragment extends Fragment {
 //                fragmentTransaction.commit();
             }
         });
+        tv_convert_currency.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (sharedPreferences_currency.getString("currency", "").equals("SAR")) {
+                    current_currency = "USD";
+                    currency_type(current_currency);
+                } else if (sharedPreferences_currency.getString("currency", "").equals("USD")) {
+                    current_currency = "SAR";
+                    currency_type(current_currency);
 
+                }
+            }
+        });
+
+    }
+
+    void currency_type(final String currency) {
+        Log.e("currency", currency);
+        ((HomeActivity) getActivity()).showdialog();
+        RetroWeb.getClient().create(ServiceApi.class).currency_type(
+                String.valueOf(sharedPrefManager.getUserDate().getId()), currency).enqueue(new Callback<CurrencyTypeModel>() {
+            @Override
+            public void onResponse(Call<CurrencyTypeModel> call, Response<CurrencyTypeModel> response) {
+                ((HomeActivity) getActivity()).dismis_dialog();
+                try {
+                    Log.e("responsechange_currency", response.toString());
+                    if (response.body().isValue()) {
+                        Toast.makeText(getActivity(), "تمت العمليه بنجاح", Toast.LENGTH_SHORT).show();
+                        SharedPreferences.Editor editor = sharedPreferences_currency.edit();
+                        editor.putString("currency", currency);
+                        editor.apply();
+                        if (currency.equals("SAR")) {
+                            tv_convert_currency.setText("ريال سعودي");
+
+                        } else if (currency.equals("USD")) {
+                            tv_convert_currency.setText("دولار امريكي");
+                        }
+
+                    } else {
+                        Toast.makeText(getActivity(), "حدث خطأ ما", Toast.LENGTH_SHORT).show();
+
+                    }
+                } catch (Exception e) {
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CurrencyTypeModel> call, Throwable t) {
+                ((HomeActivity) getActivity()).dismis_dialog();
+                handleException(getActivity(), t);
+                t.printStackTrace();
+            }
+        });
     }
 }
