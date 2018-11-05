@@ -107,7 +107,7 @@ public class InComingOrdersFragment extends Fragment {
             btn_accept.setText("تمت العملية");
             btn_refuse.setText("الغاء");
         }
-        if (type_of_request.equals("deliverd")) {
+        if (type_of_request.equals("delivered")) {
             relative_btns.setVisibility(View.GONE);
         }
         if (type_of_request.equals("rejected")) {
