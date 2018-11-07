@@ -94,7 +94,8 @@ public interface ServiceApi {
 
     @FormUrlEncoded
     @POST(Urls.ServiceCategory)
-    Call<AllServices> get_service_category(@Field("category_id") String category_id);
+    Call<AllServices> get_service_category(@Field("category_id") String category_id,
+                                           @Field("user_id") String user_id);
 
     @FormUrlEncoded
     @POST(Urls.MyFavourites)

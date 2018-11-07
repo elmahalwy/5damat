@@ -127,7 +127,8 @@ public class HomeFragmnet extends Fragment {
         } else {
             Log.e("sss", "sssss");
 
-            RetroWeb.getClient().create(ServiceApi.class).get_service_category(String.valueOf(getArguments().getInt("id"))).enqueue(new Callback<AllServices>() {
+            RetroWeb.getClient().create(ServiceApi.class).get_service_category(String.valueOf(getArguments().getInt("id")),
+                    String.valueOf(sharedPrefManager.getUserDate().getId())).enqueue(new Callback<AllServices>() {
                 @Override
                 public void onResponse(Call<AllServices> call, Response<AllServices> response) {
                     ((HomeActivity) getActivity()).dismis_dialog();
