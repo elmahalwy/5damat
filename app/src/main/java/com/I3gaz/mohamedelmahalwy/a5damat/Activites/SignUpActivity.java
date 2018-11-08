@@ -144,6 +144,8 @@ public class SignUpActivity extends ParentClass {
                         startActivity(intent);
                         Bungee.zoom(SignUpActivity.this);
 
+                    } else {
+                        makeToast(getApplicationContext(), response.body().getMsg());
                     }
                 }
 

@@ -223,6 +223,12 @@ public class ServiceDetailsFragment extends Fragment {
                 shareTextUrl();
             }
         });
+        iv_share_for_service_owner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareTextUrl();
+            }
+        });
         iv_owner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
