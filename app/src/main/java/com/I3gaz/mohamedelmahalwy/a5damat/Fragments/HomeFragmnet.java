@@ -189,8 +189,12 @@ public class HomeFragmnet extends Fragment {
         RetroWeb.getClient().create(ServiceApi.class).Get_main_categories().enqueue(new Callback<MainCategories>() {
             @Override
             public void onResponse(Call<MainCategories> call, Response<MainCategories> response) {
-                if (response.body().isValue()) {
-                    ((HomeActivity) getActivity()).categoriesAdapter.addAll(response.body().getData());
+                try {
+                    if (response.body().isValue()) {
+                        ((HomeActivity) getActivity()).categoriesAdapter.addAll(response.body().getData());
+                    }
+                } catch (Exception e) {
+                    Log.e("e_categories", e.toString());
                 }
             }
 

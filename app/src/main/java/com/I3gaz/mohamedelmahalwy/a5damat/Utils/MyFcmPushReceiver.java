@@ -23,11 +23,13 @@ import com.google.firebase.messaging.RemoteMessage;
 public class MyFcmPushReceiver extends FirebaseMessagingService {
     String TAG = "firebase";
     public static String show_dialog = "no";
-    public  static String order_id = "";
+    public static String order_id = "";
     SharedPreferences sharedPreferences_title;
+
     public MyFcmPushReceiver() {
 
     }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -58,30 +60,40 @@ public class MyFcmPushReceiver extends FirebaseMessagingService {
             Log.e("title", remoteMessage.getNotification().getTitle() + "1");
             Log.e("body", remoteMessage.getNotification().getBody() + "2");
             Log.e("click_Action", remoteMessage.getNotification().getClickAction() + "3");
+            Log.e("data", remoteMessage.getData().get("service_id") + "3");
             SharedPreferences.Editor editor = sharedPreferences_title.edit();
             editor.putString("title", "yes");
-            editor.putString("order_id",remoteMessage.getData().get("order_id"));
+            editor.putString("service_id", remoteMessage.getData().get("service_id"));
             editor.apply();
+            startService(new Intent(this, MyService.class));
         } else {
             SharedPreferences.Editor editor = sharedPreferences_title.edit();
             editor.putString("title", "no");
             editor.apply();
+            startService(new Intent(this, MyService.class));
+
 
         }
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
-            startNotification(remoteMessage.getNotification().getTitle());
+            startService(new Intent(this, MyService.class));
+            startNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getData().get("service_id"));
             Log.e(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+
+
         } else {
             Log.e("msg", "empty");
+            startService(new Intent(this, MyService.class));
+
+
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
     }
 
-    private void startNotification(String title) {
+    private void startNotification(String title, String service_id) {
         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
         intent.putExtra("type_notification", "requests");
         intent.putExtra("type", "requests");

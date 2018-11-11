@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
+import com.I3gaz.mohamedelmahalwy.a5damat.Fragments.AddServiceFragment;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.SubCatigoriesModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.Models.AdapterModel.VideoAndImageModel;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
@@ -55,6 +56,13 @@ public class VideoAndImageAdapater extends RecyclerView.Adapter<VideoAndImageAda
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        if (imges_and_videos_list.size() < 2) {
+            holder.iv_left.setVisibility(View.GONE);
+            holder.iv_right.setVisibility(View.GONE);
+        } else {
+            holder.iv_left.setVisibility(View.VISIBLE);
+            holder.iv_right.setVisibility(View.VISIBLE);
+        }
         if (imges_and_videos_list.get(position).getType().equals("file")) {
             if ((((HomeActivity) context).came_from.equals("edit"))) {
                 holder.iv_service.setVisibility(View.VISIBLE);
@@ -94,6 +102,30 @@ public class VideoAndImageAdapater extends RecyclerView.Adapter<VideoAndImageAda
             holder.relative_for_video.setVisibility(View.GONE);
             Picasso.with(context).load(imges_and_videos_list.get(position).getIv_service()).into(holder.iv_service);
         }
+        holder.iv_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (position == 0) {
+                    AddServiceFragment.rv_videos_and_images.scrollToPosition(imges_and_videos_list.size() - 1);
+                } else {
+                    AddServiceFragment.rv_videos_and_images.scrollToPosition(position - 1);
+
+                }
+            }
+        });
+        holder.iv_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (position == imges_and_videos_list.size() - 1) {
+                    AddServiceFragment.rv_videos_and_images.scrollToPosition(0);
+
+                } else {
+                    AddServiceFragment.rv_videos_and_images.scrollToPosition(position + 1);
+
+                }
+
+            }
+        });
 
     }
 
@@ -114,6 +146,10 @@ public class VideoAndImageAdapater extends RecyclerView.Adapter<VideoAndImageAda
         ImageView iv_service;
         @BindView(R.id.relative_for_video)
         RelativeLayout relative_for_video;
+        @BindView(R.id.iv_left)
+        ImageView iv_left;
+        @BindView(R.id.iv_right)
+        ImageView iv_right;
 
         public ViewHolder(View itemView) {
             super(itemView);

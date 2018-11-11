@@ -1,6 +1,8 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Activites;
 
 import android.Manifest;
+import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
@@ -13,11 +15,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.CategoriesAdapter;
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.HomeAdapter;
@@ -108,12 +114,29 @@ public class HomeActivity extends ParentClass {
     public String handle_tab = "";
     static List<String> fragments = new ArrayList<String>();
     static FragmentManager manager;
+    SharedPreferences sharedPreferences_title;
+    public static Dialog dialog_go_to_requests;
+    public static Button btn_yes;
+    public static Button btn_no;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
+        dialog_go_to_requests = new Dialog(this);
+        dialog_go_to_requests.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog_go_to_requests.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog_go_to_requests.setContentView(R.layout.dialog_go_to_requests);
+        // to set width and height
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog_go_to_requests.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        btn_yes = (Button) dialog_go_to_requests.findViewById(R.id.btn_yes);
+        btn_no = (Button) dialog_go_to_requests.findViewById(R.id.btn_no);
+        sharedPreferences_title = getSharedPreferences("title", MODE_PRIVATE);
         isStoragePermissionGranted();
         manager = getSupportFragmentManager();
         init_fragments();
@@ -156,6 +179,20 @@ public class HomeActivity extends ParentClass {
     }
 
     void initUi() {
+        if (sharedPreferences_title.getString("title", "").equals("yes")) {
+            replaceFragment(requestsFragment);
+            tv_home.setTextColor(Color.parseColor("#B2BBC9"));
+            iv_home.setImageResource(R.mipmap.home_grey);
+            tv_messages.setTextColor(Color.parseColor("#B2BBC9"));
+            iv_messages.setImageResource(R.mipmap.message_grey);
+            tv_requests.setTextColor(Color.parseColor("#174BB0"));
+            iv_requests.setImageResource(R.mipmap.requests);
+            tv_search.setTextColor(Color.parseColor("#B2BBC9"));
+            iv_search.setImageResource(R.mipmap.search_grey);
+        }
+        if (sharedPreferences_title.getString("title", "").equals("no")) {
+
+        }
 
 
         if (getIntent().getStringExtra("type").equals("deep_link")) {
@@ -163,9 +200,25 @@ public class HomeActivity extends ParentClass {
             args.putString("service_id", getIntent().getStringExtra("service_id"));
             serviceDetailsFragment.setArguments(args);
             replaceFragment(serviceDetailsFragment);
+            tv_home.setTextColor(Color.parseColor("#174BB0"));
+            iv_home.setImageResource(R.mipmap.home);
+            tv_messages.setTextColor(Color.parseColor("#B2BBC9"));
+            iv_messages.setImageResource(R.mipmap.message_grey);
+            tv_requests.setTextColor(Color.parseColor("#B2BBC9"));
+            iv_requests.setImageResource(R.mipmap.requests_grey);
+            tv_search.setTextColor(Color.parseColor("#B2BBC9"));
+            iv_search.setImageResource(R.mipmap.search_grey);
         }
         if (getIntent().getStringExtra("type").equals("requests")) {
             replaceFragment(requestsFragment);
+            tv_home.setTextColor(Color.parseColor("#B2BBC9"));
+            iv_home.setImageResource(R.mipmap.home_grey);
+            tv_messages.setTextColor(Color.parseColor("#B2BBC9"));
+            iv_messages.setImageResource(R.mipmap.message_grey);
+            tv_requests.setTextColor(Color.parseColor("#174BB0"));
+            iv_requests.setImageResource(R.mipmap.requests);
+            tv_search.setTextColor(Color.parseColor("#B2BBC9"));
+            iv_search.setImageResource(R.mipmap.search_grey);
         }
 
         tv_home.setTextColor(Color.parseColor("#174BB0"));

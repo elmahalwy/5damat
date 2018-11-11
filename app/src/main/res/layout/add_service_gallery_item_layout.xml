@@ -15,10 +15,36 @@
             android:layout_height="match_parent" />
     </RelativeLayout>
 
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#10000000"
+
+        />
+
     <ImageView
         android:id="@+id/iv_service"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/iv_left"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:padding="10dp"
+        android:src="@drawable/arrow_left"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/iv_right"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical|right"
+        android:padding="10dp"
+        android:src="@drawable/arrow_right"
         android:visibility="gone" />
 </FrameLayout>

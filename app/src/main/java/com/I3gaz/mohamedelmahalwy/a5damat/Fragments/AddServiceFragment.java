@@ -84,7 +84,7 @@ public class AddServiceFragment extends Fragment {
     public static int sp_sub_category_id = 0;
     String sp_sub_category_name;
     public static EditText et_service_details;
-    RecyclerView rv_videos_and_images;
+    public static RecyclerView rv_videos_and_images;
     VideoAndImageAdapater videoAndImageAdapater;
     List<VideoAndImageModel> videoAndImageList;
     LinearLayoutManager linearLayoutManager;
@@ -207,7 +207,7 @@ public class AddServiceFragment extends Fragment {
             et_service_details.setText(serviceDetails.getData().getNote());
             et_key_words.setText(serviceDetails.getData().getKey_words());
             et_service_instructions_to_buyer_title.setText(serviceDetails.getData().getRoles());
-            service_id_for_edit= String.valueOf(serviceDetails.getData().getId());
+            service_id_for_edit = String.valueOf(serviceDetails.getData().getId());
 
         }
         ((HomeActivity) getContext()).tv_toolbar_title.setText("اضافة الخدمة");

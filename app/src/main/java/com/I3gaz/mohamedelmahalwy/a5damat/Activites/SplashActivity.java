@@ -20,12 +20,18 @@ public class SplashActivity extends ParentClass {
     String prefix;
     SharedPreferences sharedPreferences_currency;
     String currency;
+    SharedPreferences sharedPreferences_title;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
+        sharedPreferences_title = getSharedPreferences("title", MODE_PRIVATE);
+        SharedPreferences.Editor editor1 = sharedPreferences_title.edit();
+        editor1.putString("title", "no");
+        editor1.apply();
         ToMainActivity();
         sharedPreferences_currency = getSharedPreferences("currency", MODE_PRIVATE);
         currency = sharedPreferences_currency.getString("currency", null);

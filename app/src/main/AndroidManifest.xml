@@ -14,9 +14,9 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
-        android:largeHeap="true"
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
         <activity android:name=".Activites.SplashActivity">
@@ -77,8 +77,10 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
@@ -86,6 +88,9 @@
         <activity android:name=".Activites.FirstInstructionActivity" />
         <activity android:name=".Activites.SecondInstructionActivity" />
         <activity android:name=".Activites.ThirdInstructionActivity"></activity>
+
+        <service android:name="com.I3gaz.mohamedelmahalwy.a5damat.Utils.MyService" />
+
     </application>
 
 </manifest>
