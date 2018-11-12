@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.I3gaz.mohamedelmahalwy.a5damat.Activites.HomeActivity;
 import com.I3gaz.mohamedelmahalwy.a5damat.Adapters.MessagesAdapter;
@@ -31,6 +32,8 @@ public class MessagesFragment extends Fragment {
     RecyclerView rv_messages;
     MessagesAdapter messagesAdapter;
     LinearLayoutManager linearLayoutManager;
+    @BindView(R.id.no_messages)
+    TextView no_messages;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.messages_fragment, container, false);
@@ -53,6 +56,14 @@ public class MessagesFragment extends Fragment {
                 ((HomeActivity) getActivity()).dismis_dialog();
 
                 try {
+                    if (response.body().getData().size() == 0) {
+                        no_messages.setVisibility(View.VISIBLE);
+                        rv_messages.setVisibility(View.GONE);
+                    }
+                    else {
+                        no_messages.setVisibility(View.GONE);
+                        rv_messages.setVisibility(View.VISIBLE);
+                    }
                     if (response.body().isValue()) {
                         if (!response.body().getData().isEmpty()) {
                             messagesAdapter.addAll(response.body().getData());
