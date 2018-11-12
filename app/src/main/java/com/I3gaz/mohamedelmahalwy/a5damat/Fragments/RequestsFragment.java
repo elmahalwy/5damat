@@ -22,8 +22,14 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,6 +61,11 @@ public class RequestsFragment extends Fragment {
     public String tab_selected = "#3558B9";
     public String tab_unselected = "#000000";
     List<Datum> requests_purchases_list;
+    Date current_date;
+    SimpleDateFormat myFormat;
+    Date dateAfter;
+    String sTod;
+    SimpleDateFormat formatter;
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -88,6 +99,18 @@ public class RequestsFragment extends Fragment {
 
     void initUI() {
         ((HomeActivity) getContext()).tv_toolbar_title.setText("الطلبات والمشتريات");
+        try {
+            myFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String dateAfterString = "02/02/2014";
+            String dateBeforeString = myFormat.format(new Date());
+            current_date = myFormat.parse(dateBeforeString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        formatter = new SimpleDateFormat("HH:mm:ss");
+        java.util.Date noteTS = Calendar.getInstance().getTime();
+        sTod = formatter.format(noteTS);
+        Log.e("sTod", sTod);
     }
 
     void initEventDrivn() {
@@ -218,12 +241,39 @@ public class RequestsFragment extends Fragment {
                             Datum datum = new Datum();
                             datum.setBuyer(response.body().getData().get(i).getBuyer());
                             datum.setCategory(response.body().getData().get(i).getCategory());
-
                             datum.setOrderId(response.body().getData().get(i).getOrderId());
                             datum.setPrice(response.body().getData().get(i).getPrice());
                             datum.setTitle(response.body().getData().get(i).getTitle());
                             datum.setType(in_status);
                             datum.setTab_type(in_tab);
+                            dateAfter = myFormat.parse(response.body().getData().get(i).getDelivery_date());
+                            long difference = dateAfter.getTime() - current_date.getTime();
+                            float daysBetween = TimeUnit.DAYS.convert(difference, TimeUnit.MILLISECONDS);
+                            long seconds = difference / 1000;
+                            long minutes = seconds / 60;
+                            long hours = minutes / 60;
+                            long days = hours / 24;
+                            java.util.Date date1 = formatter.parse(sTod);
+                            Log.e("date1", date1 + "");
+                            java.util.Date date2 = formatter.parse(response.body().getData().get(i).getOrder_time());
+                            Log.e("date2", date2 + "");
+                            long diff = date1.getTime() - date2.getTime();
+                            long timeInSeconds = diff / 1000;
+                            long hourss, minutess, secondss;
+                            hourss = timeInSeconds / 3600;
+                            timeInSeconds = timeInSeconds - (hours * 3600);
+                            minutess = timeInSeconds / 60;
+                            timeInSeconds = timeInSeconds - (minutes * 60);
+                            secondss = timeInSeconds;
+                            Log.e("secondss", secondss + "zzz");
+                            Log.e("minutess", minutess + "zzz");
+                            Log.e("hourss", hourss + "zzz");
+
+                            Log.e("diffffff", diff + "zzz");
+                            Log.e("days", days + "kk");
+                            Log.e("hourss_good", String.valueOf(hours - 24 + hourss));
+                            datum.setTime_left(" منذ " + days + " يوم ");
+                            datum.setHours(String.valueOf((hours - 24) + hourss));
                             requests_purchases_list.add(datum);
                         }
                         InComingOrdersFragment.type_of_request = in_status;
@@ -260,7 +310,6 @@ public class RequestsFragment extends Fragment {
                             Datum datum = new Datum();
                             datum.setBuyer(response.body().getData().get(i).getBuyer());
                             datum.setCategory(response.body().getData().get(i).getCategory());
-
                             datum.setOrderId(response.body().getData().get(i).getOrderId());
                             datum.setPrice(response.body().getData().get(i).getPrice());
                             datum.setTitle(response.body().getData().get(i).getTitle());

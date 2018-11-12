@@ -11,13 +11,29 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginEnd="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/tv_counter"
+        android:layout_toEndOf="@+id/tv_counter"
+        android:layout_marginLeft="5dp"
         android:layout_marginRight="20dp"
-        android:layout_marginStart="20dp"
+        android:maxLines="1"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:text=""
         android:textColor="#000"
         android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/drawable_add_service"
+        android:gravity="center"
+        android:text=""
+        android:textColor="#000"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/tv_category_title"

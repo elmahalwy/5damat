@@ -1,7 +1,9 @@
 package com.I3gaz.mohamedelmahalwy.a5damat.Fragments;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -25,6 +27,9 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Models.RequestsModel.Requests_Tab_Mode
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.RetroWeb;
 import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,11 +71,60 @@ public class InComingOrdersFragment extends Fragment {
     int id;
     String status_to_be_sent = "";
     public static String tabb;
+    @BindView(R.id.tv_counter)
+    TextView tv_counter;
+    int min;
+    int seconds;
+    int hours;
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.in_coming_orders_fragment, container, false);
         ButterKnife.bind(this, view);
+        if (tabb.equals("purchase")) {
+            tv_counter.setVisibility(View.VISIBLE);
+        } else {
+            tv_counter.setVisibility(View.GONE);
+        }
+        min = 59;
+        seconds = 59;
+        hours = (Integer.parseInt(getArguments().getString("hours")) - 1);
+        if (getArguments() != null) {
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    if (getActivity() != null) {
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Stuff that updates the UI
+                                if (seconds == 0) {
+                                    seconds = 59;
+                                    if (min == 0) {
+                                        min = 59;
+                                        hours = hours - 1;
+                                    } else {
+                                        min--;
+                                    }
+                                    if (hours == 0) {
+                                        tv_counter.setText("انتهي!");
+                                    }
+                                } else {
+                                    seconds--;
+
+                                }
+                                Log.e("min", min + "z");
+                                Log.e("seconds", seconds + "z");
+                                Log.e("hours", hours + "z");
+                                tv_counter.setText("الوقت المتبقي: " + hours + ":" + String.valueOf(min) + ":" + seconds);
+                            }
+                        });
+                    }
+                }
+            }, 0, 1000);
+        }
         pop_up_cancel_request = new Dialog(getActivity());
         pop_up_cancel_request.requestWindowFeature(Window.FEATURE_NO_TITLE);
         pop_up_cancel_request.getWindow().setBackgroundDrawableResource(android.R.color.transparent);

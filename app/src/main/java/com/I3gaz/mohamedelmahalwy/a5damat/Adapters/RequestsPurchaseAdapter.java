@@ -34,7 +34,11 @@ import com.I3gaz.mohamedelmahalwy.a5damat.Network.ServiceApi;
 import com.I3gaz.mohamedelmahalwy.a5damat.R;
 import com.I3gaz.mohamedelmahalwy.a5damat.Utils.ParentClass;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -70,6 +74,8 @@ public class RequestsPurchaseAdapter extends RecyclerView.Adapter<RequestsPurcha
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+
+
         pop_up_cancel_request = new Dialog(context);
         pop_up_cancel_request.requestWindowFeature(Window.FEATURE_NO_TITLE);
         pop_up_cancel_request.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -82,6 +88,7 @@ public class RequestsPurchaseAdapter extends RecyclerView.Adapter<RequestsPurcha
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         et_reason_of_cancle_process = (EditText) pop_up_cancel_request.findViewById(R.id.et_reason_of_cancle_process);
         btn_choose = (Button) pop_up_cancel_request.findViewById(R.id.btn_choose);
+        holder.tv_timer.setText(requests_purchases_list.get(position).getTime_left());
         holder.tv_request_code.setText(String.valueOf(requests_purchases_list.get(position).getOrderId()));
         holder.tv_request_title.setText(requests_purchases_list.get(position).getTitle());
         holder.tv_category.setText(requests_purchases_list.get(position).getCategory());
@@ -93,10 +100,18 @@ public class RequestsPurchaseAdapter extends RecyclerView.Adapter<RequestsPurcha
         } catch (Exception e) {
 
         }
+        if (requests_purchases_list.get(position).getTab_type().equals("purchase")) {
+            holder.tv_timer.setVisibility(View.VISIBLE);
+
+        } else {
+            holder.tv_timer.setVisibility(View.GONE);
+
+        }
         if (requests_purchases_list.get(position).getType().equals("waiting")) {
             if (requests_purchases_list.get(position).getTab_type().equals("purchase")) {
                 holder.tv_accept.setVisibility(View.GONE);
                 holder.tv_refuse.setVisibility(View.GONE);
+
             } else {
                 holder.tv_accept.setVisibility(View.VISIBLE);
                 holder.tv_refuse.setVisibility(View.VISIBLE);
@@ -242,6 +257,7 @@ public class RequestsPurchaseAdapter extends RecyclerView.Adapter<RequestsPurcha
             public void onClick(View v) {
                 Bundle args = new Bundle();
                 args.putString("order_id", String.valueOf(requests_purchases_list.get(position).getOrderId()));
+                args.putString("hours", requests_purchases_list.get(position).getHours());
                 InComingOrdersFragment inComingOrdersFragment = new InComingOrdersFragment();
                 inComingOrdersFragment.setArguments(args);
                 HomeActivity.replaceFragment(inComingOrdersFragment);
@@ -278,6 +294,8 @@ public class RequestsPurchaseAdapter extends RecyclerView.Adapter<RequestsPurcha
         TextView tv_accept;
         @BindView(R.id.tv_refuse)
         TextView tv_refuse;
+        @BindView(R.id.tv_timer)
+        TextView tv_timer;
 
         public ViewHolder(View itemView) {
             super(itemView);
