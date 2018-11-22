@@ -230,6 +230,15 @@ public class HomeActivity extends ParentClass {
         linearLayoutManager.setReverseLayout(true);
         rv_categories.setLayoutManager(linearLayoutManager);
         rv_categories.setAdapter(categoriesAdapter);
+
+
+//        KeyboardVisibilityEvent.setEventListener(this,
+//                new KeyboardVisibilityEventListener() {
+//                    @Override
+//                    public void onVisibilityChanged(boolean isOpen) {
+//                        mBottomTabLayout.setVisibility(isOpen ? View.GONE : View.VISIBLE);
+//                    }
+//                });
     }
 
     void initEventDriven() {

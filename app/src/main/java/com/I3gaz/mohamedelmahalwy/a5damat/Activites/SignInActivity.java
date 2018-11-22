@@ -280,7 +280,7 @@ public class SignInActivity extends ParentClass {
                         intent.putExtra("service_id", "");
                         startActivity(intent);
                     } else {
-                        Toast.makeText(SignInActivity.this, "حدث خطأ ما", Toast.LENGTH_SHORT).show();
+                        makeToast(getApplicationContext(), response.body().getMsg());
                     }
                 } catch (Exception e) {
 
